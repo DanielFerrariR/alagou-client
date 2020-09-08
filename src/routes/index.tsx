@@ -127,9 +127,9 @@ const Routes: React.FC = () => {
               <Stack.Screen name="MainFlow" component={MainFlow} />
             ) : (
               <>
+                <Stack.Screen name="Register" component={Register} />
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Welcome" component={Welcome} />
-                <Stack.Screen name="Register" component={Register} />
                 <Stack.Screen name="Home" component={Home} />
                 <Stack.Screen
                   name="ForgotPassword"
