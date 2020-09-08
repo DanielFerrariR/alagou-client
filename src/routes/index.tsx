@@ -4,11 +4,14 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { Provider } from 'react-redux'
 import {
   CreateTrack,
+  Welcome,
   Login,
   Register,
   Settings,
   TrackDetail,
-  TrackList
+  TrackList,
+  ForgotPassword,
+  Home
 } from 'src/components/screens'
 import store from 'src/utils/redux'
 import { useSelector, useDispatch } from 'src/store'
@@ -125,7 +128,13 @@ const Routes: React.FC = () => {
             ) : (
               <>
                 <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="Welcome" component={Welcome} />
                 <Stack.Screen name="Register" component={Register} />
+                <Stack.Screen name="Home" component={Home} />
+                <Stack.Screen
+                  name="ForgotPassword"
+                  component={ForgotPassword}
+                />
               </>
             )}
           </Stack.Navigator>

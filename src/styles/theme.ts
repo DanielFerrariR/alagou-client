@@ -8,6 +8,8 @@ declare global {
       custom: {
         userLocationStroke: string
         userLocationFill: string
+        black: string
+        white: string
       }
     }
   }
@@ -36,7 +38,9 @@ const fontConfig = {
 
 const custom = {
   userLocationStroke: 'rgba(158, 158, 255, 1.0)',
-  userLocationFill: 'rgba(158,158, 255, 0.3)'
+  userLocationFill: 'rgba(158,158, 255, 0.3)',
+  black: '#000000',
+  white: '#ffffff'
 }
 
 const theme = {
@@ -44,9 +48,9 @@ const theme = {
   roundness: 4,
   colors: {
     custom,
-    primary: '#6200ee',
-    accent: '#03dac4',
-    background: '#f6f6f6',
+    primary: '#1E5C5C',
+    accent: '#3DBABA',
+    background: '#FAFAFA',
     surface: Colors.white,
     error: '#b00020',
     text: Colors.black,

@@ -3,20 +3,20 @@ import { View, Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Appbar } from 'src/components/atoms'
 
-const Register: React.FC = () => {
+const Home: React.FC = () => {
   const navigation = useNavigation()
 
   return (
     <>
       <Appbar.Header>
-        <Appbar.BackAction onPress={() => navigation.navigate('Login')} />
-        <Appbar.Content title="Faça seu cadastro" />
+        <Appbar.BackAction onPress={() => navigation.navigate('Welcome')} />
+        <Appbar.Content title="Consultar" />
       </Appbar.Header>
       <View>
-        <Text>Register</Text>
+        <Text>Home</Text>
       </View>
     </>
   )
 }
 
-export default Register
+export default Home

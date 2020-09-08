@@ -4,6 +4,8 @@ import { TextProps } from 'react-native'
 import {
   spacing,
   SpacingProps,
+  sizing,
+  SizingProps,
   typography,
   TypographyProps as OldTypographyProps,
   flexbox,
@@ -17,6 +19,7 @@ export type TypographyProps = OldTypographyProps &
   FlexboxProps &
   PaletteProps &
   SpacingProps &
+  SizingProps &
   ExtraProps
 
 interface ExtraProps {
@@ -34,6 +37,7 @@ const StyledTypography = styled.Text`
   ${typography}
   ${flexbox}
   ${palette}
+  ${sizing}
 `
 
 const ThemedTypography: React.FC<TypographyProps> = ({ children, ...rest }) => {
