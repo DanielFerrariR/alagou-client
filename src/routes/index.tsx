@@ -11,7 +11,7 @@ import {
   TrackDetail,
   TrackList,
   ForgotPassword,
-  Home
+  Consult
 } from 'src/components/screens'
 import store from 'src/utils/redux'
 import { useSelector, useDispatch } from 'src/store'
@@ -127,10 +127,10 @@ const Routes: React.FC = () => {
               <Stack.Screen name="MainFlow" component={MainFlow} />
             ) : (
               <>
-                <Stack.Screen name="Register" component={Register} />
-                <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Welcome" component={Welcome} />
-                <Stack.Screen name="Home" component={Home} />
+                <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="Register" component={Register} />
+                <Stack.Screen name="Consult" component={Consult} />
                 <Stack.Screen
                   name="ForgotPassword"
                   component={ForgotPassword}

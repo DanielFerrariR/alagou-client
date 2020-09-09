@@ -24,7 +24,7 @@ const Welcome: React.FC = () => {
         <Button
           mode="outlined"
           mb={3}
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.navigate('Consult')}
           style={{ borderWidth: 1, borderColor: 'white' }}
           labelStyle={{ color: 'white' }}
           width={1}

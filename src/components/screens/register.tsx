@@ -9,11 +9,13 @@ import {
   Image,
   ScrollView
 } from 'src/components/atoms'
+import { MessageModal } from 'src/components/molecules'
 import { useDispatch } from 'src/store'
 import { createUser } from 'src/store/user'
 import AsyncStorage from '@react-native-community/async-storage'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import ImagePicker from 'react-native-image-picker'
+import { TextInput as OldTextInput } from 'react-native-paper'
 
 interface Form {
   name: string
@@ -21,6 +23,8 @@ interface Form {
   password: string
   confirmPassword: string
   profilePhoto: null | { uri: string }
+  showPassword: boolean
+  showConfirmPassword: boolean
 }
 
 const Register: React.FC = () => {
@@ -29,7 +33,9 @@ const Register: React.FC = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    profilePhoto: null
+    profilePhoto: null,
+    showPassword: false,
+    showConfirmPassword: false
   })
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
@@ -44,7 +50,9 @@ const Register: React.FC = () => {
           email: '',
           password: '',
           confirmPassword: '',
-          profilePhoto: null
+          profilePhoto: null,
+          showPassword: false,
+          showConfirmPassword: false
         })
         setMessage('')
       }
@@ -69,9 +77,19 @@ const Register: React.FC = () => {
 
   const onSubmit = async () => {
     try {
+      if (form.password !== form.confirmPassword) {
+        setMessage('A confirmação de senha não é igual a senha.')
+        return
+      }
+
       setLoading(true)
 
-      const response = await createUser(form)
+      const response = await createUser({
+        name: form.name,
+        email: form.email,
+        password: form.password,
+        profilePhoto: form.profilePhoto
+      })
 
       const { payload } = response
 
@@ -85,11 +103,11 @@ const Register: React.FC = () => {
       setLoading(false)
 
       if (error?.response?.data) {
-        setMessage('Something went wrong with register')
+        setMessage('Algo deu errado com o registro.')
         return
       }
 
-      setMessage('Failed to connect')
+      setMessage('Falha em conectar.')
     }
   }
 
@@ -118,7 +136,7 @@ const Register: React.FC = () => {
             </Typography>
           </TouchableOpacity>
         </Box>
-        <Box mt={3} p={2}>
+        <Box mt={3} p={2} mb={4}>
           <TextInput
             label="Nome"
             placeholder="Digite seu nome"
@@ -139,6 +157,15 @@ const Register: React.FC = () => {
             mb={3}
             onChangeText={(text) => onChange('password', text)}
             value={form.password}
+            secureTextEntry={!form.showPassword}
+            right={
+              <OldTextInput.Icon
+                onPress={() =>
+                  setForm({ ...form, showPassword: !form.showPassword })
+                }
+                name={form.showPassword ? 'eye' : 'eye-off'}
+              />
+            }
           />
           <TextInput
             label="Confirmação de senha"
@@ -146,12 +173,30 @@ const Register: React.FC = () => {
             mb={3}
             onChangeText={(text) => onChange('confirmPassword', text)}
             value={form.confirmPassword}
+            secureTextEntry={!form.showConfirmPassword}
+            right={
+              <OldTextInput.Icon
+                onPress={() =>
+                  setForm({
+                    ...form,
+                    showConfirmPassword: !form.showConfirmPassword
+                  })
+                }
+                name={form.showConfirmPassword ? 'eye' : 'eye-off'}
+              />
+            }
           />
-          <Button onPress={onSubmit} disabled={loading} loading={loading}>
+          <Button
+            onPress={onSubmit}
+            loading={loading}
+            color="accent"
+            labelStyle={{ color: 'white' }}
+          >
             Cadastrar
           </Button>
         </Box>
       </ScrollView>
+      <MessageModal message={message} setMessage={setMessage} />
     </>
   )
 }

@@ -8,6 +8,8 @@ export { default as FlatList } from './flat_list'
 export { default as List } from './list'
 export { default as Image } from './image'
 export { default as Switch } from './switch'
+export { default as Dialog } from './dialog'
+export { default as Portal } from './portal'
 
 export { default as Button } from './button'
 export * from './button'

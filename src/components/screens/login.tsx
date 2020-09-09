@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
   Container,
   Image,
-  Switch,
   TextInput
 } from 'src/components/atoms'
+import { MessageModal } from 'src/components/molecules'
 import { useDispatch } from 'src/store'
 import { fetchUser } from 'src/store/user'
 import AsyncStorage from '@react-native-community/async-storage'
@@ -20,7 +20,6 @@ const Login: React.FC = () => {
   const [form, setForm] = useState({
     email: '',
     password: '',
-    rememberPassword: true,
     showPassword: false
   })
   const dispatch = useDispatch()
@@ -28,17 +27,12 @@ const Login: React.FC = () => {
   const navigation = useNavigation()
   const [loading, setLoading] = useState(false)
 
-  const onToggleSwitch = () => {
-    setForm({ ...form, rememberPassword: !form.rememberPassword })
-  }
-
   useFocusEffect(
     useCallback(() => {
       return () => {
         setForm({
           email: '',
           password: '',
-          rememberPassword: true,
           showPassword: false
         })
         setMessage('')
@@ -55,7 +49,10 @@ const Login: React.FC = () => {
     try {
       setLoading(true)
 
-      const response = await fetchUser(form)
+      const response = await fetchUser({
+        email: form.email,
+        password: form.password
+      })
 
       const { payload } = response
 
@@ -65,20 +62,21 @@ const Login: React.FC = () => {
 
       dispatch(response)
     } catch (error) {
+      console.log(error)
       setLoading(false)
 
       if (error?.response?.data) {
-        setMessage('Something went wrong with login')
+        setMessage('Algo deu errado com o Login.')
         return
       }
 
-      setMessage('Failed to connect')
+      setMessage('Falha em conectar.')
     }
   }
 
   return (
     <Container bgColor="custom.white">
-      <Box height={0.35} alignItems="center" justifyContent="center">
+      <Box height={0.4} alignItems="center" justifyContent="center">
         <Image source={require('src/images/logo.png')} />
       </Box>
       <Box flex={1} p={2} bgColor="primary">
@@ -96,8 +94,8 @@ const Login: React.FC = () => {
           placeholder="Digite sua senha"
           onChangeText={(text) => onChange('password', text)}
           value={form.password}
-          secureTextEntry={form.showPassword}
-          mb={1}
+          secureTextEntry={!form.showPassword}
+          mb={3}
           right={
             <OldTextInput.Icon
               onPress={() =>
@@ -107,21 +105,13 @@ const Login: React.FC = () => {
             />
           }
         />
-        <Box flexDirection="row" alignItems="center" mb={3}>
-          <Typography variant="h3" color="custom.white">
-            Lembrar senha
-          </Typography>
-          <Switch
-            value={form.rememberPassword}
-            onValueChange={onToggleSwitch}
-          />
-        </Box>
         <Button
           onPress={onSubmit}
           color="custom.white"
           width={1}
           labelStyle={{ color: theme.colors.primary }}
           mb={3}
+          loading={loading}
         >
           Login
         </Button>
@@ -150,6 +140,7 @@ const Login: React.FC = () => {
           </Typography>
         </TouchableOpacity>
       </Box>
+      <MessageModal message={message} setMessage={setMessage} />
     </Container>
   )
 }
