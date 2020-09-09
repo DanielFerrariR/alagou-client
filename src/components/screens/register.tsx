@@ -117,7 +117,7 @@ const Register: React.FC = () => {
         <Appbar.BackAction onPress={() => navigation.navigate('Login')} />
         <Appbar.Content title="Faça seu cadastro" />
       </Appbar.Header>
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="handled">
         <Box justifyContent="center" alignItems="center" mt={4}>
           <Image
             source={
