@@ -28,7 +28,20 @@ const setNotLoggedUser = (): SetNotLoggedUserAction => {
 }
 
 const createUser = async (data: CreateUserData): Promise<CreateUserAction> => {
-  const response = await api.post<UserState>('/register', { ...data })
+  const formData = new FormData()
+
+  formData.append('name', data.name)
+  formData.append('email', data.email)
+  formData.append('password', data.password)
+  if (data.profilePhoto) {
+    formData.append('profilePhoto', {
+      name: data.profilePhoto.fileName,
+      type: data.profilePhoto.type,
+      uri: data.profilePhoto.uri
+    })
+  }
+
+  const response = await api.post<UserState>('/register', formData)
 
   return {
     type: CREATE_USER,

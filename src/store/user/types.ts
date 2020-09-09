@@ -11,8 +11,10 @@ export const SET_LOGGED_USER = 'SET_LOGGED_USER'
 export const SET_NOT_LOGGED_USER = 'SET_NOT_LOGGED_USER'
 
 export interface CreateUserData {
+  name: string
   email: string
   password: string
+  profilePhoto: any
 }
 
 export interface FetchUserData {

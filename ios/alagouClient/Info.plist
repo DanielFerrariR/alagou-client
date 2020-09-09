@@ -83,6 +83,12 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>NSPhotoLibraryUsageDescription</string>
+		<string>For choosing a photo.</string>
+		<string>NSCameraUsageDescription</string>
+		<string>For taking a photo.</string>
+		<string>NSPhotoLibraryAddUsageDescription</string>
+		<string>For saving a photo.</string>
 	</array>
 </dict>
 </plist>
