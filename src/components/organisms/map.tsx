@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react'
 import MapView, { Circle, Polyline } from 'react-native-maps'
-import { Typography, Box, Paper, ActivityIndicator } from 'src/components/atoms'
+import { Typography, Box, ActivityIndicator } from 'src/components/atoms'
 import { useLocation } from 'src/hooks'
 import { useSelector, useDispatch } from 'src/store'
 import { setCurrentLocation, setLocations } from 'src/store/location'
-import { useTheme } from 'react-native-paper'
+import { FAB, Portal, Provider, useTheme } from 'react-native-paper'
 
 const Map: React.FC = () => {
   const theme = useTheme()
@@ -21,10 +21,11 @@ const Map: React.FC = () => {
     [location.recording]
   )
   const [error] = useLocation(callback)
+  const [openFab, setOpenFab] = React.useState(false)
 
   return (
     <>
-      <Paper borderRadius={4} overflow="hidden" height={300}>
+      <Box height={1}>
         {!location.currentLocation ? (
           <Box
             flexDirection="column"
@@ -36,8 +37,8 @@ const Map: React.FC = () => {
           </Box>
         ) : (
           <MapView
-            style={{ height: 300 }}
-            region={{
+            style={{ height: '100%' }}
+            initialRegion={{
               latitudeDelta: 0.01,
               longitudeDelta: 0.01,
               ...location.currentLocation.coords
@@ -56,7 +57,39 @@ const Map: React.FC = () => {
             />
           </MapView>
         )}
-      </Paper>
+      </Box>
+      <Provider>
+        <Portal>
+          <FAB.Group
+            visible
+            open={openFab}
+            icon={openFab ? 'close' : 'plus'}
+            actions={[
+              {
+                icon: 'plus',
+                label: 'Adicionar alagamento',
+                onPress: () => console.log('Adicionar alagamento')
+              },
+              {
+                icon: 'calendar-today',
+                label: 'Data',
+                onPress: () => console.log('Abrir calendario')
+              },
+              {
+                icon: 'buffer',
+                label: 'Tipo de mapa',
+                onPress: () => console.log('Abrir tipo de mapa')
+              },
+              {
+                icon: 'crosshairs',
+                label: 'Localização',
+                onPress: () => console.log('Localizar')
+              }
+            ]}
+            onStateChange={({ open }) => setOpenFab(open)}
+          />
+        </Portal>
+      </Provider>
       {error ? <Typography>{error}</Typography> : null}
     </>
   )

@@ -2,6 +2,7 @@ import React from 'react'
 import { Typography, Button, Box, Container, Image } from 'src/components/atoms'
 import { useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
+import packageJson from '../../../package.json'
 
 const Welcome: React.FC = () => {
   const theme = useTheme()
@@ -42,7 +43,7 @@ const Welcome: React.FC = () => {
         </Button>
         <Box position="absolute" style={{ top: '100%' }}>
           <Typography variant="h4" color="custom.white">
-            Versão 1.0.0
+            Versão {packageJson.version}
           </Typography>
         </Box>
       </Box>

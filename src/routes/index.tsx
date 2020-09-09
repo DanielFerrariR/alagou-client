@@ -3,27 +3,29 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { Provider } from 'react-redux'
 import {
-  CreateTrack,
   Welcome,
   Login,
   Register,
-  Settings,
-  TrackDetail,
-  TrackList,
   ForgotPassword,
-  Consult
+  Consult,
+  Home,
+  FloodingList,
+  Faq
 } from 'src/components/screens'
+import { DrawerContent } from 'src/components/organisms'
 import store from 'src/utils/redux'
 import { useSelector, useDispatch } from 'src/store'
 import AsyncStorage from '@react-native-community/async-storage'
 import { setLoggedUser, setNotLoggedUser } from 'src/store/user'
-import { Provider as PaperProvider, Colors } from 'react-native-paper'
+import { Provider as PaperProvider } from 'react-native-paper'
 import { theme } from 'src/styles'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 
 const Tab = createMaterialBottomTabNavigator()
 const Stack = createStackNavigator()
+const Drawer = createDrawerNavigator()
 
 const Routes: React.FC = () => {
   const userSession = useSelector((state) => state.user)
@@ -51,17 +53,42 @@ const Routes: React.FC = () => {
     }
   }, [userSession])
 
-  const TrackListFlow = () => {
+  const HomeDrawerFlow = () => {
     return (
-      <Stack.Navigator
+      <Drawer.Navigator
+        drawerContent={() => <DrawerContent />}
         screenOptions={{
-          gestureEnabled: false,
-          headerShown: false
+          swipeEnabled: false
         }}
       >
-        <Stack.Screen name="TrackList" component={TrackList} />
-        <Stack.Screen name="TrackDetail" component={TrackDetail} />
-      </Stack.Navigator>
+        <Drawer.Screen name="Home" component={Home} />
+      </Drawer.Navigator>
+    )
+  }
+
+  const FloodingListDrawerFlow = () => {
+    return (
+      <Drawer.Navigator
+        drawerContent={() => <DrawerContent />}
+        screenOptions={{
+          swipeEnabled: false
+        }}
+      >
+        <Drawer.Screen name="FloodingList" component={FloodingList} />
+      </Drawer.Navigator>
+    )
+  }
+
+  const FaqDrawerFlow = () => {
+    return (
+      <Drawer.Navigator
+        drawerContent={() => <DrawerContent />}
+        screenOptions={{
+          swipeEnabled: false
+        }}
+      >
+        <Drawer.Screen name="Faq" component={Faq} />
+      </Drawer.Navigator>
     )
   }
 
@@ -69,14 +96,25 @@ const Routes: React.FC = () => {
     return (
       <Tab.Navigator shifting>
         <Tab.Screen
-          name="TrackListFlow"
-          component={TrackListFlow}
+          name="Home"
+          component={HomeDrawerFlow}
           options={{
-            tabBarLabel: 'Track List',
-            tabBarColor: Colors.blue800,
+            tabBarLabel: 'Home',
+            tabBarColor: theme.colors.accent,
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons name="home" color={color} size={26} />
+            )
+          }}
+        />
+        <Tab.Screen
+          name="FloodingList"
+          component={FloodingListDrawerFlow}
+          options={{
+            tabBarLabel: 'Alagamentos',
+            tabBarColor: theme.colors.accent,
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons
-                name="view-list-outline"
+                name="format-list-bulleted"
                 color={color}
                 size={26}
               />
@@ -84,25 +122,14 @@ const Routes: React.FC = () => {
           }}
         />
         <Tab.Screen
-          name="CreateTrack"
-          component={CreateTrack}
+          name="Faq"
+          component={FaqDrawerFlow}
           options={{
-            tabBarLabel: 'Create Track',
-            tabBarColor: Colors.red800,
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="plus" color={color} size={26} />
-            )
-          }}
-        />
-        <Tab.Screen
-          name="Settings"
-          component={Settings}
-          options={{
-            tabBarLabel: 'Settings',
-            tabBarColor: Colors.green800,
+            tabBarLabel: 'Dúvidas',
+            tabBarColor: theme.colors.accent,
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons
-                name="cog-outline"
+                name="help-circle"
                 color={color}
                 size={26}
               />
@@ -127,8 +154,8 @@ const Routes: React.FC = () => {
               <Stack.Screen name="MainFlow" component={MainFlow} />
             ) : (
               <>
-                <Stack.Screen name="Consult" component={Consult} />
                 <Stack.Screen name="Welcome" component={Welcome} />
+                <Stack.Screen name="Consult" component={Consult} />
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Register" component={Register} />
                 <Stack.Screen
