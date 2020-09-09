@@ -11,7 +11,7 @@ const Contributions: React.FC = () => {
       <Appbar.Header>
         <Appbar.BackAction
           onPress={() => {
-            navigation.navigate('Home')
+            navigation.goBack()
           }}
         />
         <Appbar.Content title="Contribuições" />

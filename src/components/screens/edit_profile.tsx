@@ -9,7 +9,7 @@ const EditProfile: React.FC = () => {
   return (
     <>
       <Appbar.Header>
-        <Appbar.BackAction onPress={() => navigation.navigate('Home')} />
+        <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Editar Perfil" />
       </Appbar.Header>
       <View>

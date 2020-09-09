@@ -66,10 +66,6 @@ const Routes: React.FC = () => {
         }}
       >
         <Drawer.Screen name="Home" component={Home} />
-        <Drawer.Screen name="Alerts" component={Alerts} />
-        <Drawer.Screen name="Contributions" component={Contributions} />
-        <Drawer.Screen name="Favorites" component={Favorites} />
-        <Drawer.Screen name="EditProfile" component={EditProfile} />
       </Drawer.Navigator>
     )
   }
@@ -83,10 +79,6 @@ const Routes: React.FC = () => {
         }}
       >
         <Drawer.Screen name="FloodingList" component={FloodingList} />
-        <Drawer.Screen name="Alerts" component={Alerts} />
-        <Drawer.Screen name="Contributions" component={Contributions} />
-        <Drawer.Screen name="Favorites" component={Favorites} />
-        <Drawer.Screen name="EditProfile" component={EditProfile} />
       </Drawer.Navigator>
     )
   }
@@ -100,10 +92,6 @@ const Routes: React.FC = () => {
         }}
       >
         <Drawer.Screen name="Faq" component={Faq} />
-        <Drawer.Screen name="Alerts" component={Alerts} />
-        <Drawer.Screen name="Contributions" component={Contributions} />
-        <Drawer.Screen name="Favorites" component={Favorites} />
-        <Drawer.Screen name="EditProfile" component={EditProfile} />
       </Drawer.Navigator>
     )
   }
@@ -112,7 +100,7 @@ const Routes: React.FC = () => {
     return (
       <Tab.Navigator shifting>
         <Tab.Screen
-          name="Home"
+          name="HomeDrawerFlow"
           component={HomeDrawerFlow}
           options={{
             tabBarLabel: 'Home',
@@ -123,7 +111,7 @@ const Routes: React.FC = () => {
           }}
         />
         <Tab.Screen
-          name="FloodingList"
+          name="FloodingListDrawerFlow"
           component={FloodingListDrawerFlow}
           options={{
             tabBarLabel: 'Alagamentos',
@@ -138,7 +126,7 @@ const Routes: React.FC = () => {
           }}
         />
         <Tab.Screen
-          name="Faq"
+          name="FaqDrawerFlow"
           component={FaqDrawerFlow}
           options={{
             tabBarLabel: 'Dúvidas',
@@ -167,7 +155,13 @@ const Routes: React.FC = () => {
             }}
           >
             {userSession ? (
-              <Stack.Screen name="MainFlow" component={MainFlow} />
+              <>
+                <Stack.Screen name="MainFlow" component={MainFlow} />
+                <Stack.Screen name="Alerts" component={Alerts} />
+                <Stack.Screen name="Contributions" component={Contributions} />
+                <Stack.Screen name="Favorites" component={Favorites} />
+                <Stack.Screen name="EditProfile" component={EditProfile} />
+              </>
             ) : (
               <>
                 <Stack.Screen name="Welcome" component={Welcome} />

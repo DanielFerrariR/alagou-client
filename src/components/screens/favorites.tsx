@@ -9,7 +9,7 @@ const Favorites: React.FC = () => {
   return (
     <>
       <Appbar.Header>
-        <Appbar.BackAction onPress={() => navigation.navigate('Home')} />
+        <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Favoritos" />
       </Appbar.Header>
       <View>

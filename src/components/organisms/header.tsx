@@ -12,7 +12,7 @@ const Header: React.FC = () => {
         icon="menu"
         color="white"
         size={26}
-        onPress={() => navigation.openDrawer()}
+        onPress={() => navigation.toggleDrawer()}
       />
       <Box
         position="absolute"
