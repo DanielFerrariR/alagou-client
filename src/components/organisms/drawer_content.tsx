@@ -103,6 +103,14 @@ const DrawerContent: React.FC = () => {
           </Typography>
         </Box>
       </TouchableOpacity>
+      <TouchableOpacity mb={2} onPress={() => navigation.navigate('Settings')}>
+        <Box flexDirection="row" alignItems="center">
+          <MaterialCommunityIcons name="cog" color="white" size={26} />
+          <Typography color="custom.white" ml={4}>
+            Configurações
+          </Typography>
+        </Box>
+      </TouchableOpacity>
       <TouchableOpacity mb={2} onPress={logout}>
         <Box flexDirection="row" alignItems="center">
           <MaterialCommunityIcons name="logout" color="white" size={26} />

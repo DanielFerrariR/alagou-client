@@ -14,9 +14,9 @@ import {
   Alerts,
   Contributions,
   Favorites,
-  EditProfile
+  EditProfile,
+  Settings
 } from 'src/components/screens'
-import { DrawerContent } from 'src/components/organisms'
 import store from 'src/utils/redux'
 import { useSelector, useDispatch } from 'src/store'
 import AsyncStorage from '@react-native-community/async-storage'
@@ -25,15 +25,15 @@ import { Provider as PaperProvider } from 'react-native-paper'
 import { theme } from 'src/styles'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { DrawerNavigator } from 'src/utils'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-
-const Tab = createMaterialBottomTabNavigator()
-const Stack = createStackNavigator()
-const Drawer = createDrawerNavigator()
 
 const Routes: React.FC = () => {
   const userSession = useSelector((state) => state.user)
   const dispatch = useDispatch()
+  const Tab = createMaterialBottomTabNavigator()
+  const Stack = createStackNavigator()
+  const Drawer = createDrawerNavigator()
 
   useEffect(() => {
     const asyncEffect = async () => {
@@ -59,40 +59,25 @@ const Routes: React.FC = () => {
 
   const HomeDrawerFlow = () => {
     return (
-      <Drawer.Navigator
-        drawerContent={() => <DrawerContent />}
-        screenOptions={{
-          swipeEnabled: false
-        }}
-      >
+      <DrawerNavigator>
         <Drawer.Screen name="Home" component={Home} />
-      </Drawer.Navigator>
+      </DrawerNavigator>
     )
   }
 
   const FloodingListDrawerFlow = () => {
     return (
-      <Drawer.Navigator
-        drawerContent={() => <DrawerContent />}
-        screenOptions={{
-          swipeEnabled: false
-        }}
-      >
+      <DrawerNavigator>
         <Drawer.Screen name="FloodingList" component={FloodingList} />
-      </Drawer.Navigator>
+      </DrawerNavigator>
     )
   }
 
   const FaqDrawerFlow = () => {
     return (
-      <Drawer.Navigator
-        drawerContent={() => <DrawerContent />}
-        screenOptions={{
-          swipeEnabled: false
-        }}
-      >
+      <DrawerNavigator>
         <Drawer.Screen name="Faq" component={Faq} />
-      </Drawer.Navigator>
+      </DrawerNavigator>
     )
   }
 
@@ -161,6 +146,7 @@ const Routes: React.FC = () => {
                 <Stack.Screen name="Contributions" component={Contributions} />
                 <Stack.Screen name="Favorites" component={Favorites} />
                 <Stack.Screen name="EditProfile" component={EditProfile} />
+                <Stack.Screen name="Settings" component={Settings} />
               </>
             ) : (
               <>
