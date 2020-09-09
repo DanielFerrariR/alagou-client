@@ -10,7 +10,11 @@ import {
   Consult,
   Home,
   FloodingList,
-  Faq
+  Faq,
+  Alerts,
+  Contributions,
+  Favorites,
+  EditProfile
 } from 'src/components/screens'
 import { DrawerContent } from 'src/components/organisms'
 import store from 'src/utils/redux'
@@ -62,6 +66,10 @@ const Routes: React.FC = () => {
         }}
       >
         <Drawer.Screen name="Home" component={Home} />
+        <Drawer.Screen name="Alerts" component={Alerts} />
+        <Drawer.Screen name="Contributions" component={Contributions} />
+        <Drawer.Screen name="Favorites" component={Favorites} />
+        <Drawer.Screen name="EditProfile" component={EditProfile} />
       </Drawer.Navigator>
     )
   }
@@ -75,6 +83,10 @@ const Routes: React.FC = () => {
         }}
       >
         <Drawer.Screen name="FloodingList" component={FloodingList} />
+        <Drawer.Screen name="Alerts" component={Alerts} />
+        <Drawer.Screen name="Contributions" component={Contributions} />
+        <Drawer.Screen name="Favorites" component={Favorites} />
+        <Drawer.Screen name="EditProfile" component={EditProfile} />
       </Drawer.Navigator>
     )
   }
@@ -88,6 +100,10 @@ const Routes: React.FC = () => {
         }}
       >
         <Drawer.Screen name="Faq" component={Faq} />
+        <Drawer.Screen name="Alerts" component={Alerts} />
+        <Drawer.Screen name="Contributions" component={Contributions} />
+        <Drawer.Screen name="Favorites" component={Favorites} />
+        <Drawer.Screen name="EditProfile" component={EditProfile} />
       </Drawer.Navigator>
     )
   }

@@ -10,6 +10,9 @@ declare global {
         userLocationFill: string
         black: string
         white: string
+        star: string
+        alert: string
+        water: string
       }
     }
   }
@@ -40,7 +43,10 @@ const custom = {
   userLocationStroke: 'rgba(158, 158, 255, 1.0)',
   userLocationFill: 'rgba(158,158, 255, 0.3)',
   black: '#000000',
-  white: '#ffffff'
+  white: '#ffffff',
+  star: '#D7CD38',
+  alert: '#F9862C',
+  water: '#369AEB'
 }
 
 const theme = {

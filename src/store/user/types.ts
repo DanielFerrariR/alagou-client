@@ -1,6 +1,11 @@
 import { DestroySessionActionTypes } from '../destroy_session'
 
-export type UserState = { email: string; token: string }[]
+export type UserState = {
+  name: string
+  email: string
+  profilePhoto: string
+  token: string
+}
 
 export const CREATE_USER = 'CREATE_USER'
 

@@ -2,11 +2,12 @@ export interface FlexboxProps {
   flexDirection?: 'row' | 'column' | 'row-reverse' | 'column-reverse'
   flexWrap?: 'wrap' | 'nowrap'
   justifyContent?:
-    | 'start'
+    | 'flex-start'
     | 'center'
     | 'space-between'
     | 'space-around'
     | 'space-evenly'
+    | 'flex-end'
   alignItems?: 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline'
   flex?: number
   flexGrow?: number
