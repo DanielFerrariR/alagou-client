@@ -81,6 +81,11 @@ project.ext.react = [
     enableHermes: false,  // clean and rebuild if changing
 ]
 
+project.ext.react = [
+    // the entry file for bundle generation
+    entryFile: "src/index.ts",
+]
+
 apply from: "../../node_modules/react-native/react.gradle"
 
 /**

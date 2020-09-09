@@ -140,9 +140,9 @@ $ yarn commit
 yarn android:key
 ```
 
-- move it to 'android/app'
+- move 'my-upload-key.keystore' to 'android/app'
 
-- Change the gradle.properties with the key password
+- Change the 'android/gradle.properties' with the key password
 
 ```bash
 MYAPP_UPLOAD_STORE_FILE=my-upload-key.keystore
@@ -154,7 +154,7 @@ MYAPP_UPLOAD_KEY_PASSWORD=123456
 - Generate the build with:
 
 ```bash
-yarn android:build
+yarn android:build:apk
 ```
 
 2. **For ios**
