@@ -72,7 +72,7 @@ const Register: React.FC = () => {
     const options = {
       noData: true
     }
-    ImagePicker.launchImageLibrary(options, (response) => {
+    ImagePicker.showImagePicker(options, (response) => {
       if (response.uri) {
         setForm({ ...form, profilePhoto: response as any })
       }
@@ -136,7 +136,7 @@ const Register: React.FC = () => {
           />
           <TouchableOpacity onPress={handleChoosePhoto}>
             <Typography variant="h3" color="primary" fontWeight="bold">
-              Alterar Foto
+              Adicionar Foto
             </Typography>
           </TouchableOpacity>
         </Box>

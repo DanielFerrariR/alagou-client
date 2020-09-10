@@ -15,7 +15,8 @@ import {
   Contributions,
   Favorites,
   EditProfile,
-  Settings
+  Settings,
+  AddFlooding
 } from 'src/components/screens'
 import store from 'src/utils/redux'
 import { useSelector, useDispatch } from 'src/store'
@@ -125,6 +126,7 @@ const Routes: React.FC = () => {
           >
             {userSession ? (
               <>
+                <Stack.Screen name="AddFlooding" component={AddFlooding} />
                 <Stack.Screen name="DrawerFlow" component={DrawerFlow} />
                 <Stack.Screen name="Alerts" component={Alerts} />
                 <Stack.Screen name="Contributions" component={Contributions} />

@@ -9,7 +9,7 @@ interface Data {
   id: string
   userPicture: string
   userName: string
-  title: string
+  description: string
   address: string
   picture: string
   severity: 1 | 2 | 3
@@ -23,7 +23,7 @@ const FloadingList: React.FC = () => {
       id: '5f58cf915bb9fa4e2d4f27d1',
       userPicture: 'https://picsum.photos/700',
       userName: 'Daniel',
-      title: 'Forte alagamento arrasta carros.',
+      description: 'Forte alagamento arrasta carros.',
       address: 'SQN 210 Bl. I, Asa Norte',
       picture: 'https://picsum.photos/700',
       severity: 1,
@@ -33,7 +33,7 @@ const FloadingList: React.FC = () => {
       id: '5f58cf915bb9fa4e2d4f27d2',
       userPicture: 'https://picsum.photos/700',
       userName: 'Daniel',
-      title: 'Forte alagamento arrasta carros.',
+      description: 'Forte alagamento arrasta carros.',
       address: 'SQN 210 Bl. I, Asa Norte',
       picture: 'https://picsum.photos/700',
       severity: 1,
@@ -43,7 +43,7 @@ const FloadingList: React.FC = () => {
       id: '5f58cf915bb9fa4e2d4f27d3',
       userPicture: 'https://picsum.photos/700',
       userName: 'Daniel',
-      title: 'Forte alagamento arrasta carros.',
+      description: 'Forte alagamento arrasta carros.',
       address: 'SQN 210 Bl. I, Asa Norte',
       picture: 'https://picsum.photos/700',
       severity: 1,
@@ -71,7 +71,7 @@ const FloadingList: React.FC = () => {
               <Box
                 px={2}
                 pt={index === 0 ? 2 : 0}
-                mb={data.length - 1 > index ? 2 : 9}
+                mb={data.length - 1 > index ? 3 : 9}
               >
                 <FloodingCard data={item} />
               </Box>
@@ -81,7 +81,7 @@ const FloadingList: React.FC = () => {
       ) : (
         <Box p={2}>
           {[...new Array(3)].map(() => (
-            <Box mb={2}>
+            <Box mb={3}>
               <Shimmer>
                 <Box
                   width={1}

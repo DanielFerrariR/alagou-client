@@ -5,9 +5,11 @@ import { useLocation } from 'src/hooks'
 import { useSelector, useDispatch } from 'src/store'
 import { setCurrentLocation, setLocations } from 'src/store/location'
 import { FAB, Portal, Provider, useTheme } from 'react-native-paper'
+import { useNavigation } from '@react-navigation/native'
 
 const Map: React.FC = () => {
   const theme = useTheme()
+  const navigation = useNavigation()
   const location = useSelector((state) => state.location)
   const dispatch = useDispatch()
   const callback = useCallback(
@@ -69,7 +71,7 @@ const Map: React.FC = () => {
               {
                 icon: 'plus',
                 label: 'Adicionar alagamento',
-                onPress: () => console.log('Adicionar alagamento')
+                onPress: () => navigation.navigate('AddFlooding')
               },
               {
                 icon: 'calendar-today',

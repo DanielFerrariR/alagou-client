@@ -6162,7 +6162,7 @@ promise@^8.0.3:
   dependencies:
     asap "~2.0.6"
 
-prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -6243,6 +6243,22 @@ react-native-image-picker@2.3.3:
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-2.3.3.tgz#eaacd4a1ed9e9887613be31f0765478ca2f18a51"
   integrity sha512-i/7JDnxKkUGSbFY2i7YqFNn3ncJm1YlcrPKXrXmJ/YUElz8tHkuwknuqBd9QCJivMfHX41cmq4XvdBDwIOtO+A==
 
+react-native-image-preview@0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-image-preview/-/react-native-image-preview-0.3.1.tgz#e949369bb84acab692207538f72c15ce736fa53d"
+  integrity sha512-gmNn9OZ8KwdxbM4HJirya5XtjrhScsW6Ax2mdI+f53H5QbVEZt39wCxbYFshPHLctJ0SfbVQ9/CYRoCjUWmOCg==
+  dependencies:
+    prop-types "^15.6.0"
+    react-native-image-progress "1.0.1"
+    react-native-progress "3.4.0"
+
+react-native-image-progress@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-image-progress/-/react-native-image-progress-1.0.1.tgz#5ceb4cfefd39d7ebdffab802bc984b5a0fc41021"
+  integrity sha512-wdYyrhrYvkBZanDCuc0F62Chq8n4QfhZN5G9JyHgPkNAourWJJTuz4wt8Kl6XhNiFaBgN5lX/NCMPCCP2Tz5pQ==
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-iphone-x-helper@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
@@ -6261,6 +6277,13 @@ react-native-paper@4.0.1:
     "@callstack/react-theme-provider" "^3.0.5"
     color "^3.1.2"
     react-native-safe-area-view "^0.14.9"
+
+react-native-progress@3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-progress/-/react-native-progress-3.4.0.tgz#c002e6efb2f0b82dd6889510e669c492da2718ac"
+  integrity sha512-Kqc+wwQHyBG83Fnbb84oM9qqgn1d51ABVS/RK36V+35KmihEYx33WijdQT05iwT+tfJWGArvFLsZWbd8mKyJ6A==
+  dependencies:
+    prop-types "^15.5.8"
 
 react-native-reanimated@1.13.0:
   version "1.13.0"

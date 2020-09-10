@@ -28,7 +28,7 @@ export interface CreateUserData {
     name: string
     type: string
     uri: string
-  }
+  } | null
 }
 
 export interface FetchUserData {

@@ -15,7 +15,7 @@ interface Data {
   id: string
   userPicture: string
   userName: string
-  title: string
+  description: string
   address: string
   picture: string
   severity: 1 | 2 | 3
@@ -67,7 +67,7 @@ const FloadingList: React.FC<Props> = ({ data }) => {
               numberOfLines={1}
               variant="h3"
             >
-              {data.title}
+              {data.description}
             </Typography>
             <Typography variant="h4" ellipsizeMode="tail" numberOfLines={1}>
               {data.address}

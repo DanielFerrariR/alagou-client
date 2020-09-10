@@ -23,7 +23,7 @@ const DrawerContent: React.FC = () => {
   return (
     <Box flex={1} bgColor="primary" p={2}>
       <TouchableOpacity
-        mb={4}
+        mb={3}
         onPress={() => navigation.navigate('EditProfile')}
       >
         <Box flexDirection="row" alignItems="center" justifyContent="flex-end">
@@ -37,7 +37,7 @@ const DrawerContent: React.FC = () => {
         flexDirection="column"
         alignItems="center"
         justifyContent="center"
-        mb={8}
+        mb={5}
       >
         <Image
           source={
@@ -48,7 +48,7 @@ const DrawerContent: React.FC = () => {
           width={148}
           height={148}
           borderRadius={148 / 2}
-          mb={2}
+          mb={3}
         />
         <Typography
           color="custom.white"
@@ -82,7 +82,7 @@ const DrawerContent: React.FC = () => {
         </Box>
       </Box>
       <TouchableOpacity
-        mb={2}
+        mb={3}
         onPress={() => navigation.navigate('Contributions')}
       >
         <Box flexDirection="row" alignItems="center">
@@ -96,7 +96,7 @@ const DrawerContent: React.FC = () => {
           </Typography>
         </Box>
       </TouchableOpacity>
-      <TouchableOpacity mb={2} onPress={() => navigation.navigate('Favorites')}>
+      <TouchableOpacity mb={3} onPress={() => navigation.navigate('Favorites')}>
         <Box flexDirection="row" alignItems="center">
           <MaterialCommunityIcons
             name="star"
@@ -120,7 +120,7 @@ const DrawerContent: React.FC = () => {
           </Typography>
         </Box>
       </TouchableOpacity>
-      <TouchableOpacity mb={2} onPress={() => navigation.navigate('Settings')}>
+      <TouchableOpacity mb={3} onPress={() => navigation.navigate('Settings')}>
         <Box flexDirection="row" alignItems="center">
           <MaterialCommunityIcons name="cog" color="white" size={24} />
           <Typography color="custom.white" ml={4} variant="h3">
@@ -128,7 +128,7 @@ const DrawerContent: React.FC = () => {
           </Typography>
         </Box>
       </TouchableOpacity>
-      <TouchableOpacity mb={2} onPress={logout}>
+      <TouchableOpacity mb={3} onPress={logout}>
         <Box flexDirection="row" alignItems="center">
           <MaterialCommunityIcons name="logout" color="white" size={24} />
           <Typography color="custom.white" ml={4} variant="h3">
