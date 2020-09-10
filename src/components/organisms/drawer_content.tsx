@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Typography, TouchableOpacity, Image } from 'src/components/atoms'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useSelector, useDispatch } from 'src/store'
@@ -7,8 +7,10 @@ import AsyncStorage from '@react-native-community/async-storage'
 import { ensure } from 'src/utils'
 import { useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
+import ImageView from 'react-native-image-viewing'
 
 const DrawerContent: React.FC = () => {
+  const [openProfilePhoto, setOpenProfilePhoto] = useState(false)
   const userSession = ensure(useSelector((state) => state.user))
   const dispatch = useDispatch()
   const theme = useTheme()
@@ -39,17 +41,32 @@ const DrawerContent: React.FC = () => {
         justifyContent="center"
         mb={5}
       >
-        <Image
-          source={
+        <ImageView
+          images={[
             userSession.profilePhoto
               ? { uri: userSession.profilePhoto }
-              : require('src/images/no_photo.png')
-          }
-          width={148}
-          height={148}
-          borderRadius={148 / 2}
-          mb={3}
+              : require('src/images/no_picture.png')
+          ]}
+          imageIndex={0}
+          visible={openProfilePhoto}
+          onRequestClose={() => setOpenProfilePhoto(false)}
         />
+        <TouchableOpacity
+          onPress={() => setOpenProfilePhoto(true)}
+          width={124}
+          mb={3}
+        >
+          <Image
+            source={
+              userSession.profilePhoto
+                ? { uri: userSession.profilePhoto }
+                : require('src/images/no_picture.png')
+            }
+            width={124}
+            height={124}
+            borderRadius={124 / 2}
+          />
+        </TouchableOpacity>
         <Typography
           color="custom.white"
           textTransform="uppercase"

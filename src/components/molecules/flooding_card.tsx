@@ -5,11 +5,13 @@ import {
   IconButton,
   Paper,
   Image,
-  Menu
+  Menu,
+  TouchableOpacity
 } from 'src/components/atoms'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useTheme } from 'react-native-paper'
 import { formatDate } from 'src/utils'
+import ImageView from 'react-native-image-viewing'
 
 interface Data {
   id: string
@@ -27,6 +29,8 @@ interface Props {
 }
 
 const FloadingList: React.FC<Props> = ({ data }) => {
+  const [openPicture, setOpenPicture] = useState(false)
+  const [openUserPicture, setOpenUserPicture] = useState(false)
   const [open, setOpen] = useState(false)
   const theme = useTheme()
   const severity = [
@@ -50,13 +54,24 @@ const FloadingList: React.FC<Props> = ({ data }) => {
     <>
       <Paper p={2}>
         <Box flexDirection="row" alignItems="center" mb={2}>
-          <Image
-            source={{ uri: data.userPicture }}
-            width={48}
-            height={48}
-            borderRadius={48 / 2}
-            mr={1}
+          <ImageView
+            images={[{ uri: data.userPicture }]}
+            imageIndex={0}
+            visible={openUserPicture}
+            onRequestClose={() => setOpenUserPicture(false)}
           />
+          <TouchableOpacity
+            onPress={() => setOpenUserPicture(true)}
+            width={48}
+            mr={1}
+          >
+            <Image
+              source={{ uri: data.userPicture }}
+              width={48}
+              height={48}
+              borderRadius={48 / 2}
+            />
+          </TouchableOpacity>
           <Box>
             <Typography variant="h4" ellipsizeMode="tail" numberOfLines={1}>
               {data.userName}
@@ -92,12 +107,15 @@ const FloadingList: React.FC<Props> = ({ data }) => {
             <Menu.Item onPress={excludeCard} title="Excluir" />
           </Menu>
         </Box>
-        <Image
-          source={{ uri: data.picture }}
-          width={1}
-          height={120}
-          borderRadius={4}
+        <ImageView
+          images={[{ uri: data.picture }]}
+          imageIndex={0}
+          visible={openPicture}
+          onRequestClose={() => setOpenPicture(false)}
         />
+        <TouchableOpacity onPress={() => setOpenPicture(true)} width={1}>
+          <Image source={{ uri: data.picture }} width={1} height={148} />
+        </TouchableOpacity>
         <Box
           flexDirection="row"
           justifyContent="flex-end"

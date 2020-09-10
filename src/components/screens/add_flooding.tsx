@@ -12,6 +12,7 @@ import {
 } from 'src/components/atoms'
 import { useTheme, TextInput as OldTextInput } from 'react-native-paper'
 import ImagePicker from 'react-native-image-picker'
+import ImageView from 'react-native-image-viewing'
 
 interface Form {
   description: string
@@ -24,6 +25,7 @@ interface Form {
 }
 
 const AddFlodding: React.FC = () => {
+  const [openImage, setOpenImage] = useState(false)
   const [form, setForm] = useState<Form>({
     description: '',
     localization: '',
@@ -86,16 +88,28 @@ const AddFlodding: React.FC = () => {
           />
         </Box>
         <Box justifyContent="center" alignItems="center" mb={3}>
-          <Image
-            source={
+          <ImageView
+            images={[
               form.picture
                 ? { uri: form.picture.uri }
-                : require('src/images/no_photo.png')
-            }
-            width={1}
-            height={120}
-            mb={1}
+                : require('src/images/no_flooding_picture.png')
+            ]}
+            imageIndex={0}
+            visible={openImage}
+            onRequestClose={() => setOpenImage(false)}
           />
+          <TouchableOpacity onPress={() => setOpenImage(true)} width={1}>
+            <Image
+              source={
+                form.picture
+                  ? { uri: form.picture.uri }
+                  : require('src/images/no_flooding_picture.png')
+              }
+              width={1}
+              height={148}
+              mb={1}
+            />
+          </TouchableOpacity>
           <TouchableOpacity onPress={handleChoosePhoto}>
             <Typography variant="h3" color="accent" fontWeight="bold">
               Adicionar Foto

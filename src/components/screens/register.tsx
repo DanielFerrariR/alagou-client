@@ -16,6 +16,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import ImagePicker from 'react-native-image-picker'
 import { TextInput as OldTextInput } from 'react-native-paper'
+import ImageView from 'react-native-image-viewing'
 
 interface Form {
   name: string
@@ -32,6 +33,7 @@ interface Form {
 }
 
 const Register: React.FC = () => {
+  const [openProfilePhoto, setOpenProfilePhoto] = useState(false)
   const [form, setForm] = useState<Form>({
     name: '',
     email: '',
@@ -123,17 +125,32 @@ const Register: React.FC = () => {
       </Appbar.Header>
       <ScrollView keyboardShouldPersistTaps="handled">
         <Box justifyContent="center" alignItems="center" mt={4}>
-          <Image
-            source={
+          <ImageView
+            images={[
               form.profilePhoto
                 ? { uri: form.profilePhoto.uri }
-                : require('src/images/no_photo.png')
-            }
-            width={148}
-            height={148}
-            borderRadius={148 / 2}
-            mb={1}
+                : require('src/images/no_picture.png')
+            ]}
+            imageIndex={0}
+            visible={openProfilePhoto}
+            onRequestClose={() => setOpenProfilePhoto(false)}
           />
+          <TouchableOpacity
+            onPress={() => setOpenProfilePhoto(true)}
+            width={148}
+            mb={1}
+          >
+            <Image
+              source={
+                form.profilePhoto
+                  ? { uri: form.profilePhoto.uri }
+                  : require('src/images/no_picture.png')
+              }
+              width={148}
+              height={148}
+              borderRadius={148 / 2}
+            />
+          </TouchableOpacity>
           <TouchableOpacity onPress={handleChoosePhoto}>
             <Typography variant="h3" color="primary" fontWeight="bold">
               Adicionar Foto

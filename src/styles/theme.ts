@@ -18,6 +18,7 @@ declare global {
         moderate: string
         light: string
         seal: string
+        shimmer: string
       }
     }
   }
@@ -37,7 +38,8 @@ const custom = {
   danger: '#ff0000',
   moderate: '#eaf300',
   light: '#00c239',
-  seal: '#d6cc11'
+  seal: '#d6cc11',
+  shimmer: 'rgba(0, 0, 0, 0.11)'
 }
 
 const theme = {

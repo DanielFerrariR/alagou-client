@@ -4,6 +4,7 @@ import { Header } from 'src/components/organisms'
 import { FloodingCard } from 'src/components/molecules'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import Shimmer from 'react-native-shimmer'
+import { Colors } from 'react-native-paper'
 
 interface Data {
   id: string
@@ -80,14 +81,14 @@ const FloadingList: React.FC = () => {
         </Box>
       ) : (
         <Box p={2}>
-          {[...new Array(3)].map(() => (
-            <Box mb={3}>
+          {[...new Array(3)].map((_each, index) => (
+            <Box mb={3} key={index}>
               <Shimmer>
                 <Box
                   width={1}
-                  height={268}
-                  bgColor="custom.white"
+                  height={296}
                   borderRadius={4}
+                  bgColor="custom.shimmer"
                 />
               </Shimmer>
             </Box>
