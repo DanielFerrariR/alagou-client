@@ -64,6 +64,7 @@ const Map: React.FC = () => {
             visible
             open={openFab}
             icon={openFab ? 'close' : 'plus'}
+            color="white"
             actions={[
               {
                 icon: 'plus',
@@ -82,7 +83,7 @@ const Map: React.FC = () => {
               },
               {
                 icon: 'crosshairs',
-                label: 'Localização',
+                label: 'Minha Localização',
                 onPress: () => console.log('Localizar')
               }
             ]}

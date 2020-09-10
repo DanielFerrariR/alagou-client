@@ -3,8 +3,13 @@ import { DestroySessionActionTypes } from '../destroy_session'
 export type UserState = {
   name: string
   email: string
-  profilePhoto: string
+  profilePhoto: {
+    name: string
+    type: string
+    uri: string
+  }
   token: string
+  level: number
 }
 
 export const CREATE_USER = 'CREATE_USER'
@@ -19,7 +24,11 @@ export interface CreateUserData {
   name: string
   email: string
   password: string
-  profilePhoto: any
+  profilePhoto: {
+    name: string
+    type: string
+    uri: string
+  }
 }
 
 export interface FetchUserData {

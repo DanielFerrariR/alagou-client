@@ -30,7 +30,7 @@ const DrawerContent: React.FC = () => {
           <Typography color="custom.white" mr={1} variant="h3">
             Editar Perfil
           </Typography>
-          <MaterialCommunityIcons name="pencil" color="white" size={20} />
+          <MaterialCommunityIcons name="pencil" color="white" size={24} />
         </Box>
       </TouchableOpacity>
       <Box
@@ -45,10 +45,10 @@ const DrawerContent: React.FC = () => {
               ? { uri: userSession.profilePhoto }
               : require('src/images/no_photo.png')
           }
-          width={110}
-          height={110}
-          borderRadius={110 / 2}
-          mb={1}
+          width={148}
+          height={148}
+          borderRadius={148 / 2}
+          mb={2}
         />
         <Typography
           color="custom.white"
@@ -60,9 +60,26 @@ const DrawerContent: React.FC = () => {
         >
           {userSession.name}
         </Typography>
-        <Typography color="custom.white" variant="h3">
-          NÍVEL 1
-        </Typography>
+        <Box flexDirection="row" alignItems="center">
+          <Typography
+            color="custom.white"
+            ellipsizeMode="tail"
+            numberOfLines={1}
+            mr={1}
+          >
+            Nível:
+          </Typography>
+          <Box flexDirection="row" alignItems="center" justifyContent="center">
+            <MaterialCommunityIcons
+              name="decagram"
+              color={theme.colors.custom.seal}
+              size={28}
+            />
+            <Box position="absolute">
+              <Typography color="custom.white">{userSession.level}</Typography>
+            </Box>
+          </Box>
+        </Box>
       </Box>
       <TouchableOpacity
         mb={2}
@@ -72,10 +89,10 @@ const DrawerContent: React.FC = () => {
           <MaterialCommunityIcons
             name="water"
             color={theme.colors.custom.water}
-            size={26}
+            size={24}
           />
-          <Typography color="custom.white" ml={4}>
-            Colaraborações
+          <Typography color="custom.white" ml={4} variant="h3">
+            Colaborações
           </Typography>
         </Box>
       </TouchableOpacity>
@@ -84,9 +101,9 @@ const DrawerContent: React.FC = () => {
           <MaterialCommunityIcons
             name="star"
             color={theme.colors.custom.star}
-            size={26}
+            size={24}
           />
-          <Typography color="custom.white" ml={4}>
+          <Typography color="custom.white" ml={4} variant="h3">
             Favoritos
           </Typography>
         </Box>
@@ -96,25 +113,25 @@ const DrawerContent: React.FC = () => {
           <MaterialCommunityIcons
             name="alert-circle"
             color={theme.colors.custom.alert}
-            size={26}
+            size={24}
           />
-          <Typography color="custom.white" ml={4}>
+          <Typography color="custom.white" ml={4} variant="h3">
             Alertas
           </Typography>
         </Box>
       </TouchableOpacity>
       <TouchableOpacity mb={2} onPress={() => navigation.navigate('Settings')}>
         <Box flexDirection="row" alignItems="center">
-          <MaterialCommunityIcons name="cog" color="white" size={26} />
-          <Typography color="custom.white" ml={4}>
+          <MaterialCommunityIcons name="cog" color="white" size={24} />
+          <Typography color="custom.white" ml={4} variant="h3">
             Configurações
           </Typography>
         </Box>
       </TouchableOpacity>
       <TouchableOpacity mb={2} onPress={logout}>
         <Box flexDirection="row" alignItems="center">
-          <MaterialCommunityIcons name="logout" color="white" size={26} />
-          <Typography color="custom.white" ml={4}>
+          <MaterialCommunityIcons name="logout" color="white" size={24} />
+          <Typography color="custom.white" ml={4} variant="h3">
             Sair
           </Typography>
         </Box>

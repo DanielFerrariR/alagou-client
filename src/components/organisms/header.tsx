@@ -11,7 +11,7 @@ const Header: React.FC = () => {
       <IconButton
         icon="menu"
         color="white"
-        size={26}
+        size={24}
         onPress={() => navigation.toggleDrawer()}
       />
       <Box

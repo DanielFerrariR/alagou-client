@@ -22,7 +22,11 @@ interface Form {
   email: string
   password: string
   confirmPassword: string
-  profilePhoto: null | { uri: string }
+  profilePhoto: null | {
+    name: string
+    type: string
+    uri: string
+  }
   showPassword: boolean
   showConfirmPassword: boolean
 }
@@ -70,7 +74,7 @@ const Register: React.FC = () => {
     }
     ImagePicker.launchImageLibrary(options, (response) => {
       if (response.uri) {
-        setForm({ ...form, profilePhoto: response })
+        setForm({ ...form, profilePhoto: response as any })
       }
     })
   }

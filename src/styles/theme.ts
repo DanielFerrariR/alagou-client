@@ -1,5 +1,5 @@
 import color from 'color'
-import { configureFonts, DefaultTheme, Colors } from 'react-native-paper'
+import { configureFonts, Colors } from 'react-native-paper'
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -11,33 +11,19 @@ declare global {
         black: string
         white: string
         star: string
+        starOff: string
         alert: string
         water: string
+        danger: string
+        moderate: string
+        light: string
+        seal: string
       }
     }
   }
 }
 
-const fontConfig = {
-  default: {
-    regular: {
-      fontFamily: 'Roboto-Regular',
-      fontWeight: 'normal'
-    },
-    medium: {
-      fontFamily: 'Roboto-Medium',
-      fontWeight: 'normal'
-    },
-    light: {
-      fontFamily: 'Roboto-Light',
-      fontWeight: 'normal'
-    },
-    thin: {
-      fontFamily: 'Roboto-Thin',
-      fontWeight: 'normal'
-    }
-  } as typeof DefaultTheme.fonts
-}
+const fontConfig = {}
 
 const custom = {
   userLocationStroke: 'rgba(158, 158, 255, 1.0)',
@@ -45,8 +31,13 @@ const custom = {
   black: '#000000',
   white: '#ffffff',
   star: '#D7CD38',
+  starOff: '#d7d7d7',
   alert: '#F9862C',
-  water: '#369AEB'
+  water: '#369AEB',
+  danger: '#ff0000',
+  moderate: '#eaf300',
+  light: '#00c239',
+  seal: '#d6cc11'
 }
 
 const theme = {

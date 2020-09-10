@@ -10,6 +10,8 @@ export { default as Image } from './image'
 export { default as Switch } from './switch'
 export { default as Dialog } from './dialog'
 export { default as Portal } from './portal'
+export { default as IconButton } from './icon_button'
+export { default as Menu } from './menu'
 
 export { default as Button } from './button'
 export * from './button'

@@ -57,47 +57,23 @@ const Routes: React.FC = () => {
     }
   }, [userSession])
 
-  const HomeDrawerFlow = () => {
-    return (
-      <DrawerNavigator>
-        <Drawer.Screen name="Home" component={Home} />
-      </DrawerNavigator>
-    )
-  }
-
-  const FloodingListDrawerFlow = () => {
-    return (
-      <DrawerNavigator>
-        <Drawer.Screen name="FloodingList" component={FloodingList} />
-      </DrawerNavigator>
-    )
-  }
-
-  const FaqDrawerFlow = () => {
-    return (
-      <DrawerNavigator>
-        <Drawer.Screen name="Faq" component={Faq} />
-      </DrawerNavigator>
-    )
-  }
-
   const MainFlow = () => {
     return (
       <Tab.Navigator shifting>
         <Tab.Screen
-          name="HomeDrawerFlow"
-          component={HomeDrawerFlow}
+          name="Home"
+          component={Home}
           options={{
             tabBarLabel: 'Home',
             tabBarColor: theme.colors.accent,
             tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="home" color={color} size={26} />
+              <MaterialCommunityIcons name="home" color={color} size={24} />
             )
           }}
         />
         <Tab.Screen
-          name="FloodingListDrawerFlow"
-          component={FloodingListDrawerFlow}
+          name="FloodingList"
+          component={FloodingList}
           options={{
             tabBarLabel: 'Alagamentos',
             tabBarColor: theme.colors.accent,
@@ -105,14 +81,14 @@ const Routes: React.FC = () => {
               <MaterialCommunityIcons
                 name="format-list-bulleted"
                 color={color}
-                size={26}
+                size={24}
               />
             )
           }}
         />
         <Tab.Screen
-          name="FaqDrawerFlow"
-          component={FaqDrawerFlow}
+          name="Faq"
+          component={Faq}
           options={{
             tabBarLabel: 'Dúvidas',
             tabBarColor: theme.colors.accent,
@@ -120,12 +96,20 @@ const Routes: React.FC = () => {
               <MaterialCommunityIcons
                 name="help-circle"
                 color={color}
-                size={26}
+                size={24}
               />
             )
           }}
         />
       </Tab.Navigator>
+    )
+  }
+
+  const DrawerFlow = () => {
+    return (
+      <DrawerNavigator>
+        <Drawer.Screen name="MainFlow" component={MainFlow} />
+      </DrawerNavigator>
     )
   }
 
@@ -141,7 +125,7 @@ const Routes: React.FC = () => {
           >
             {userSession ? (
               <>
-                <Stack.Screen name="MainFlow" component={MainFlow} />
+                <Stack.Screen name="DrawerFlow" component={DrawerFlow} />
                 <Stack.Screen name="Alerts" component={Alerts} />
                 <Stack.Screen name="Contributions" component={Contributions} />
                 <Stack.Screen name="Favorites" component={Favorites} />

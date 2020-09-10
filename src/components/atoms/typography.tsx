@@ -28,7 +28,6 @@ interface ExtraProps {
 
 const StyledTypography = styled.Text`
   font-size: 16px;
-  font-family: Roboto;
   ${(props: any) => (props.variant === 'h1' ? 'font-size: 24px;' : '')}
   ${(props: any) => (props.variant === 'h2' ? 'font-size: 20px;' : '')}
   ${(props: any) => (props.variant === 'h3' ? 'font-size: 14px;' : '')}
