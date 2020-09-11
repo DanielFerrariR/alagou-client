@@ -5,15 +5,16 @@ import {
   Typography,
   Box,
   TextInput,
-  IconButton,
   Image,
   TouchableOpacity,
   Button,
-  Container
+  Container,
+  RadioButton
 } from 'src/components/atoms'
 import ImagePicker from 'react-native-image-picker'
 import ImageView from 'react-native-image-viewing'
 import { AddressSearchInput } from 'src/components/molecules'
+import { useTheme } from 'react-native-paper'
 
 interface Form {
   description: string
@@ -22,16 +23,19 @@ interface Form {
     type: string
     uri: string
   }
+  severity: '1' | '2' | '3'
 }
 
 const AddFlodding: React.FC = () => {
   const [openImage, setOpenImage] = useState(false)
   const [form, setForm] = useState<Form>({
     description: '',
-    picture: null
+    picture: null,
+    severity: '1'
   })
   const navigation = useNavigation()
   const [searchAddress, setSearchAddress] = useState('')
+  const theme = useTheme()
 
   const onChange = (name: keyof typeof form, text: string) => {
     setForm({ ...form, [name]: text })
@@ -73,11 +77,19 @@ const AddFlodding: React.FC = () => {
         />
         <Box flexDirection="row" alignItems="center" mb={3}>
           <Typography fontWeight="bold">Classificação:</Typography>
-          <IconButton
-            icon="information-outline"
-            color="accent"
-            onPress={() => navigation.navigate('Faq')}
-          />
+          <RadioButton.Group
+            onValueChange={(value) =>
+              setForm({ ...form, severity: value as any })
+            }
+            value={form.severity}
+          >
+            <RadioButton value="1" color={theme.colors.custom.light} />
+            <Typography>Leve</Typography>
+            <RadioButton value="2" color={theme.colors.custom.moderate} />
+            <Typography>Moderado</Typography>
+            <RadioButton value="3" color={theme.colors.custom.danger} />
+            <Typography>Crítico</Typography>
+          </RadioButton.Group>
         </Box>
         <Box justifyContent="center" alignItems="center" mb={3}>
           <ImageView

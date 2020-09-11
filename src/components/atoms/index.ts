@@ -11,6 +11,7 @@ export { default as Dialog } from './dialog'
 export { default as Portal } from './portal'
 export { default as IconButton } from './icon_button'
 export { default as Menu } from './menu'
+export { default as RadioButton } from './radio_button'
 
 export { default as TextInput } from './text_input'
 export * from './text_input'
