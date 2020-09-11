@@ -24,7 +24,7 @@ interface Form {
   password: string
   confirmPassword: string
   profilePhoto: null | {
-    name: string
+    fileName: string
     type: string
     uri: string
   }
@@ -75,6 +75,7 @@ const Register: React.FC = () => {
       noData: true
     }
     ImagePicker.showImagePicker(options, (response) => {
+      console.log(response)
       if (response.uri) {
         setForm({ ...form, profilePhoto: response as any })
       }
@@ -105,7 +106,7 @@ const Register: React.FC = () => {
 
       dispatch(response)
     } catch (error) {
-      console.error(error)
+      console.log(error)
       setLoading(false)
 
       if (error?.response?.data) {

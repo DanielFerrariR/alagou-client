@@ -1,7 +1,6 @@
 import React from 'react'
-import { View, Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { Appbar } from 'src/components/atoms'
+import { Appbar, Container, Typography } from 'src/components/atoms'
 
 const Contributions: React.FC = () => {
   const navigation = useNavigation()
@@ -16,9 +15,9 @@ const Contributions: React.FC = () => {
         />
         <Appbar.Content title="Contribuições" />
       </Appbar.Header>
-      <View>
-        <Text>Contributions</Text>
-      </View>
+      <Container>
+        <Typography>Contributions</Typography>
+      </Container>
     </>
   )
 }

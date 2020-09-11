@@ -1,4 +1,4 @@
-import { api } from 'src/utils'
+import { serverAPI } from 'src/services'
 import {
   UserState,
   CreateUserAction,
@@ -41,7 +41,7 @@ const createUser = async (data: CreateUserData): Promise<CreateUserAction> => {
     })
   }
 
-  const response = await api.post<UserState>('/register', formData)
+  const response = await serverAPI.post<UserState>('/register', formData)
 
   return {
     type: CREATE_USER,
@@ -50,7 +50,7 @@ const createUser = async (data: CreateUserData): Promise<CreateUserAction> => {
 }
 
 const fetchUser = async (data: FetchUserData): Promise<FetchUserAction> => {
-  const response = await api.post<UserState>('/login', { ...data })
+  const response = await serverAPI.post<UserState>('/login', { ...data })
 
   return {
     type: FETCH_USER,

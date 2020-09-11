@@ -6,7 +6,7 @@ const axiosConfig = {
   baseURL: API_ADDRESS
 }
 
-const api = axios.create(axiosConfig)
+const serverAPI = axios.create(axiosConfig)
 
 const errorHandler = (error: AxiosError) => {
   return Promise.reject(error)
@@ -25,9 +25,9 @@ const successHandler = async (config: AxiosRequestConfig) => {
   return config
 }
 
-api.interceptors.request.use(
+serverAPI.interceptors.request.use(
   (response) => successHandler(response),
   (error) => errorHandler(error)
 )
 
-export default api
+export default serverAPI

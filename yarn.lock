@@ -4890,6 +4890,11 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
+lodash.debounce@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
+  integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
+
 lodash.map@^4.5.1:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.map/-/lodash.map-4.6.0.tgz#771ec7839e3473d9c4cde28b19394c3562f4f6d3"
@@ -6189,6 +6194,11 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
+qs@~6.9.1:
+  version "6.9.4"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.4.tgz#9090b290d1f91728d3c22e54843ca44aea5ab687"
+  integrity sha512-A1kFqHekCTM7cz0udomYUoYNWjBebHm/5wzU/XqrBRBNWectVH0QIiN+NEcZ0Dte5hvzHwbr8+XQmguPhJ6WdQ==
+
 query-string@^6.13.1:
   version "6.13.1"
   resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.13.1.tgz#d913ccfce3b4b3a713989fe6d39466d92e71ccad"
@@ -6223,6 +6233,11 @@ react-native-dotenv@2.3.0:
   dependencies:
     dotenv "^8.0.0"
 
+react-native-geocoding@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-geocoding/-/react-native-geocoding-0.4.0.tgz#e22c97500bfccc25273499ab3af87c27ac6ede8f"
+  integrity sha512-iXIqdLHDGVyhWLJyWGRFRdvQa3hDQoCX4MLwKA9zja3gQxZ91v51CLGrbvxCckOGzoxu2/WA6e8TM74rrPxlsA==
+
 react-native-geolocation-service@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-native-geolocation-service/-/react-native-geolocation-service-5.0.0.tgz#eaf0541c99db9cbed5af5e2ad2822d166e3a7543"
@@ -6237,6 +6252,15 @@ react-native-gesture-handler@1.7.0:
     hoist-non-react-statics "^2.3.1"
     invariant "^2.2.4"
     prop-types "^15.7.2"
+
+react-native-google-places-autocomplete@1.8.2:
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/react-native-google-places-autocomplete/-/react-native-google-places-autocomplete-1.8.2.tgz#8cd2edea6b9946416f5994358a94e8186c47c762"
+  integrity sha512-+bQPeSJCfq6nqdVSGJQTwe7djCzKHBT/ULuSjhWiijidWhKstVnZ/9bB8z/8Jpk0gHs0fYCJb0DFR3djFrg7uw==
+  dependencies:
+    lodash.debounce "^4.0.8"
+    prop-types "^15.5.10"
+    qs "~6.9.1"
 
 react-native-image-picker@2.3.3:
   version "2.3.3"

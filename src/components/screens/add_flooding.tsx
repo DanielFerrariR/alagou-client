@@ -8,17 +8,17 @@ import {
   IconButton,
   Image,
   TouchableOpacity,
-  Button
+  Button,
+  Container
 } from 'src/components/atoms'
-import { useTheme, TextInput as OldTextInput } from 'react-native-paper'
 import ImagePicker from 'react-native-image-picker'
 import ImageView from 'react-native-image-viewing'
+import { AddressSearchInput } from 'src/components/molecules'
 
 interface Form {
   description: string
-  localization: string
   picture: null | {
-    name: string
+    fileName: string
     type: string
     uri: string
   }
@@ -28,11 +28,10 @@ const AddFlodding: React.FC = () => {
   const [openImage, setOpenImage] = useState(false)
   const [form, setForm] = useState<Form>({
     description: '',
-    localization: '',
     picture: null
   })
   const navigation = useNavigation()
-  const theme = useTheme()
+  const [searchAddress, setSearchAddress] = useState('')
 
   const onChange = (name: keyof typeof form, text: string) => {
     setForm({ ...form, [name]: text })
@@ -57,7 +56,7 @@ const AddFlodding: React.FC = () => {
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Adicionar alagamento" />
       </Appbar.Header>
-      <Box p={2}>
+      <Container p={2}>
         <TextInput
           label="Descrição"
           placeholder="Descreva o alagamento"
@@ -65,19 +64,12 @@ const AddFlodding: React.FC = () => {
           onChangeText={(text) => onChange('description', text)}
           value={form.description}
         />
-        <TextInput
+        <AddressSearchInput
+          searchAddress={searchAddress}
+          setSearchAddress={setSearchAddress}
+          mb={3}
           label="Localização"
           placeholder="Informe a localização"
-          mb={3}
-          onChangeText={(text) => onChange('localization', text)}
-          value={form.localization}
-          right={
-            <OldTextInput.Icon
-              color={theme.colors.accent}
-              onPress={() => console.log('test')}
-              name="crosshairs"
-            />
-          }
         />
         <Box flexDirection="row" alignItems="center" mb={3}>
           <Typography fontWeight="bold">Classificação:</Typography>
@@ -119,7 +111,7 @@ const AddFlodding: React.FC = () => {
         <Button color="accent" labelStyle={{ color: 'white' }} onPress={submit}>
           Adicionar
         </Button>
-      </Box>
+      </Container>
     </>
   )
 }

@@ -107,15 +107,24 @@ interface OldTextInputProps {
   theme?: ReactNativePaper.Theme
 }
 
-export type TextInputProps = OldTextInputProps & SizingProps & SpacingProps
+interface ExtraProps {
+  ref?: any
+}
+
+export type TextInputProps = OldTextInputProps &
+  SizingProps &
+  SpacingProps &
+  ExtraProps
 
 const StyledTextInput: any = styled(TextInput)`
   ${sizing};
   ${spacing};
 `
 
-const ThemedTextInput: React.FC<TextInputProps> = (props) => {
-  return <StyledTextInput mode="outlined" {...props} />
-}
+const ThemedTextInput: React.FC<TextInputProps> = React.forwardRef(
+  (props, ref) => {
+    return <StyledTextInput ref={ref} mode="outlined" {...props} />
+  }
+)
 
 export default ThemedTextInput

@@ -25,7 +25,7 @@ export interface CreateUserData {
   email: string
   password: string
   profilePhoto: {
-    name: string
+    fileName: string
     type: string
     uri: string
   } | null

@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { View, Text } from 'react-native'
+import { Container, Typography } from 'src/components/atoms'
 import { Header } from 'src/components/organisms'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
 
@@ -17,9 +17,9 @@ const Faq: React.FC = () => {
   return (
     <>
       <Header />
-      <View>
-        <Text>Faq</Text>
-      </View>
+      <Container>
+        <Typography>Faq</Typography>
+      </Container>
     </>
   )
 }

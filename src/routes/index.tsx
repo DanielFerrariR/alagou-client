@@ -126,8 +126,8 @@ const Routes: React.FC = () => {
           >
             {userSession ? (
               <>
-                <Stack.Screen name="DrawerFlow" component={DrawerFlow} />
                 <Stack.Screen name="AddFlooding" component={AddFlooding} />
+                <Stack.Screen name="DrawerFlow" component={DrawerFlow} />
                 <Stack.Screen name="Alerts" component={Alerts} />
                 <Stack.Screen name="Contributions" component={Contributions} />
                 <Stack.Screen name="Favorites" component={Favorites} />

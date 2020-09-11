@@ -1,5 +1,5 @@
 import { LocationState } from 'src/store/location'
-import { api } from 'src/utils'
+import { serverAPI } from 'src/services'
 import {
   TracksState,
   FETCH_TRACKS,
@@ -11,7 +11,7 @@ import {
 } from './types'
 
 const fetchTracks = async (): Promise<FetchTracksAction> => {
-  const response = await api.get<FetchTrackAxiosResponse>('/tracks')
+  const response = await serverAPI.get<FetchTrackAxiosResponse>('/tracks')
 
   return {
     type: FETCH_TRACKS,
@@ -24,7 +24,7 @@ const createTrack = async (
   locations: LocationState['locations'],
   tracks: TracksState
 ): Promise<CreateTrackAction> => {
-  const response = await api.post<CreateTrackAxiosResponse>('/tracks', {
+  const response = await serverAPI.post<CreateTrackAxiosResponse>('/tracks', {
     name,
     locations
   })

@@ -1,4 +1,3 @@
-export { default as TextInput } from './text_input'
 export { default as Container } from './container'
 export { default as Paper } from './paper'
 export { default as Appbar } from './appbar'
@@ -12,6 +11,9 @@ export { default as Dialog } from './dialog'
 export { default as Portal } from './portal'
 export { default as IconButton } from './icon_button'
 export { default as Menu } from './menu'
+
+export { default as TextInput } from './text_input'
+export * from './text_input'
 
 export { default as Button } from './button'
 export * from './button'

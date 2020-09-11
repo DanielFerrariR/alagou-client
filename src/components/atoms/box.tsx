@@ -30,6 +30,7 @@ export type BoxProps = OldViewProps &
 
 interface ExtraProps {
   elevation?: number
+  ref?: any
 }
 
 const StyledBox = styled.View`
@@ -42,8 +43,8 @@ const StyledBox = styled.View`
   ${display}
 `
 
-const ThemedBox: React.FC<BoxProps> = ({ children, ...rest }) => {
-  return <StyledBox {...rest}>{children}</StyledBox>
-}
+const ThemedBox: React.FC<BoxProps> = React.forwardRef(({ children, ...rest }, ref) => {
+  return <StyledBox ref={ref} {...rest}>{children}</StyledBox>
+})
 
 export default ThemedBox

@@ -1,7 +1,6 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { Appbar, Container, Typography } from 'src/components/atoms'
 import { useNavigation } from '@react-navigation/native'
-import { Appbar } from 'src/components/atoms'
 
 const Alerts: React.FC = () => {
   const navigation = useNavigation()
@@ -12,9 +11,9 @@ const Alerts: React.FC = () => {
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Alertas" />
       </Appbar.Header>
-      <View>
-        <Text>Alerts</Text>
-      </View>
+      <Container>
+        <Typography>Alerts</Typography>
+      </Container>
     </>
   )
 }
