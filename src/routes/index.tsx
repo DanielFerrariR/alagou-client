@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { Provider } from 'react-redux'
@@ -19,44 +19,19 @@ import {
   AddFlooding
 } from 'src/components/screens'
 import store from 'src/utils/redux'
-import { useSelector, useDispatch } from 'src/store'
-import AsyncStorage from '@react-native-community/async-storage'
-import { setLoggedUser, setNotLoggedUser } from 'src/store/user'
+import { useSelector } from 'src/store'
 import { Provider as PaperProvider } from 'react-native-paper'
 import { theme } from 'src/styles'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { DrawerNavigator } from 'src/utils'
+import { DrawerNavigator, FloodingsSocket, FetchReduxStore } from 'src/utils'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
 const Routes: React.FC = () => {
   const userSession = useSelector((state) => state.user)
-  const dispatch = useDispatch()
   const Tab = createMaterialBottomTabNavigator()
   const Stack = createStackNavigator()
   const Drawer = createDrawerNavigator()
-
-  useEffect(() => {
-    const asyncEffect = async () => {
-      try {
-        const userData = await AsyncStorage.getItem('@user').catch()
-
-        if (userData) {
-          const newUserData = JSON.parse(userData)
-
-          dispatch(setLoggedUser(newUserData))
-        } else {
-          dispatch(setNotLoggedUser())
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
-    if (userSession === null) {
-      asyncEffect()
-    }
-  }, [userSession])
 
   const MainFlow = () => {
     return (
@@ -158,6 +133,8 @@ const RoutesContainer: React.FC = () => {
     <PaperProvider theme={theme}>
       <Provider store={store}>
         <Routes />
+        <FloodingsSocket />
+        <FetchReduxStore />
       </Provider>
     </PaperProvider>
   )

@@ -1,12 +1,20 @@
 import { DestroySessionActionTypes } from '../destroy_session'
 
 export type UserState = {
+  _id: string
   name: string
   email: string
   profilePhoto: {
-    name: string
+    fileSize: number
     type: string
+    isVertical: true
+    height: number
+    path: string
+    width: number
+    originalRotation: number
     uri: string
+    fileName: string
+    timestamp: string
   }
   token: string
   level: number
@@ -25,9 +33,16 @@ export interface CreateUserData {
   email: string
   password: string
   profilePhoto: {
-    fileName: string
+    fileSize: number
     type: string
+    isVertical: true
+    height: number
+    path: string
+    width: number
+    originalRotation: number
     uri: string
+    fileName: string
+    timestamp: string
   } | null
 }
 

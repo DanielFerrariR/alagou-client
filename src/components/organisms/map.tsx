@@ -1,34 +1,20 @@
-import React, { useCallback } from 'react'
-import MapView, { Circle, Polyline } from 'react-native-maps'
+import React from 'react'
+import MapView, { Circle } from 'react-native-maps'
 import { Typography, Box, ActivityIndicator } from 'src/components/atoms'
 import { useLocation } from 'src/hooks'
-import { useSelector, useDispatch } from 'src/store'
-import { setCurrentLocation, setLocations } from 'src/store/location'
 import { FAB, Portal, Provider, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 
 const Map: React.FC = () => {
   const theme = useTheme()
   const navigation = useNavigation()
-  const location = useSelector((state) => state.location)
-  const dispatch = useDispatch()
-  const callback = useCallback(
-    (currentLocation) => {
-      dispatch(setCurrentLocation(currentLocation))
-
-      if (location.recording) {
-        dispatch(setLocations(currentLocation))
-      }
-    },
-    [location.recording]
-  )
-  const [error] = useLocation(callback)
+  const [location, error] = useLocation()
   const [openFab, setOpenFab] = React.useState(false)
 
   return (
     <>
       <Box height={1}>
-        {!location.currentLocation ? (
+        {!location ? (
           <Box
             flexDirection="column"
             justifyContent="center"
@@ -43,19 +29,16 @@ const Map: React.FC = () => {
             initialRegion={{
               latitudeDelta: 0.01,
               longitudeDelta: 0.01,
-              ...location.currentLocation.coords
+              ...location.coords
             }}
           >
             <Circle
               center={{
-                ...location.currentLocation.coords
+                ...location.coords
               }}
               radius={30}
               strokeColor={theme.colors.custom.userLocationStroke}
               fillColor={theme.colors.custom.userLocationStroke}
-            />
-            <Polyline
-              coordinates={location.locations.map((each) => each.coords)}
             />
           </MapView>
         )}

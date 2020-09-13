@@ -1,3 +1,5 @@
 export { default as ensure } from './ensure'
 export { default as DrawerNavigator } from './drawer_navigator'
 export { default as formatDate } from './format_date'
+export { default as FloodingsSocket } from './floodings_socket'
+export { default as FetchReduxStore } from './fetch_redux_store'

@@ -24,9 +24,16 @@ interface Form {
   password: string
   confirmPassword: string
   profilePhoto: null | {
-    fileName: string
+    fileSize: number
     type: string
+    isVertical: true
+    height: number
+    path: string
+    width: number
+    originalRotation: number
     uri: string
+    fileName: string
+    timestamp: string
   }
   showPassword: boolean
   showConfirmPassword: boolean
@@ -83,12 +90,21 @@ const Register: React.FC = () => {
   }
 
   const onSubmit = async () => {
-    try {
-      if (form.password !== form.confirmPassword) {
-        setMessage('A confirmação de senha não é igual a senha.')
-        return
-      }
+    if (loading) {
+      return
+    }
 
+    if (!form.name || !form.email || !form.password || !form.confirmPassword) {
+      setMessage('Você precisa preencher todos os campos.')
+      return
+    }
+
+    if (form.password !== form.confirmPassword) {
+      setMessage('A confirmação de senha não é igual a senha.')
+      return
+    }
+
+    try {
       setLoading(true)
 
       const response = await createUser({
@@ -190,7 +206,7 @@ const Register: React.FC = () => {
             }
           />
           <TextInput
-            label="Confirmação de senha"
+            label="Confirmação de senha *"
             placeholder="Digite a confirmação de senha"
             mb={3}
             onChangeText={(text) => onChange('confirmPassword', text)}

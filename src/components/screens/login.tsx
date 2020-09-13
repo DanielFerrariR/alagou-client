@@ -46,6 +46,15 @@ const Login: React.FC = () => {
   }
 
   const onSubmit = async () => {
+    if (loading) {
+      return
+    }
+
+    if (!form.email || !form.password) {
+      setMessage('Você precisa preencher todos os campos.')
+      return
+    }
+
     try {
       setLoading(true)
 

@@ -5,7 +5,13 @@ import React, {
   SetStateAction,
   useRef
 } from 'react'
-import { TextInput, Menu, TextInputProps } from 'src/components/atoms'
+import {
+  TextInput,
+  Menu,
+  TextInputProps,
+  Box,
+  ActivityIndicator
+} from 'src/components/atoms'
 import { Dimensions, PermissionsAndroid } from 'react-native'
 import Geolocation from 'react-native-geolocation-service'
 import GeocoderLibrary from 'react-native-geocoding'
@@ -30,12 +36,12 @@ const AddressSearchInput: React.FC<Props> = ({
   ...rest
 }) => {
   const [openSearchBox, setOpenSearchBox] = useState(false)
-  const Geocoder = GeocoderLibrary as any
   const [results, setResults] = useState<string[] | null>(null)
-  const [loadingLocation] = useState(false)
+  const [loadingLocation, setLoadingLocation] = useState(false)
   const theme = useTheme()
   const inputRef = useRef<any>()
   const skipRef = useRef<boolean>(false)
+  const Geocoder = GeocoderLibrary as any
 
   Geocoder.init(GOOGLE_MAPS_API_KEY)
 
@@ -85,6 +91,8 @@ const AddressSearchInput: React.FC<Props> = ({
   }
 
   const getLocation = async () => {
+    setLoadingLocation(true)
+
     const hasLocationPermission = await verifyLocationPermission()
 
     if (hasLocationPermission) {
@@ -100,6 +108,7 @@ const AddressSearchInput: React.FC<Props> = ({
 
             skipRef.current = true
             setSearchAddress(address)
+            setLoadingLocation(false)
           } catch (error) {
             console.log(error)
           }
@@ -144,30 +153,37 @@ const AddressSearchInput: React.FC<Props> = ({
         marginTop: 64
       }}
       anchor={
-        <TextInput
-          ref={inputRef}
-          onBlur={onBlurInput}
-          onFocus={onFocusInput}
-          onChangeText={(text) => setSearchAddress(text)}
-          value={searchAddress}
-          right={
-            searchAddress ? (
-              <OldTextInput.Icon
-                color={theme.colors.accent}
-                onPress={() => setSearchAddress('')}
-                name="close"
-              />
-            ) : (
-              <OldTextInput.Icon
-                color={theme.colors.accent}
-                onPress={() => getLocation()}
-                name="crosshairs"
-                style={{ display: loadingLocation ? 'none' : undefined }}
-              />
-            )
-          }
-          {...rest}
-        />
+        <Box>
+          <TextInput
+            ref={inputRef}
+            onBlur={onBlurInput}
+            onFocus={onFocusInput}
+            onChangeText={(text) => setSearchAddress(text)}
+            value={searchAddress}
+            right={
+              searchAddress ? (
+                <OldTextInput.Icon
+                  color={theme.colors.accent}
+                  onPress={() => setSearchAddress('')}
+                  name="close"
+                />
+              ) : (
+                <OldTextInput.Icon
+                  color={theme.colors.accent}
+                  onPress={() => getLocation()}
+                  name="crosshairs"
+                  style={{ display: loadingLocation ? 'none' : undefined }}
+                />
+              )
+            }
+            {...rest}
+          />
+          {loadingLocation ? (
+            <Box position="absolute" style={{ top: 26, right: 15 }}>
+              <ActivityIndicator animating size={18} />
+            </Box>
+          ) : null}
+        </Box>
       }
     >
       {results &&

@@ -13,15 +13,26 @@ import {
 } from 'src/components/atoms'
 import ImagePicker from 'react-native-image-picker'
 import ImageView from 'react-native-image-viewing'
-import { AddressSearchInput } from 'src/components/molecules'
+import { AddressSearchInput, MessageModal } from 'src/components/molecules'
 import { useTheme } from 'react-native-paper'
+import GeocoderLibrary from 'react-native-geocoding'
+import { GOOGLE_MAPS_API_KEY } from '@env'
+import { createFlooding } from 'src/store/floodings'
+import { useDispatch } from 'src/store'
 
 interface Form {
   description: string
   picture: null | {
-    fileName: string
+    fileSize: number
     type: string
+    isVertical: true
+    height: number
+    path: string
+    width: number
+    originalRotation: number
     uri: string
+    fileName: string
+    timestamp: string
   }
   severity: '1' | '2' | '3'
 }
@@ -36,6 +47,12 @@ const AddFlodding: React.FC = () => {
   const navigation = useNavigation()
   const [searchAddress, setSearchAddress] = useState('')
   const theme = useTheme()
+  const Geocoder = GeocoderLibrary as any
+  const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState('')
+  const dispatch = useDispatch()
+
+  Geocoder.init(GOOGLE_MAPS_API_KEY)
 
   const onChange = (name: keyof typeof form, text: string) => {
     setForm({ ...form, [name]: text })
@@ -52,7 +69,41 @@ const AddFlodding: React.FC = () => {
     })
   }
 
-  const submit = () => {}
+  const submit = async () => {
+    if (loading) {
+      return
+    }
+
+    if (
+      !form.description ||
+      !searchAddress ||
+      !form.picture ||
+      !form.severity
+    ) {
+      setMessage('Você precisa preencher todos os campos.')
+      return
+    }
+
+    setLoading(true)
+
+    const location = await Geocoder.from(searchAddress)
+
+    const latitude = location.results[0].geometry.location.lat
+    const longitude = location.results[0].geometry.location.lng
+
+    const newFlooding = {
+      description: form.description,
+      latitude,
+      longitude,
+      picture: form.picture,
+      severity: Number(form.severity),
+      date: new Date().getTime()
+    }
+
+    dispatch(await createFlooding(newFlooding))
+
+    navigation.navigate('Home')
+  }
 
   return (
     <>
@@ -120,10 +171,16 @@ const AddFlodding: React.FC = () => {
             </Typography>
           </TouchableOpacity>
         </Box>
-        <Button color="accent" labelStyle={{ color: 'white' }} onPress={submit}>
+        <Button
+          color="accent"
+          labelStyle={{ color: 'white' }}
+          onPress={submit}
+          loading={loading}
+        >
           Adicionar
         </Button>
       </Container>
+      <MessageModal message={message} setMessage={setMessage} />
     </>
   )
 }

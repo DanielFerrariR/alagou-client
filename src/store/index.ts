@@ -5,14 +5,12 @@ import {
   TypedUseSelectorHook
 } from 'react-redux'
 import { userReducer } from './user'
-import { locationReducer } from './location'
-import { tracksReducer } from './tracks'
+import { floodingsReducer } from './floodings'
 import { DestroySessionActionTypes } from './destroy_session'
 
 const appReducer = combineReducers({
   user: userReducer,
-  location: locationReducer,
-  tracks: tracksReducer
+  floodings: floodingsReducer
 })
 
 export const rootReducer: typeof appReducer = (state, action) => {
