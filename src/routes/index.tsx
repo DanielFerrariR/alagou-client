@@ -32,67 +32,68 @@ import {
 } from 'src/utils'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
+const Tab = createMaterialBottomTabNavigator()
+const Stack = createStackNavigator()
+const Drawer = createDrawerNavigator()
+
+const MainFlow = () => {
+  return (
+    <Tab.Navigator shifting>
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarColor: theme.colors.accent,
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="home" color={color} size={24} />
+          )
+        }}
+      />
+      <Tab.Screen
+        name="FloodingList"
+        component={FloodingList}
+        options={{
+          tabBarLabel: 'Alagamentos',
+          tabBarColor: theme.colors.accent,
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="format-list-bulleted"
+              color={color}
+              size={24}
+            />
+          )
+        }}
+      />
+      <Tab.Screen
+        name="Faq"
+        component={Faq}
+        options={{
+          tabBarLabel: 'Dúvidas',
+          tabBarColor: theme.colors.accent,
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="help-circle"
+              color={color}
+              size={24}
+            />
+          )
+        }}
+      />
+    </Tab.Navigator>
+  )
+}
+
+const DrawerFlow = () => {
+  return (
+    <DrawerNavigator>
+      <Drawer.Screen name="MainFlow" component={MainFlow} />
+    </DrawerNavigator>
+  )
+}
+
 const Routes: React.FC = () => {
   const userSession = useSelector((state) => state.user)
-  const Tab = createMaterialBottomTabNavigator()
-  const Stack = createStackNavigator()
-  const Drawer = createDrawerNavigator()
-
-  const MainFlow = () => {
-    return (
-      <Tab.Navigator shifting>
-        <Tab.Screen
-          name="Home"
-          component={Home}
-          options={{
-            tabBarLabel: 'Home',
-            tabBarColor: theme.colors.accent,
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="home" color={color} size={24} />
-            )
-          }}
-        />
-        <Tab.Screen
-          name="FloodingList"
-          component={FloodingList}
-          options={{
-            tabBarLabel: 'Alagamentos',
-            tabBarColor: theme.colors.accent,
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons
-                name="format-list-bulleted"
-                color={color}
-                size={24}
-              />
-            )
-          }}
-        />
-        <Tab.Screen
-          name="Faq"
-          component={Faq}
-          options={{
-            tabBarLabel: 'Dúvidas',
-            tabBarColor: theme.colors.accent,
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons
-                name="help-circle"
-                color={color}
-                size={24}
-              />
-            )
-          }}
-        />
-      </Tab.Navigator>
-    )
-  }
-
-  const DrawerFlow = () => {
-    return (
-      <DrawerNavigator>
-        <Drawer.Screen name="MainFlow" component={MainFlow} />
-      </DrawerNavigator>
-    )
-  }
 
   return (
     <>
