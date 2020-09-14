@@ -19,6 +19,9 @@ declare global {
         light: string
         seal: string
         shimmer: string
+        information: string
+        trash: string
+        email: string
       }
     }
   }
@@ -39,7 +42,10 @@ const custom = {
   moderate: '#eaf300',
   light: '#00c239',
   seal: '#d6cc11',
-  shimmer: 'rgba(0, 0, 0, 0.11)'
+  shimmer: 'rgba(0, 0, 0, 0.11)',
+  information: '#349aef',
+  trash: '#e8641b',
+  email: '#00b034'
 }
 
 const theme = {
