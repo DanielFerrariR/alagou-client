@@ -4,55 +4,25 @@ import { Header } from 'src/components/organisms'
 import { FloodingCard } from 'src/components/molecules'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import Shimmer from 'react-native-shimmer'
-
-interface Data {
-  id: string
-  userPicture: string
-  userName: string
-  description: string
-  address: string
-  picture: string
-  severity: 1 | 2 | 3
-  date: Date
-}
+import { fetchFloodings } from 'src/store/floodings'
+import { useDispatch, useSelector } from 'src/store'
 
 const FloadingList: React.FC = () => {
   const navigation = useNavigation() as any
-  const data: Data[] = [
-    {
-      id: '5f58cf915bb9fa4e2d4f27d1',
-      userPicture: 'https://picsum.photos/700',
-      userName: 'Daniel',
-      description: 'Forte alagamento arrasta carros.',
-      address: 'SQN 210 Bl. I, Asa Norte',
-      picture: 'https://picsum.photos/700',
-      severity: 1,
-      date: new Date()
-    },
-    {
-      id: '5f58cf915bb9fa4e2d4f27d2',
-      userPicture: 'https://picsum.photos/700',
-      userName: 'Daniel',
-      description: 'Forte alagamento arrasta carros.',
-      address: 'SQN 210 Bl. I, Asa Norte',
-      picture: 'https://picsum.photos/700',
-      severity: 1,
-      date: new Date()
-    },
-    {
-      id: '5f58cf915bb9fa4e2d4f27d3',
-      userPicture: 'https://picsum.photos/700',
-      userName: 'Daniel',
-      description: 'Forte alagamento arrasta carros.',
-      address: 'SQN 210 Bl. I, Asa Norte',
-      picture: 'https://picsum.photos/700',
-      severity: 1,
-      date: new Date()
-    }
-  ]
+  const floodings = useSelector((state) => state.floodings)
+  const dispatch = useDispatch()
 
   useFocusEffect(
     useCallback(() => {
+      const asyncUseCallback = async () => {
+        try {
+          dispatch(await fetchFloodings())
+        } catch (error) {
+          console.log(error)
+        }
+      }
+
+      asyncUseCallback()
       return () => {
         navigation.closeDrawer()
       }
@@ -63,16 +33,16 @@ const FloadingList: React.FC = () => {
     <>
       <Header />
       <Container>
-        {data.length > 0 ? (
+        {floodings ? (
           <Box>
             <FlatList
-              data={data}
-              keyExtractor={(item) => String(item.id)}
+              data={floodings}
+              keyExtractor={(item) => String(item._id)}
               renderItem={({ item, index }) => (
                 <Box
                   px={2}
                   pt={index === 0 ? 2 : 0}
-                  mb={data.length - 1 > index ? 3 : 9}
+                  mb={floodings.length - 1 > index ? 3 : 9}
                 >
                   <FloodingCard data={item} />
                 </Box>

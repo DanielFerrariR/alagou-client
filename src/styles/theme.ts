@@ -49,7 +49,7 @@ const theme = {
     custom,
     primary: '#1E5C5C',
     accent: '#3DBABA',
-    background: '#FAFAFA',
+    background: '#f5f5f5',
     surface: Colors.white,
     error: '#b00020',
     text: Colors.black,

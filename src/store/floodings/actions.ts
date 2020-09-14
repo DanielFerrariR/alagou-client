@@ -36,6 +36,7 @@ const createFlooding = async (
   const formData = new FormData()
 
   formData.append('description', data.description)
+  formData.append('address', data.address)
   formData.append('latitude', data.latitude)
   formData.append('longitude', data.longitude)
   formData.append('severity', data.severity)

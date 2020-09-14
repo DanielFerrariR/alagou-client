@@ -10,7 +10,7 @@ import { useNavigation } from '@react-navigation/native'
 import ImageView from 'react-native-image-viewing'
 
 const DrawerContent: React.FC = () => {
-  const [openProfilePhoto, setOpenProfilePhoto] = useState(false)
+  const [openPicture, setOpenPicture] = useState(false)
   const userSession = ensure(useSelector((state) => state.user))
   const dispatch = useDispatch()
   const theme = useTheme()
@@ -43,23 +43,23 @@ const DrawerContent: React.FC = () => {
       >
         <ImageView
           images={[
-            userSession.profilePhoto
-              ? { uri: userSession.profilePhoto }
+            userSession.picture
+              ? { uri: userSession.picture }
               : require('src/images/no_picture.png')
           ]}
           imageIndex={0}
-          visible={openProfilePhoto}
-          onRequestClose={() => setOpenProfilePhoto(false)}
+          visible={openPicture}
+          onRequestClose={() => setOpenPicture(false)}
         />
         <TouchableOpacity
-          onPress={() => setOpenProfilePhoto(true)}
+          onPress={() => setOpenPicture(true)}
           width={124}
           mb={3}
         >
           <Image
             source={
-              userSession.profilePhoto
-                ? { uri: userSession.profilePhoto }
+              userSession.picture
+                ? { uri: userSession.picture }
                 : require('src/images/no_picture.png')
             }
             width={124}

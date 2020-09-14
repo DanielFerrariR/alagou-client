@@ -93,6 +93,7 @@ const AddFlodding: React.FC = () => {
 
     const newFlooding = {
       description: form.description,
+      address: searchAddress,
       latitude,
       longitude,
       picture: form.picture,

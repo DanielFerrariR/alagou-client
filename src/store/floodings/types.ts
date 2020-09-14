@@ -6,26 +6,17 @@ export type FloodingsState = {
   userName: string
   userPicture: string
   description: string
+  address: string
   latitude: number
   longitude: number
-  picture: {
-    fileSize: number
-    type: string
-    isVertical: true
-    height: number
-    path: string
-    width: number
-    originalRotation: number
-    uri: string
-    fileName: string
-    timestamp: string
-  }
+  picture: string
   severity: number
   date: Date
 }[]
 
 export type CreateFloodingData = {
   description: string
+  address: string
   latitude: number
   longitude: number
   picture: {

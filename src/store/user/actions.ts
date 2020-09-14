@@ -33,11 +33,11 @@ const createUser = async (data: CreateUserData): Promise<CreateUserAction> => {
   formData.append('name', data.name)
   formData.append('email', data.email)
   formData.append('password', data.password)
-  if (data.profilePhoto) {
-    formData.append('profilePhoto', {
-      name: data.profilePhoto.fileName,
-      type: data.profilePhoto.type,
-      uri: data.profilePhoto.uri
+  if (data.picture) {
+    formData.append('picture', {
+      name: data.picture.fileName,
+      type: data.picture.type,
+      uri: data.picture.uri
     })
   }
 

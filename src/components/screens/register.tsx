@@ -23,7 +23,7 @@ interface Form {
   email: string
   password: string
   confirmPassword: string
-  profilePhoto: null | {
+  picture: null | {
     fileSize: number
     type: string
     isVertical: true
@@ -40,13 +40,13 @@ interface Form {
 }
 
 const Register: React.FC = () => {
-  const [openProfilePhoto, setOpenProfilePhoto] = useState(false)
+  const [openpicture, setOpenpicture] = useState(false)
   const [form, setForm] = useState<Form>({
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
-    profilePhoto: null,
+    picture: null,
     showPassword: false,
     showConfirmPassword: false
   })
@@ -63,7 +63,7 @@ const Register: React.FC = () => {
           email: '',
           password: '',
           confirmPassword: '',
-          profilePhoto: null,
+          picture: null,
           showPassword: false,
           showConfirmPassword: false
         })
@@ -84,7 +84,7 @@ const Register: React.FC = () => {
     ImagePicker.showImagePicker(options, (response) => {
       console.log(response)
       if (response.uri) {
-        setForm({ ...form, profilePhoto: response as any })
+        setForm({ ...form, picture: response as any })
       }
     })
   }
@@ -111,7 +111,7 @@ const Register: React.FC = () => {
         name: form.name,
         email: form.email,
         password: form.password,
-        profilePhoto: form.profilePhoto
+        picture: form.picture
       })
 
       const { payload } = response
@@ -144,23 +144,23 @@ const Register: React.FC = () => {
         <Box justifyContent="center" alignItems="center" mt={4}>
           <ImageView
             images={[
-              form.profilePhoto
-                ? { uri: form.profilePhoto.uri }
+              form.picture
+                ? { uri: form.picture.uri }
                 : require('src/images/no_picture.png')
             ]}
             imageIndex={0}
-            visible={openProfilePhoto}
-            onRequestClose={() => setOpenProfilePhoto(false)}
+            visible={openpicture}
+            onRequestClose={() => setOpenpicture(false)}
           />
           <TouchableOpacity
-            onPress={() => setOpenProfilePhoto(true)}
+            onPress={() => setOpenpicture(true)}
             width={148}
             mb={1}
           >
             <Image
               source={
-                form.profilePhoto
-                  ? { uri: form.profilePhoto.uri }
+                form.picture
+                  ? { uri: form.picture.uri }
                   : require('src/images/no_picture.png')
               }
               width={148}

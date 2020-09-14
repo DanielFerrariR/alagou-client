@@ -4,18 +4,7 @@ export type UserState = {
   _id: string
   name: string
   email: string
-  profilePhoto: {
-    fileSize: number
-    type: string
-    isVertical: true
-    height: number
-    path: string
-    width: number
-    originalRotation: number
-    uri: string
-    fileName: string
-    timestamp: string
-  }
+  picture: string
   token: string
   level: number
 }
@@ -32,7 +21,7 @@ export interface CreateUserData {
   name: string
   email: string
   password: string
-  profilePhoto: {
+  picture: {
     fileSize: number
     type: string
     isVertical: true
