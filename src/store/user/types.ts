@@ -13,6 +13,8 @@ export type UserState = {
 
 export const CREATE_USER = 'CREATE_USER'
 
+export const EDIT_USER = 'EDIT_USER'
+
 export const FETCH_USER = 'FETCH_USER'
 
 export const SET_LOGGED_USER = 'SET_LOGGED_USER'
@@ -47,18 +49,41 @@ export interface CreateUserData {
   name: string
   email: string
   password: string
-  picture: {
-    fileSize: number
-    type: string
-    isVertical: true
-    height: number
-    path: string
-    width: number
-    originalRotation: number
-    uri: string
-    fileName: string
-    timestamp: string
-  } | null
+  picture:
+    | {
+        fileSize: number
+        type: string
+        isVertical: true
+        height: number
+        path: string
+        width: number
+        originalRotation: number
+        uri: string
+        fileName: string
+        timestamp: string
+      }
+    | string
+}
+
+export interface EditUserData {
+  name: string
+  email: string
+  oldPassword: string
+  newPassword: string
+  picture:
+    | {
+        fileSize: number
+        type: string
+        isVertical: true
+        height: number
+        path: string
+        width: number
+        originalRotation: number
+        uri: string
+        fileName: string
+        timestamp: string
+      }
+    | string
 }
 
 export interface FetchUserData {
@@ -68,6 +93,11 @@ export interface FetchUserData {
 
 export interface CreateUserAction {
   type: typeof CREATE_USER
+  payload: UserState
+}
+
+export interface EditUserAction {
+  type: typeof EDIT_USER
   payload: UserState
 }
 
@@ -98,6 +128,7 @@ export interface RemoveFavoriteAction {
 
 export type UserActionsTypes =
   | CreateUserAction
+  | EditUserAction
   | FetchUserAction
   | SetLoggedUserAction
   | SetNotLoggedUserAction

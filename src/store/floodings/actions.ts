@@ -47,11 +47,16 @@ const createFlooding = async (
   formData.append('latitude', data.latitude)
   formData.append('longitude', data.longitude)
   formData.append('severity', data.severity)
-  formData.append('picture', {
-    name: data.picture.fileName,
-    type: data.picture.type,
-    uri: data.picture.uri
-  })
+  formData.append(
+    'picture',
+    typeof data.picture !== 'string'
+      ? {
+          name: data.picture.fileName,
+          type: data.picture.type,
+          uri: data.picture.uri
+        }
+      : data.picture
+  )
   formData.append('date', data.date)
 
   const response = await serverAPI.post<CreateFloodingAxiosResponse>(

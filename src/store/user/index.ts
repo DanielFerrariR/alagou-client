@@ -1,5 +1,6 @@
 export {
   createUser,
+  editUser,
   fetchUser,
   setLoggedUser,
   setNotLoggedUser,

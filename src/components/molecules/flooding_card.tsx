@@ -47,24 +47,29 @@ const FloadingList: React.FC<Props> = ({ data }) => {
   }
 
   const excludeCard = async () => {
-    if (loadingExcludeCard) {
-      return
+    try {
+      if (loadingExcludeCard) {
+        return
+      }
+
+      setOpen(false)
+      setLoadingExcludeCard(true)
+
+      dispatch(await removeFlooding(data._id))
+    } catch (error) {
+      console.log(error)
+      setLoadingExcludeCard(false)
     }
-
-    setOpen(false)
-    setLoadingExcludeCard(true)
-
-    dispatch(await removeFlooding(data._id))
   }
 
   const updateFavorite = async () => {
-    if (loadingFavorite) {
-      return
-    }
-
-    setLoadingFavorite(true)
-
     try {
+      if (loadingFavorite) {
+        return
+      }
+
+      setLoadingFavorite(true)
+
       if (isFavorite) {
         const { payload } = dispatch(
           await removeFavorite(userSession, data._id)
@@ -82,9 +87,9 @@ const FloadingList: React.FC<Props> = ({ data }) => {
       }
     } catch (error) {
       console.log(error)
+    } finally {
+      setLoadingFavorite(false)
     }
-
-    setLoadingFavorite(false)
   }
 
   return (
@@ -158,13 +163,25 @@ const FloadingList: React.FC<Props> = ({ data }) => {
           </Box>
         )}
         <ImageView
-          images={[{ uri: data.picture }]}
+          images={[
+            data.picture
+              ? { uri: data.picture }
+              : require('src/images/no_flooding_picture.png')
+          ]}
           imageIndex={0}
           visible={openPicture}
           onRequestClose={() => setOpenPicture(false)}
         />
         <TouchableOpacity onPress={() => setOpenPicture(true)} width={1}>
-          <Image source={{ uri: data.picture }} width={1} height={148} />
+          <Image
+            source={
+              data.picture
+                ? { uri: data.picture }
+                : require('src/images/no_flooding_picture.png')
+            }
+            width={1}
+            height={148}
+          />
         </TouchableOpacity>
         <Box
           flexDirection="row"

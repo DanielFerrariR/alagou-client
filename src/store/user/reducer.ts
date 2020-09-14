@@ -2,6 +2,7 @@ import {
   UserState,
   UserActionsTypes,
   CREATE_USER,
+  EDIT_USER,
   FETCH_USER,
   SET_NOT_LOGGED_USER,
   SET_LOGGED_USER,
@@ -17,6 +18,8 @@ const userReducer = (
 ): UserState | false | null => {
   switch (action.type) {
     case CREATE_USER:
+      return action.payload
+    case EDIT_USER:
       return action.payload
     case FETCH_USER:
       return action.payload

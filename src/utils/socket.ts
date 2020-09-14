@@ -5,7 +5,7 @@ import { FloodingsState, updateFloodings } from 'src/store/floodings'
 import { useDispatch, useSelector } from 'src/store'
 import { removeFavorite } from 'src/store/user'
 
-const FloodingsSocket: React.FC = () => {
+const Socket: React.FC = () => {
   // const userSession = useSelector((state) => state.user)
   // const socket = useRef<SocketIOClient.Socket>(io(API_ADDRESS))
   // const dispatch = useDispatch()
@@ -33,4 +33,4 @@ const FloodingsSocket: React.FC = () => {
   return null
 }
 
-export default FloodingsSocket
+export default Socket

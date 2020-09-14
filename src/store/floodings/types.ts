@@ -19,18 +19,20 @@ export type CreateFloodingData = {
   address: string
   latitude: number
   longitude: number
-  picture: {
-    fileSize: number
-    type: string
-    isVertical: true
-    height: number
-    path: string
-    width: number
-    originalRotation: number
-    uri: string
-    fileName: string
-    timestamp: string
-  }
+  picture:
+    | {
+        fileSize: number
+        type: string
+        isVertical: true
+        height: number
+        path: string
+        width: number
+        originalRotation: number
+        uri: string
+        fileName: string
+        timestamp: string
+      }
+    | string
   severity: number
   date: number
 }

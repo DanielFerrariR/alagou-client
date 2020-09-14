@@ -1,9 +1,13 @@
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, Dispatch, SetStateAction } from 'react'
 import { PermissionsAndroid } from 'react-native'
 import Geolocation from 'react-native-geolocation-service'
 import { useFocusEffect } from '@react-navigation/native'
 
-type UseLocation = [Geolocation.GeoPosition | null, string]
+type UseLocation = [
+  Geolocation.GeoPosition | null,
+  string,
+  Dispatch<SetStateAction<string>>
+]
 
 const useLocation = (): UseLocation => {
   const [message, setMessage] = useState('')
@@ -63,7 +67,7 @@ const useLocation = (): UseLocation => {
     }, [])
   )
 
-  return [location, message]
+  return [location, message, setMessage]
 }
 
 export default useLocation

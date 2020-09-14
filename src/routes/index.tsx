@@ -27,7 +27,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import {
   DrawerNavigator,
-  FloodingsSocket,
+  Socket,
   FetchReduxStore,
   LogoutListenner
 } from 'src/utils'
@@ -141,7 +141,7 @@ const RoutesContainer: React.FC = () => {
     <PaperProvider theme={theme}>
       <Provider store={store}>
         <Routes />
-        <FloodingsSocket />
+        <Socket />
         <FetchReduxStore />
         <LogoutListenner />
       </Provider>

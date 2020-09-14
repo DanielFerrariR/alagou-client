@@ -2,16 +2,19 @@ import { serverAPI } from 'src/services'
 import {
   UserState,
   CreateUserAction,
+  EditUserAction,
   FetchUserAction,
   AddFavoriteAction,
   RemoveFavoriteAction,
   AddFavoriteAxiosResponse,
   RemoveFavoriteAxiosResponse,
   CREATE_USER,
+  EDIT_USER,
   FETCH_USER,
   ADD_FAVORITE,
   REMOVE_FAVORITE,
   CreateUserData,
+  EditUserData,
   FetchUserData,
   SetLoggedUserAction,
   SetNotLoggedUserAction,
@@ -24,7 +27,7 @@ const addFavorite = async (
   _id: string
 ): Promise<AddFavoriteAction> => {
   const response = await serverAPI.post<AddFavoriteAxiosResponse>(
-    '/add_favorite',
+    '/add-favorite',
     {
       _id
     }
@@ -41,7 +44,7 @@ const removeFavorite = async (
   _id: string
 ): Promise<RemoveFavoriteAction> => {
   const response = await serverAPI.post<RemoveFavoriteAxiosResponse>(
-    '/remove_favorite',
+    '/remove-favorite',
     {
       _id
     }
@@ -73,19 +76,51 @@ const createUser = async (data: CreateUserData): Promise<CreateUserAction> => {
   formData.append('name', data.name)
   formData.append('email', data.email)
   formData.append('password', data.password)
-  if (data.picture) {
-    formData.append('picture', {
-      name: data.picture.fileName,
-      type: data.picture.type,
-      uri: data.picture.uri
-    })
-  }
+  formData.append(
+    'picture',
+    typeof data.picture !== 'string'
+      ? {
+          name: data.picture.fileName,
+          type: data.picture.type,
+          uri: data.picture.uri
+        }
+      : data.picture
+  )
 
   const response = await serverAPI.post<UserState>('/register', formData)
 
   return {
     type: CREATE_USER,
     payload: response.data
+  }
+}
+
+const editUser = async (
+  userSession: UserState,
+  data: EditUserData
+): Promise<EditUserAction> => {
+  const formData = new FormData()
+
+  formData.append('name', data.name)
+  formData.append('email', data.email)
+  formData.append('oldPassword', data.oldPassword)
+  formData.append('newPassword', data.newPassword)
+  formData.append(
+    'picture',
+    typeof data.picture !== 'string'
+      ? {
+          name: data.picture.fileName,
+          type: data.picture.type,
+          uri: data.picture.uri
+        }
+      : data.picture
+  )
+
+  const response = await serverAPI.put<UserState>('/edit-user', formData)
+
+  return {
+    type: EDIT_USER,
+    payload: { ...response.data, token: userSession.token }
   }
 }
 
@@ -100,6 +135,7 @@ const fetchUser = async (data: FetchUserData): Promise<FetchUserAction> => {
 
 export {
   createUser,
+  editUser,
   fetchUser,
   setLoggedUser,
   setNotLoggedUser,

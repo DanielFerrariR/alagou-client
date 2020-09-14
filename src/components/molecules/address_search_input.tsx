@@ -18,6 +18,7 @@ import GeocoderLibrary from 'react-native-geocoding'
 import { GOOGLE_MAPS_API_KEY } from '@env'
 import { useTheme, TextInput as OldTextInput } from 'react-native-paper'
 import { GoogleMapsAPI } from 'src/services'
+import MessageModal from './message_modal'
 
 type Props = {
   searchAddress: string
@@ -43,6 +44,7 @@ const AddressSearchInput: React.FC<Props> = ({
   const inputRef = useRef<any>()
   const skipRef = useRef<boolean>(false)
   const Geocoder = GeocoderLibrary as any
+  const [message, setMessage] = useState('')
 
   Geocoder.init(GOOGLE_MAPS_API_KEY)
 
@@ -60,22 +62,26 @@ const AddressSearchInput: React.FC<Props> = ({
     }
 
     const asyncEffect = async () => {
-      const response = await GoogleMapsAPI.get<GetLocationsAxiosResponse>(
-        `/maps/api/place/autocomplete/json?&input=${encodeURI(
-          searchAddress
-        )}&key=${GOOGLE_MAPS_API_KEY}&language=pt-BR&components=country%3Abr`
-      )
+      try {
+        const response = await GoogleMapsAPI.get<GetLocationsAxiosResponse>(
+          `/maps/api/place/autocomplete/json?&input=${encodeURI(
+            searchAddress
+          )}&key=${GOOGLE_MAPS_API_KEY}&language=pt-BR&components=country%3Abr`
+        )
 
-      const newResults = response.data.predictions.map((each) => {
-        return each.description
-      })
+        const newResults = response.data.predictions.map((each) => {
+          return each.description
+        })
 
-      setResults(newResults)
+        setResults(newResults)
 
-      if (newResults?.length) {
-        setOpenSearchBox(true)
-      } else {
-        setOpenSearchBox(false)
+        if (newResults?.length) {
+          setOpenSearchBox(true)
+        } else {
+          setOpenSearchBox(false)
+        }
+      } catch (error) {
+        console.log(error)
       }
     }
 
@@ -126,7 +132,9 @@ const AddressSearchInput: React.FC<Props> = ({
         { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
       )
     } else {
-      console.log('Please enable location services')
+      setMessage(
+        'Por favor, habilite os serviços de localização e tente novamente.'
+      )
     }
   }
 
@@ -152,60 +160,63 @@ const AddressSearchInput: React.FC<Props> = ({
   }
 
   return (
-    <Menu
-      visible={openSearchBox}
-      onDismiss={() => setOpenSearchBox(false)}
-      style={{
-        width: Dimensions.get('window').width - 32,
-        marginTop: 64
-      }}
-      anchor={
-        <Box>
-          <TextInput
-            ref={inputRef}
-            onBlur={onBlurInput}
-            onFocus={onFocusInput}
-            onChangeText={(text) => setSearchAddress(text)}
-            value={searchAddress}
-            right={
-              searchAddress ? (
-                <OldTextInput.Icon
-                  color={theme.colors.accent}
-                  onPress={() => setSearchAddress('')}
-                  name="close"
-                />
-              ) : (
-                <OldTextInput.Icon
-                  color={theme.colors.accent}
-                  onPress={() => getLocation()}
-                  name="crosshairs"
-                  style={{ display: loadingLocation ? 'none' : undefined }}
-                />
-              )
-            }
-            {...rest}
-          />
-          {loadingLocation ? (
-            <Box position="absolute" style={{ top: 26, right: 15 }}>
-              <ActivityIndicator animating size={18} />
-            </Box>
-          ) : null}
-        </Box>
-      }
-    >
-      {results &&
-        results.map((each) => (
-          <Menu.Item
-            key={each}
-            onPress={() => {
-              skipRef.current = true
-              setSearchAddress(each)
-            }}
-            title={each}
-            style={{ maxWidth: '100%' }}
-          />
-        ))}
-    </Menu>
+    <>
+      <Menu
+        visible={openSearchBox}
+        onDismiss={() => setOpenSearchBox(false)}
+        style={{
+          width: Dimensions.get('window').width - 32,
+          marginTop: 64
+        }}
+        anchor={
+          <Box>
+            <TextInput
+              ref={inputRef}
+              onBlur={onBlurInput}
+              onFocus={onFocusInput}
+              onChangeText={(text) => setSearchAddress(text)}
+              value={searchAddress}
+              right={
+                searchAddress ? (
+                  <OldTextInput.Icon
+                    color={theme.colors.accent}
+                    onPress={() => setSearchAddress('')}
+                    name="close"
+                  />
+                ) : (
+                  <OldTextInput.Icon
+                    color={theme.colors.accent}
+                    onPress={() => getLocation()}
+                    name="crosshairs"
+                    style={{ display: loadingLocation ? 'none' : undefined }}
+                  />
+                )
+              }
+              {...rest}
+            />
+            {loadingLocation ? (
+              <Box position="absolute" style={{ top: 26, right: 15 }}>
+                <ActivityIndicator animating size={18} />
+              </Box>
+            ) : null}
+          </Box>
+        }
+      >
+        {results &&
+          results.map((each) => (
+            <Menu.Item
+              key={each}
+              onPress={() => {
+                skipRef.current = true
+                setSearchAddress(each)
+              }}
+              title={each}
+              style={{ maxWidth: '100%' }}
+            />
+          ))}
+      </Menu>
+      <MessageModal message={message} setMessage={setMessage} />
+    </>
   )
 }
 

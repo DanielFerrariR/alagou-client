@@ -46,16 +46,16 @@ const Login: React.FC = () => {
   }
 
   const onSubmit = async () => {
-    if (loading) {
-      return
-    }
-
-    if (!form.email || !form.password) {
-      setMessage('Você precisa preencher todos os campos.')
-      return
-    }
-
     try {
+      if (loading) {
+        return
+      }
+
+      if (!form.email || !form.password) {
+        setMessage('Todos campos obrigatórios devem ser preenchidos.')
+        return
+      }
+
       setLoading(true)
 
       const response = await fetchUser({
@@ -74,8 +74,8 @@ const Login: React.FC = () => {
       console.log(error)
       setLoading(false)
 
-      if (error?.response?.data) {
-        setMessage('Algo deu errado com o Login.')
+      if (error?.response?.data?.error) {
+        setMessage(error.response.data.error)
         return
       }
 
@@ -91,7 +91,7 @@ const Login: React.FC = () => {
       <Box flex={1} p={2} bgColor="primary">
         <TextInput
           mode="flat"
-          label="Email"
+          label="Email *"
           placeholder="Digite seu e-mail"
           mb={3}
           onChangeText={(text) => onChange('email', text)}
@@ -99,7 +99,7 @@ const Login: React.FC = () => {
         />
         <TextInput
           mode="flat"
-          label="Password"
+          label="Password *"
           placeholder="Digite sua senha"
           onChangeText={(text) => onChange('password', text)}
           value={form.password}

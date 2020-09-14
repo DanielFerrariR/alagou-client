@@ -86,40 +86,47 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
   }
 
   const submit = async () => {
-    if (loading) {
-      return
+    try {
+      if (loading) {
+        return
+      }
+
+      if (!form.description || !searchAddress || !form.severity) {
+        setMessage('Todos campos obrigatórios devem ser preenchidos.')
+        return
+      }
+
+      setLoading(true)
+
+      const location = await Geocoder.from(searchAddress)
+
+      const latitude = location.results[0].geometry.location.lat
+      const longitude = location.results[0].geometry.location.lng
+
+      const editedFlooding = {
+        _id: route.params._id,
+        description: form.description,
+        address: searchAddress,
+        latitude,
+        longitude,
+        picture: form.picture,
+        severity: Number(form.severity)
+      }
+
+      dispatch(await editFlooding(editedFlooding))
+
+      navigation.navigate('FloodingList')
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+
+      if (error?.response?.data?.error) {
+        setMessage(error.response.data.error)
+        return
+      }
+
+      setMessage('Falha em conectar.')
     }
-
-    if (
-      !form.description ||
-      !searchAddress ||
-      !form.picture ||
-      !form.severity
-    ) {
-      setMessage('Você precisa preencher todos os campos.')
-      return
-    }
-
-    setLoading(true)
-
-    const location = await Geocoder.from(searchAddress)
-
-    const latitude = location.results[0].geometry.location.lat
-    const longitude = location.results[0].geometry.location.lng
-
-    const editedFlooding = {
-      _id: route.params._id,
-      description: form.description,
-      address: searchAddress,
-      latitude,
-      longitude,
-      picture: form.picture,
-      severity: Number(form.severity)
-    }
-
-    dispatch(await editFlooding(editedFlooding))
-
-    navigation.navigate('FloodingList')
   }
 
   return (
@@ -130,7 +137,7 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
       </Appbar.Header>
       <Container p={2}>
         <TextInput
-          label="Descrição"
+          label="Descrição *"
           placeholder="Descreva o alagamento"
           mb={3}
           onChangeText={(text) => onChange('description', text)}
@@ -140,7 +147,7 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
           searchAddress={searchAddress}
           setSearchAddress={setSearchAddress}
           mb={3}
-          label="Localização"
+          label="Localização *"
           placeholder="Informe a localização"
         />
         <Box flexDirection="row" alignItems="center" mb={3}>
@@ -162,13 +169,8 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
         <Box justifyContent="center" alignItems="center" mb={3}>
           <ImageView
             images={[
-              form.picture
-                ? {
-                    uri:
-                      typeof form.picture !== 'string'
-                        ? form.picture.uri
-                        : form.picture
-                  }
+              typeof form.picture !== 'string'
+                ? { uri: form.picture.uri }
                 : require('src/images/no_flooding_picture.png')
             ]}
             imageIndex={0}
@@ -178,13 +180,8 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
           <TouchableOpacity onPress={() => setOpenImage(true)} width={1}>
             <Image
               source={
-                form.picture
-                  ? {
-                      uri:
-                        typeof form.picture !== 'string'
-                          ? form.picture.uri
-                          : form.picture
-                    }
+                typeof form.picture !== 'string'
+                  ? { uri: form.picture.uri }
                   : require('src/images/no_flooding_picture.png')
               }
               width={1}
@@ -204,7 +201,7 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
           onPress={submit}
           loading={loading}
         >
-          Adicionar
+          Editar
         </Button>
       </Container>
       <MessageModal message={message} setMessage={setMessage} />

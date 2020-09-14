@@ -1,6 +1,7 @@
 import React from 'react'
 import MapView, { Circle } from 'react-native-maps'
-import { Typography, Box, ActivityIndicator } from 'src/components/atoms'
+import { Box, ActivityIndicator } from 'src/components/atoms'
+import { MessageModal } from 'src/components/molecules'
 import { useLocation } from 'src/hooks'
 import { FAB, Portal, Provider, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
@@ -8,7 +9,7 @@ import { useNavigation } from '@react-navigation/native'
 const Map: React.FC = () => {
   const theme = useTheme()
   const navigation = useNavigation()
-  const [location, error] = useLocation()
+  const [location, message, setMessage] = useLocation()
   const [openFab, setOpenFab] = React.useState(false)
 
   return (
@@ -76,7 +77,7 @@ const Map: React.FC = () => {
           />
         </Portal>
       </Provider>
-      {error ? <Typography>{error}</Typography> : null}
+      <MessageModal message={message} setMessage={setMessage} />
     </>
   )
 }

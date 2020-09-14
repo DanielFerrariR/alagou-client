@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   Appbar,
   Image,
-  ScrollView
+  ScrollView,
+  Container
 } from 'src/components/atoms'
 import { MessageModal } from 'src/components/molecules'
 import { useDispatch } from 'src/store'
@@ -23,18 +24,20 @@ interface Form {
   email: string
   password: string
   confirmPassword: string
-  picture: null | {
-    fileSize: number
-    type: string
-    isVertical: true
-    height: number
-    path: string
-    width: number
-    originalRotation: number
-    uri: string
-    fileName: string
-    timestamp: string
-  }
+  picture:
+    | string
+    | {
+        fileSize: number
+        type: string
+        isVertical: true
+        height: number
+        path: string
+        width: number
+        originalRotation: number
+        uri: string
+        fileName: string
+        timestamp: string
+      }
   showPassword: boolean
   showConfirmPassword: boolean
 }
@@ -46,7 +49,7 @@ const Register: React.FC = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    picture: null,
+    picture: '',
     showPassword: false,
     showConfirmPassword: false
   })
@@ -63,7 +66,7 @@ const Register: React.FC = () => {
           email: '',
           password: '',
           confirmPassword: '',
-          picture: null,
+          picture: '',
           showPassword: false,
           showConfirmPassword: false
         })
@@ -90,21 +93,26 @@ const Register: React.FC = () => {
   }
 
   const onSubmit = async () => {
-    if (loading) {
-      return
-    }
-
-    if (!form.name || !form.email || !form.password || !form.confirmPassword) {
-      setMessage('Você precisa preencher todos os campos.')
-      return
-    }
-
-    if (form.password !== form.confirmPassword) {
-      setMessage('A confirmação de senha não é igual a senha.')
-      return
-    }
-
     try {
+      if (loading) {
+        return
+      }
+
+      if (
+        !form.name ||
+        !form.email ||
+        !form.password ||
+        !form.confirmPassword
+      ) {
+        setMessage('Todos campos obrigatórios devem ser preenchidos.')
+        return
+      }
+
+      if (form.password !== form.confirmPassword) {
+        setMessage('A confirmação de senha não é igual a senha.')
+        return
+      }
+
       setLoading(true)
 
       const response = await createUser({
@@ -125,8 +133,8 @@ const Register: React.FC = () => {
       console.log(error)
       setLoading(false)
 
-      if (error?.response?.data) {
-        setMessage('Algo deu errado com o registro.')
+      if (error?.response?.data?.error) {
+        setMessage(error.response.data.error)
         return
       }
 
@@ -141,98 +149,100 @@ const Register: React.FC = () => {
         <Appbar.Content title="Faça seu cadastro" />
       </Appbar.Header>
       <ScrollView keyboardShouldPersistTaps="handled">
-        <Box justifyContent="center" alignItems="center" mt={4}>
-          <ImageView
-            images={[
-              form.picture
-                ? { uri: form.picture.uri }
-                : require('src/images/no_picture.png')
-            ]}
-            imageIndex={0}
-            visible={openpicture}
-            onRequestClose={() => setOpenpicture(false)}
-          />
-          <TouchableOpacity
-            onPress={() => setOpenpicture(true)}
-            width={148}
-            mb={1}
-          >
-            <Image
-              source={
-                form.picture
+        <Container>
+          <Box justifyContent="center" alignItems="center" mt={4}>
+            <ImageView
+              images={[
+                typeof form.picture !== 'string'
                   ? { uri: form.picture.uri }
                   : require('src/images/no_picture.png')
-              }
-              width={148}
-              height={148}
-              borderRadius={148 / 2}
+              ]}
+              imageIndex={0}
+              visible={openpicture}
+              onRequestClose={() => setOpenpicture(false)}
             />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleChoosePhoto}>
-            <Typography variant="h3" color="primary" fontWeight="bold">
-              Adicionar Foto
-            </Typography>
-          </TouchableOpacity>
-        </Box>
-        <Box mt={3} p={2} mb={4}>
-          <TextInput
-            label="Nome"
-            placeholder="Digite seu nome"
-            mb={3}
-            onChangeText={(text) => onChange('name', text)}
-            value={form.name}
-          />
-          <TextInput
-            label="Email"
-            placeholder="Digite seu e-mail"
-            mb={3}
-            onChangeText={(text) => onChange('email', text)}
-            value={form.email}
-          />
-          <TextInput
-            label="Senha"
-            placeholder="Digite sua senha"
-            mb={3}
-            onChangeText={(text) => onChange('password', text)}
-            value={form.password}
-            secureTextEntry={!form.showPassword}
-            right={
-              <OldTextInput.Icon
-                onPress={() =>
-                  setForm({ ...form, showPassword: !form.showPassword })
+            <TouchableOpacity
+              onPress={() => setOpenpicture(true)}
+              width={148}
+              mb={1}
+            >
+              <Image
+                source={
+                  typeof form.picture !== 'string'
+                    ? { uri: form.picture.uri }
+                    : require('src/images/no_picture.png')
                 }
-                name={form.showPassword ? 'eye' : 'eye-off'}
+                width={148}
+                height={148}
+                borderRadius={148 / 2}
               />
-            }
-          />
-          <TextInput
-            label="Confirmação de senha"
-            placeholder="Digite a confirmação de senha"
-            mb={3}
-            onChangeText={(text) => onChange('confirmPassword', text)}
-            value={form.confirmPassword}
-            secureTextEntry={!form.showConfirmPassword}
-            right={
-              <OldTextInput.Icon
-                onPress={() =>
-                  setForm({
-                    ...form,
-                    showConfirmPassword: !form.showConfirmPassword
-                  })
-                }
-                name={form.showConfirmPassword ? 'eye' : 'eye-off'}
-              />
-            }
-          />
-          <Button
-            onPress={onSubmit}
-            loading={loading}
-            color="accent"
-            labelStyle={{ color: 'white' }}
-          >
-            Cadastrar
-          </Button>
-        </Box>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleChoosePhoto}>
+              <Typography variant="h3" color="primary" fontWeight="bold">
+                Adicionar Foto
+              </Typography>
+            </TouchableOpacity>
+          </Box>
+          <Box mt={3} p={2} mb={4}>
+            <TextInput
+              label="Nome *"
+              placeholder="Digite seu nome"
+              mb={3}
+              onChangeText={(text) => onChange('name', text)}
+              value={form.name}
+            />
+            <TextInput
+              label="Email *"
+              placeholder="Digite seu e-mail"
+              mb={3}
+              onChangeText={(text) => onChange('email', text)}
+              value={form.email}
+            />
+            <TextInput
+              label="Senha *"
+              placeholder="Digite sua senha"
+              mb={3}
+              onChangeText={(text) => onChange('password', text)}
+              value={form.password}
+              secureTextEntry={!form.showPassword}
+              right={
+                <OldTextInput.Icon
+                  onPress={() =>
+                    setForm({ ...form, showPassword: !form.showPassword })
+                  }
+                  name={form.showPassword ? 'eye' : 'eye-off'}
+                />
+              }
+            />
+            <TextInput
+              label="Confirmação de senha *"
+              placeholder="Digite a confirmação de senha"
+              mb={3}
+              onChangeText={(text) => onChange('confirmPassword', text)}
+              value={form.confirmPassword}
+              secureTextEntry={!form.showConfirmPassword}
+              right={
+                <OldTextInput.Icon
+                  onPress={() =>
+                    setForm({
+                      ...form,
+                      showConfirmPassword: !form.showConfirmPassword
+                    })
+                  }
+                  name={form.showConfirmPassword ? 'eye' : 'eye-off'}
+                />
+              }
+            />
+            <Button
+              onPress={onSubmit}
+              loading={loading}
+              color="accent"
+              labelStyle={{ color: 'white' }}
+            >
+              Cadastrar
+            </Button>
+          </Box>
+        </Container>
       </ScrollView>
       <MessageModal message={message} setMessage={setMessage} />
     </>

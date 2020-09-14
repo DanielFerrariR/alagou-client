@@ -22,18 +22,20 @@ import { useDispatch } from 'src/store'
 
 interface Form {
   description: string
-  picture: null | {
-    fileSize: number
-    type: string
-    isVertical: true
-    height: number
-    path: string
-    width: number
-    originalRotation: number
-    uri: string
-    fileName: string
-    timestamp: string
-  }
+  picture:
+    | string
+    | {
+        fileSize: number
+        type: string
+        isVertical: true
+        height: number
+        path: string
+        width: number
+        originalRotation: number
+        uri: string
+        fileName: string
+        timestamp: string
+      }
   severity: '1' | '2' | '3'
 }
 
@@ -41,7 +43,7 @@ const AddFlodding: React.FC = () => {
   const [openImage, setOpenImage] = useState(false)
   const [form, setForm] = useState<Form>({
     description: '',
-    picture: null,
+    picture: '',
     severity: '1'
   })
   const navigation = useNavigation()
@@ -70,40 +72,47 @@ const AddFlodding: React.FC = () => {
   }
 
   const submit = async () => {
-    if (loading) {
-      return
+    try {
+      if (loading) {
+        return
+      }
+
+      if (!form.description || !searchAddress || !form.severity) {
+        setMessage('Todos campos obrigatórios devem ser preenchidos.')
+        return
+      }
+
+      setLoading(true)
+
+      const location = await Geocoder.from(searchAddress)
+
+      const latitude = location.results[0].geometry.location.lat
+      const longitude = location.results[0].geometry.location.lng
+
+      const newFlooding = {
+        description: form.description,
+        address: searchAddress,
+        latitude,
+        longitude,
+        picture: form.picture,
+        severity: Number(form.severity),
+        date: new Date().getTime()
+      }
+
+      dispatch(await createFlooding(newFlooding))
+
+      navigation.navigate('Home')
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+
+      if (error?.response?.data?.error) {
+        setMessage(error.response.data.error)
+        return
+      }
+
+      setMessage('Falha em conectar.')
     }
-
-    if (
-      !form.description ||
-      !searchAddress ||
-      !form.picture ||
-      !form.severity
-    ) {
-      setMessage('Você precisa preencher todos os campos.')
-      return
-    }
-
-    setLoading(true)
-
-    const location = await Geocoder.from(searchAddress)
-
-    const latitude = location.results[0].geometry.location.lat
-    const longitude = location.results[0].geometry.location.lng
-
-    const newFlooding = {
-      description: form.description,
-      address: searchAddress,
-      latitude,
-      longitude,
-      picture: form.picture,
-      severity: Number(form.severity),
-      date: new Date().getTime()
-    }
-
-    dispatch(await createFlooding(newFlooding))
-
-    navigation.navigate('Home')
   }
 
   return (
@@ -114,7 +123,7 @@ const AddFlodding: React.FC = () => {
       </Appbar.Header>
       <Container p={2}>
         <TextInput
-          label="Descrição"
+          label="Descrição *"
           placeholder="Descreva o alagamento"
           mb={3}
           onChangeText={(text) => onChange('description', text)}
@@ -124,7 +133,7 @@ const AddFlodding: React.FC = () => {
           searchAddress={searchAddress}
           setSearchAddress={setSearchAddress}
           mb={3}
-          label="Localização"
+          label="Localização *"
           placeholder="Informe a localização"
         />
         <Box flexDirection="row" alignItems="center" mb={3}>
@@ -146,7 +155,7 @@ const AddFlodding: React.FC = () => {
         <Box justifyContent="center" alignItems="center" mb={3}>
           <ImageView
             images={[
-              form.picture
+              typeof form.picture !== 'string'
                 ? { uri: form.picture.uri }
                 : require('src/images/no_flooding_picture.png')
             ]}
@@ -157,7 +166,7 @@ const AddFlodding: React.FC = () => {
           <TouchableOpacity onPress={() => setOpenImage(true)} width={1}>
             <Image
               source={
-                form.picture
+                typeof form.picture !== 'string'
                   ? { uri: form.picture.uri }
                   : require('src/images/no_flooding_picture.png')
               }
