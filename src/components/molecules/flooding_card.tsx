@@ -16,6 +16,7 @@ import { FloodingsState } from 'src/store/floodings'
 import { useSelector, useDispatch } from 'src/store'
 import { addFavorite, removeFavorite } from 'src/store/user'
 import AsyncStorage from '@react-native-community/async-storage'
+import { Dimensions } from 'react-native'
 
 interface Props {
   data: FloodingsState[0]
@@ -95,17 +96,11 @@ const FloadingList: React.FC<Props> = ({ data }) => {
               borderRadius={48 / 2}
             />
           </TouchableOpacity>
-          <Box>
-            <Typography
-              variant="h4"
-              ellipsizeMode="tail"
-              numberOfLines={1}
-              width={240}
-            >
+          <Box width={Dimensions.get('window').width - 148}>
+            <Typography variant="h4" ellipsizeMode="tail" numberOfLines={1}>
               {data.userName}
             </Typography>
             <Typography
-              width={240}
               fontWeight="bold"
               ellipsizeMode="tail"
               numberOfLines={1}
@@ -113,12 +108,7 @@ const FloadingList: React.FC<Props> = ({ data }) => {
             >
               {data.description}
             </Typography>
-            <Typography
-              width={240}
-              variant="h4"
-              ellipsizeMode="tail"
-              numberOfLines={1}
-            >
+            <Typography variant="h4" ellipsizeMode="tail" numberOfLines={1}>
               {data.address}
             </Typography>
           </Box>
