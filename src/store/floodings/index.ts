@@ -1,3 +1,9 @@
-export { fetchFloodings, createFlooding, updateFloodings } from './actions'
+export {
+  fetchFloodings,
+  createFlooding,
+  editFlooding,
+  removeFlooding,
+  updateFloodings
+} from './actions'
 export { default as floodingsReducer } from './reducer'
 export * from './types'

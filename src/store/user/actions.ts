@@ -81,9 +81,7 @@ const createUser = async (data: CreateUserData): Promise<CreateUserAction> => {
     })
   }
 
-  const response = await serverAPI.post<UserState>('/register', formData, {
-    handlerEnabled: false
-  })
+  const response = await serverAPI.post<UserState>('/register', formData)
 
   return {
     type: CREATE_USER,
@@ -92,13 +90,7 @@ const createUser = async (data: CreateUserData): Promise<CreateUserAction> => {
 }
 
 const fetchUser = async (data: FetchUserData): Promise<FetchUserAction> => {
-  const response = await serverAPI.post<UserState>(
-    '/login',
-    { ...data },
-    {
-      handlerEnabled: false
-    }
-  )
+  const response = await serverAPI.post<UserState>('/login', { ...data })
 
   return {
     type: FETCH_USER,

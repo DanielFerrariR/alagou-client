@@ -38,6 +38,7 @@ const AddressSearchInput: React.FC<Props> = ({
   const [openSearchBox, setOpenSearchBox] = useState(false)
   const [results, setResults] = useState<string[] | null>(null)
   const [loadingLocation, setLoadingLocation] = useState(false)
+  const [initialRender, setInitialRender] = useState(false)
   const theme = useTheme()
   const inputRef = useRef<any>()
   const skipRef = useRef<boolean>(false)
@@ -46,6 +47,12 @@ const AddressSearchInput: React.FC<Props> = ({
   Geocoder.init(GOOGLE_MAPS_API_KEY)
 
   useEffect(() => {
+    if (!initialRender) {
+      setInitialRender(true)
+
+      return
+    }
+
     if (skipRef.current) {
       inputRef.current.blur()
 

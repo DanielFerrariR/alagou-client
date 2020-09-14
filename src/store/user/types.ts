@@ -8,6 +8,7 @@ export type UserState = {
   token: string
   level: number
   favorites: string[]
+  isAdmin: boolean
 }
 
 export const CREATE_USER = 'CREATE_USER'
@@ -29,6 +30,7 @@ export interface AddFavoriteAxiosResponse {
   picture: string
   level: number
   favorites: string[]
+  isAdmin: boolean
 }
 
 export interface RemoveFavoriteAxiosResponse {
@@ -38,6 +40,7 @@ export interface RemoveFavoriteAxiosResponse {
   picture: string
   level: number
   favorites: string[]
+  isAdmin: boolean
 }
 
 export interface CreateUserData {

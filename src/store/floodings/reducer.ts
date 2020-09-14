@@ -3,6 +3,8 @@ import {
   FloodingActionsTypes,
   FETCH_FLOODINGS,
   CREATE_FLOODING,
+  EDIT_FLOODING,
+  REMOVE_FLOODING,
   UPDATE_FLOODINGS
 } from './types'
 
@@ -16,6 +18,10 @@ const FloodingReducer = (
     case FETCH_FLOODINGS:
       return action.payload
     case CREATE_FLOODING:
+      return action.payload
+    case EDIT_FLOODING:
+      return action.payload
+    case REMOVE_FLOODING:
       return action.payload
     case UPDATE_FLOODINGS:
       return action.payload

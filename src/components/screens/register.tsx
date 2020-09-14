@@ -206,7 +206,7 @@ const Register: React.FC = () => {
             }
           />
           <TextInput
-            label="Confirmação de senha *"
+            label="Confirmação de senha"
             placeholder="Digite a confirmação de senha"
             mb={3}
             onChangeText={(text) => onChange('confirmPassword', text)}

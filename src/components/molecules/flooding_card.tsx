@@ -12,11 +12,12 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { useTheme } from 'react-native-paper'
 import { formatDate, ensure } from 'src/utils'
 import ImageView from 'react-native-image-viewing'
-import { FloodingsState } from 'src/store/floodings'
+import { FloodingsState, removeFlooding } from 'src/store/floodings'
 import { useSelector, useDispatch } from 'src/store'
 import { addFavorite, removeFavorite } from 'src/store/user'
 import AsyncStorage from '@react-native-community/async-storage'
 import { Dimensions } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 interface Props {
   data: FloodingsState[0]
@@ -35,16 +36,34 @@ const FloadingList: React.FC<Props> = ({ data }) => {
     theme.colors.custom.danger
   ]
   const isFavorite = userSession.favorites.includes(data._id)
+  const [loadingFavorite, setLoadingFavorite] = useState(false)
+  const [loadingExcludeCard, setLoadingExcludeCard] = useState(false)
+  const navigation = useNavigation()
 
   const editCard = () => {
     setOpen(false)
+
+    navigation.navigate('EditFlooding', { _id: data._id })
   }
 
-  const excludeCard = () => {
+  const excludeCard = async () => {
+    if (loadingExcludeCard) {
+      return
+    }
+
     setOpen(false)
+    setLoadingExcludeCard(true)
+
+    dispatch(await removeFlooding(data._id))
   }
 
   const updateFavorite = async () => {
+    if (loadingFavorite) {
+      return
+    }
+
+    setLoadingFavorite(true)
+
     try {
       if (isFavorite) {
         const { payload } = dispatch(
@@ -64,6 +83,8 @@ const FloadingList: React.FC<Props> = ({ data }) => {
     } catch (error) {
       console.log(error)
     }
+
+    setLoadingFavorite(false)
   }
 
   return (
