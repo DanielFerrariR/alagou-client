@@ -7,6 +7,7 @@ export type UserState = {
   picture: string
   token: string
   level: number
+  favorites: string[]
 }
 
 export const CREATE_USER = 'CREATE_USER'
@@ -16,6 +17,28 @@ export const FETCH_USER = 'FETCH_USER'
 export const SET_LOGGED_USER = 'SET_LOGGED_USER'
 
 export const SET_NOT_LOGGED_USER = 'SET_NOT_LOGGED_USER'
+
+export const ADD_FAVORITE = 'ADD_FAVORITE'
+
+export const REMOVE_FAVORITE = 'REMOVE_FAVORITE'
+
+export interface AddFavoriteAxiosResponse {
+  _id: string
+  name: string
+  email: string
+  picture: string
+  level: number
+  favorites: string[]
+}
+
+export interface RemoveFavoriteAxiosResponse {
+  _id: string
+  name: string
+  email: string
+  picture: string
+  level: number
+  favorites: string[]
+}
 
 export interface CreateUserData {
   name: string
@@ -60,9 +83,21 @@ export interface SetNotLoggedUserAction {
   payload: false
 }
 
+export interface AddFavoriteAction {
+  type: typeof ADD_FAVORITE
+  payload: UserState
+}
+
+export interface RemoveFavoriteAction {
+  type: typeof REMOVE_FAVORITE
+  payload: UserState
+}
+
 export type UserActionsTypes =
   | CreateUserAction
   | FetchUserAction
   | SetLoggedUserAction
   | SetNotLoggedUserAction
+  | AddFavoriteAction
+  | RemoveFavoriteAction
   | DestroySessionActionTypes

@@ -20,7 +20,9 @@
     "react/jsx-props-no-spreading": "off",
     "no-restricted-syntax": "off",
     "no-underscore-dangle": "off",
-    "react/no-array-index-key": "off"
+    "react/no-array-index-key": "off",
+    "import/no-mutable-exports": "off",
+    "no-param-reassign": "off"
   },
   "overrides": [
     {
@@ -54,7 +56,9 @@
         "react/jsx-props-no-spreading": "off",
         "no-restricted-syntax": "off",
         "no-underscore-dangle": "off",
-        "react/no-array-index-key": "off"
+        "react/no-array-index-key": "off",
+        "import/no-mutable-exports": "off",
+        "no-param-reassign": "off"
       }
     }
   ]

@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosError } from 'axios'
 import { API_ADDRESS } from '@env'
 import AsyncStorage from '@react-native-community/async-storage'
+import { eventEmitterInstance } from 'src/utils'
 
 const axiosConfig = {
   baseURL: API_ADDRESS
@@ -9,6 +10,11 @@ const axiosConfig = {
 const serverAPI = axios.create(axiosConfig)
 
 const errorHandler = (error: AxiosError) => {
+  if (error?.config?.handlerEnabled !== false) {
+    if (error?.response?.status === 401) {
+      eventEmitterInstance.emit('logout', { detail: true })
+    }
+  }
   return Promise.reject(error)
 }
 
@@ -18,7 +24,6 @@ const successHandler = async (config: AxiosRequestConfig) => {
   if (userData) {
     const newUserData = JSON.parse(userData)
 
-    // eslint-disable-next-line no-param-reassign
     config.headers.Authorization = `Bearer ${newUserData.token}`
   }
 

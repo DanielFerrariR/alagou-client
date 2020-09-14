@@ -33,6 +33,7 @@
     "@react-navigation/stack": "^5.9.0",
     "axios": "0.19.2",
     "color": "3.1.2",
+    "eventemitter3": "4.0.7",
     "react": "16.13.1",
     "react-native": "0.63.2",
     "react-native-geocoding": "0.4.0",

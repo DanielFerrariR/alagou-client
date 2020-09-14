@@ -3,8 +3,8 @@ import { DrawerContent } from 'src/components/organisms'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
 const DrawerNavigator: React.FC = ({ children }) => {
-  const [initRender, setInitRender] = useState(true)
   const Drawer = createDrawerNavigator()
+  const [initRender, setInitRender] = useState(true)
 
   useEffect(() => {
     setInitRender(false)

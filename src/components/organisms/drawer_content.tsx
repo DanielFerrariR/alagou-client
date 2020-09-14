@@ -1,25 +1,20 @@
 import React, { useState } from 'react'
 import { Box, Typography, TouchableOpacity, Image } from 'src/components/atoms'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { useSelector, useDispatch } from 'src/store'
-import { destroySession } from 'src/store/destroy_session'
-import AsyncStorage from '@react-native-community/async-storage'
-import { ensure } from 'src/utils'
+import { useSelector } from 'src/store'
 import { useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import ImageView from 'react-native-image-viewing'
+import { ensure, eventEmitterInstance } from 'src/utils'
 
 const DrawerContent: React.FC = () => {
   const [openPicture, setOpenPicture] = useState(false)
   const userSession = ensure(useSelector((state) => state.user))
-  const dispatch = useDispatch()
   const theme = useTheme()
   const navigation = useNavigation()
 
   const logout = async () => {
-    await AsyncStorage.removeItem('@user')
-
-    dispatch(destroySession())
+    eventEmitterInstance.emit('logout')
   }
 
   return (

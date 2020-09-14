@@ -13,7 +13,9 @@ import { useTheme } from 'react-native-paper'
 import { formatDate, ensure } from 'src/utils'
 import ImageView from 'react-native-image-viewing'
 import { FloodingsState } from 'src/store/floodings'
-import { useSelector } from 'src/store'
+import { useSelector, useDispatch } from 'src/store'
+import { addFavorite, removeFavorite } from 'src/store/user'
+import AsyncStorage from '@react-native-community/async-storage'
 
 interface Props {
   data: FloodingsState[0]
@@ -21,6 +23,7 @@ interface Props {
 
 const FloadingList: React.FC<Props> = ({ data }) => {
   const userSession = ensure(useSelector((state) => state.user))
+  const dispatch = useDispatch()
   const [openPicture, setOpenPicture] = useState(false)
   const [openUserPicture, setOpenUserPicture] = useState(false)
   const [open, setOpen] = useState(false)
@@ -30,7 +33,7 @@ const FloadingList: React.FC<Props> = ({ data }) => {
     theme.colors.custom.moderate,
     theme.colors.custom.danger
   ]
-  const isFavorite = false
+  const isFavorite = userSession.favorites.includes(data._id)
 
   const editCard = () => {
     setOpen(false)
@@ -40,7 +43,27 @@ const FloadingList: React.FC<Props> = ({ data }) => {
     setOpen(false)
   }
 
-  const makeFavorite = () => {}
+  const updateFavorite = async () => {
+    try {
+      if (isFavorite) {
+        const { payload } = dispatch(
+          await removeFavorite(userSession, data._id)
+        )
+
+        const userData = JSON.stringify(payload)
+
+        await AsyncStorage.setItem('@user', userData)
+      } else {
+        const { payload } = dispatch(await addFavorite(userSession, data._id))
+
+        const userData = JSON.stringify(payload)
+
+        await AsyncStorage.setItem('@user', userData)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <>
@@ -148,7 +171,7 @@ const FloadingList: React.FC<Props> = ({ data }) => {
             icon="star"
             color={isFavorite ? 'custom.star' : 'custom.starOff'}
             size={24}
-            onPress={makeFavorite}
+            onPress={updateFavorite}
           />
         </Box>
         <Box

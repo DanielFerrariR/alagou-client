@@ -3,8 +3,14 @@ import {
   UserState,
   CreateUserAction,
   FetchUserAction,
+  AddFavoriteAction,
+  RemoveFavoriteAction,
+  AddFavoriteAxiosResponse,
+  RemoveFavoriteAxiosResponse,
   CREATE_USER,
   FETCH_USER,
+  ADD_FAVORITE,
+  REMOVE_FAVORITE,
   CreateUserData,
   FetchUserData,
   SetLoggedUserAction,
@@ -12,6 +18,40 @@ import {
   SET_LOGGED_USER,
   SET_NOT_LOGGED_USER
 } from './types'
+
+const addFavorite = async (
+  userSession: UserState,
+  _id: string
+): Promise<AddFavoriteAction> => {
+  const response = await serverAPI.post<AddFavoriteAxiosResponse>(
+    '/add_favorite',
+    {
+      _id
+    }
+  )
+
+  return {
+    type: ADD_FAVORITE,
+    payload: { ...response.data, token: userSession.token }
+  }
+}
+
+const removeFavorite = async (
+  userSession: UserState,
+  _id: string
+): Promise<RemoveFavoriteAction> => {
+  const response = await serverAPI.post<RemoveFavoriteAxiosResponse>(
+    '/remove_favorite',
+    {
+      _id
+    }
+  )
+
+  return {
+    type: REMOVE_FAVORITE,
+    payload: { ...response.data, token: userSession.token }
+  }
+}
 
 const setLoggedUser = (userSession: UserState): SetLoggedUserAction => {
   return {
@@ -41,7 +81,9 @@ const createUser = async (data: CreateUserData): Promise<CreateUserAction> => {
     })
   }
 
-  const response = await serverAPI.post<UserState>('/register', formData)
+  const response = await serverAPI.post<UserState>('/register', formData, {
+    handlerEnabled: false
+  })
 
   return {
     type: CREATE_USER,
@@ -50,7 +92,13 @@ const createUser = async (data: CreateUserData): Promise<CreateUserAction> => {
 }
 
 const fetchUser = async (data: FetchUserData): Promise<FetchUserAction> => {
-  const response = await serverAPI.post<UserState>('/login', { ...data })
+  const response = await serverAPI.post<UserState>(
+    '/login',
+    { ...data },
+    {
+      handlerEnabled: false
+    }
+  )
 
   return {
     type: FETCH_USER,
@@ -58,4 +106,11 @@ const fetchUser = async (data: FetchUserData): Promise<FetchUserAction> => {
   }
 }
 
-export { createUser, fetchUser, setLoggedUser, setNotLoggedUser }
+export {
+  createUser,
+  fetchUser,
+  setLoggedUser,
+  setNotLoggedUser,
+  addFavorite,
+  removeFavorite
+}

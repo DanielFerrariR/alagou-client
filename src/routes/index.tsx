@@ -24,7 +24,12 @@ import { Provider as PaperProvider } from 'react-native-paper'
 import { theme } from 'src/styles'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { DrawerNavigator, FloodingsSocket, FetchReduxStore } from 'src/utils'
+import {
+  DrawerNavigator,
+  FloodingsSocket,
+  FetchReduxStore,
+  LogoutListenner
+} from 'src/utils'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
 const Routes: React.FC = () => {
@@ -135,6 +140,7 @@ const RoutesContainer: React.FC = () => {
         <Routes />
         <FloodingsSocket />
         <FetchReduxStore />
+        <LogoutListenner />
       </Provider>
     </PaperProvider>
   )
