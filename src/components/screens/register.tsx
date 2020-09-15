@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState } from 'react'
 import {
   Typography,
   TextInput,
@@ -14,7 +14,7 @@ import { MessageModal } from 'src/components/molecules'
 import { useDispatch } from 'src/store'
 import { createUser } from 'src/store/user'
 import AsyncStorage from '@react-native-community/async-storage'
-import { useNavigation, useFocusEffect } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import ImagePicker from 'react-native-image-picker'
 import { TextInput as OldTextInput } from 'react-native-paper'
 import ImageView from 'react-native-image-viewing'
@@ -53,30 +53,12 @@ const Register: React.FC = () => {
     showPassword: false,
     showConfirmPassword: false
   })
-  const [message, setMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
   const [loading, setLoading] = useState(false)
   const navigation = useNavigation()
   const dispatch = useDispatch()
 
-  useFocusEffect(
-    useCallback(() => {
-      return () => {
-        setForm({
-          name: '',
-          email: '',
-          password: '',
-          confirmPassword: '',
-          picture: '',
-          showPassword: false,
-          showConfirmPassword: false
-        })
-        setMessage('')
-      }
-    }, [])
-  )
-
   const onChange = (name: keyof typeof form, text: string) => {
-    setMessage('')
     setForm({ ...form, [name]: text })
   }
 
@@ -104,12 +86,12 @@ const Register: React.FC = () => {
         !form.password ||
         !form.confirmPassword
       ) {
-        setMessage('Todos campos obrigatórios devem ser preenchidos.')
+        setErrorMessage('Todos campos obrigatórios devem ser preenchidos.')
         return
       }
 
       if (form.password !== form.confirmPassword) {
-        setMessage('A confirmação de senha não é igual a senha.')
+        setErrorMessage('A confirmação de senha não é igual a senha.')
         return
       }
 
@@ -134,11 +116,11 @@ const Register: React.FC = () => {
       setLoading(false)
 
       if (error?.response?.data?.error) {
-        setMessage(error.response.data.error)
+        setErrorMessage(error.response.data.error)
         return
       }
 
-      setMessage('Falha em conectar.')
+      setErrorMessage('Falha em conectar.')
     }
   }
 
@@ -244,7 +226,7 @@ const Register: React.FC = () => {
           </Box>
         </Container>
       </ScrollView>
-      <MessageModal message={message} setMessage={setMessage} />
+      <MessageModal message={errorMessage} setMessage={setErrorMessage} error />
     </>
   )
 }

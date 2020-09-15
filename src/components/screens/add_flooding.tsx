@@ -51,7 +51,7 @@ const AddFlodding: React.FC = () => {
   const theme = useTheme()
   const Geocoder = GeocoderLibrary as any
   const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
   const dispatch = useDispatch()
 
   Geocoder.init(GOOGLE_MAPS_API_KEY)
@@ -78,7 +78,7 @@ const AddFlodding: React.FC = () => {
       }
 
       if (!form.description || !searchAddress || !form.severity) {
-        setMessage('Todos campos obrigatórios devem ser preenchidos.')
+        setErrorMessage('Todos campos obrigatórios devem ser preenchidos.')
         return
       }
 
@@ -107,11 +107,11 @@ const AddFlodding: React.FC = () => {
       setLoading(false)
 
       if (error?.response?.data?.error) {
-        setMessage(error.response.data.error)
+        setErrorMessage(error.response.data.error)
         return
       }
 
-      setMessage('Falha em conectar.')
+      setErrorMessage('Falha em conectar.')
     }
   }
 
@@ -190,7 +190,7 @@ const AddFlodding: React.FC = () => {
           Adicionar
         </Button>
       </Container>
-      <MessageModal message={message} setMessage={setMessage} />
+      <MessageModal message={errorMessage} setMessage={setErrorMessage} error />
     </>
   )
 }

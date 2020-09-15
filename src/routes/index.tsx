@@ -17,7 +17,9 @@ import {
   EditProfile,
   Settings,
   AddFlooding,
-  EditFlooding
+  EditFlooding,
+  Support,
+  About
 } from 'src/components/screens'
 import store from 'src/utils/redux'
 import { useSelector } from 'src/store'
@@ -109,13 +111,15 @@ const Routes: React.FC = () => {
             {userSession ? (
               <>
                 <Stack.Screen name="DrawerFlow" component={DrawerFlow} />
+                <Stack.Screen name="Settings" component={Settings} />
                 <Stack.Screen name="AddFlooding" component={AddFlooding} />
                 <Stack.Screen name="EditFlooding" component={EditFlooding} />
                 <Stack.Screen name="Alerts" component={Alerts} />
                 <Stack.Screen name="Contributions" component={Contributions} />
                 <Stack.Screen name="Favorites" component={Favorites} />
                 <Stack.Screen name="EditProfile" component={EditProfile} />
-                <Stack.Screen name="Settings" component={Settings} />
+                <Stack.Screen name="Support" component={Support} />
+                <Stack.Screen name="About" component={About} />
               </>
             ) : (
               <>

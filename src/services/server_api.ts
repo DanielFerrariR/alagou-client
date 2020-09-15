@@ -12,7 +12,7 @@ const serverAPI = axios.create(axiosConfig)
 const errorHandler = (error: AxiosError) => {
   if (error?.config?.handlerEnabled !== false) {
     if (error?.response?.status === 401) {
-      eventEmitterInstance.emit('logout', { detail: true })
+      eventEmitterInstance.emit('logout', { detail: 'Não autorizado.' })
     }
   }
   return Promise.reject(error)

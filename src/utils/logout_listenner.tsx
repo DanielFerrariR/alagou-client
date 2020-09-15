@@ -8,14 +8,14 @@ const LogoutListenners: React.FC = () => {
   const [message, setMessage] = useState('')
   const dispatch = useDispatch()
 
-  const logout = async (args: { detail: boolean }) => {
+  const logout = async (args: { detail: string }) => {
     try {
       await AsyncStorage.removeItem('@user')
 
       dispatch(destroySession())
 
       if (args?.detail) {
-        setMessage('Não autorizado.')
+        setMessage(args.detail)
       }
     } catch (error) {
       console.error(error)
@@ -28,7 +28,14 @@ const LogoutListenners: React.FC = () => {
     return () => eventEmitterInstance.removeListener('logout', logout)
   }, [])
 
-  return <MessageModal message={message} setMessage={setMessage} />
+  return (
+    <MessageModal
+      message={message}
+      setMessage={setMessage}
+      error={message === 'Não autorizado.'}
+      success={message === 'Usuário deletado com sucesso!'}
+    />
+  )
 }
 
 export default LogoutListenners

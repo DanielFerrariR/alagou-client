@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native'
 const Map: React.FC = () => {
   const theme = useTheme()
   const navigation = useNavigation()
-  const [location, message, setMessage] = useLocation()
+  const [location, errorMessage, setErrorMessage] = useLocation()
   const [openFab, setOpenFab] = React.useState(false)
 
   return (
@@ -77,7 +77,7 @@ const Map: React.FC = () => {
           />
         </Portal>
       </Provider>
-      <MessageModal message={message} setMessage={setMessage} />
+      <MessageModal message={errorMessage} setMessage={setErrorMessage} error />
     </>
   )
 }

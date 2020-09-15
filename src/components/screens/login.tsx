@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState } from 'react'
 import {
   Typography,
   Button,
@@ -12,7 +12,7 @@ import { MessageModal } from 'src/components/molecules'
 import { useDispatch } from 'src/store'
 import { fetchUser } from 'src/store/user'
 import AsyncStorage from '@react-native-community/async-storage'
-import { useNavigation, useFocusEffect } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { useTheme, TextInput as OldTextInput } from 'react-native-paper'
 
 const Login: React.FC = () => {
@@ -23,25 +23,11 @@ const Login: React.FC = () => {
     showPassword: false
   })
   const dispatch = useDispatch()
-  const [message, setMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
   const navigation = useNavigation()
   const [loading, setLoading] = useState(false)
 
-  useFocusEffect(
-    useCallback(() => {
-      return () => {
-        setForm({
-          email: '',
-          password: '',
-          showPassword: false
-        })
-        setMessage('')
-      }
-    }, [])
-  )
-
   const onChange = (name: keyof typeof form, text: string) => {
-    setMessage('')
     setForm({ ...form, [name]: text })
   }
 
@@ -52,7 +38,7 @@ const Login: React.FC = () => {
       }
 
       if (!form.email || !form.password) {
-        setMessage('Todos campos obrigatórios devem ser preenchidos.')
+        setErrorMessage('Todos campos obrigatórios devem ser preenchidos.')
         return
       }
 
@@ -75,11 +61,11 @@ const Login: React.FC = () => {
       setLoading(false)
 
       if (error?.response?.data?.error) {
-        setMessage(error.response.data.error)
+        setErrorMessage(error.response.data.error)
         return
       }
 
-      setMessage('Falha em conectar.')
+      setErrorMessage('Falha em conectar.')
     }
   }
 
@@ -149,7 +135,7 @@ const Login: React.FC = () => {
           </Typography>
         </TouchableOpacity>
       </Box>
-      <MessageModal message={message} setMessage={setMessage} />
+      <MessageModal message={errorMessage} setMessage={setErrorMessage} error />
     </Container>
   )
 }

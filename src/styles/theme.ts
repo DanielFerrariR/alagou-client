@@ -22,6 +22,9 @@ declare global {
         information: string
         trash: string
         email: string
+        error: string
+        success: string
+        warning: string
       }
     }
   }
@@ -45,7 +48,10 @@ const custom = {
   shimmer: 'rgba(0, 0, 0, 0.11)',
   information: '#349aef',
   trash: '#e8641b',
-  email: '#00b034'
+  email: '#00b034',
+  error: '#f44336',
+  success: '#388e3c',
+  warning: '#ff9800'
 }
 
 const theme = {

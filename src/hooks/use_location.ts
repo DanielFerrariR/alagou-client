@@ -10,7 +10,7 @@ type UseLocation = [
 ]
 
 const useLocation = (): UseLocation => {
-  const [message, setMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
   const watchId = useRef<number>()
   const [location, setLocation] = useState<Geolocation.GeoPosition | null>(null)
 
@@ -43,7 +43,7 @@ const useLocation = (): UseLocation => {
         { enableHighAccuracy: true, interval: 1000, distanceFilter: 10 }
       )
     } else {
-      setMessage('Por favor, habilite o serviço de localização.')
+      setErrorMessage('Por favor, habilite o serviço de localização.')
     }
   }
 
@@ -67,7 +67,7 @@ const useLocation = (): UseLocation => {
     }, [])
   )
 
-  return [location, message, setMessage]
+  return [location, errorMessage, setErrorMessage]
 }
 
 export default useLocation

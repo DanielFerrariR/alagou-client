@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState } from 'react'
 import {
   Typography,
   TextInput,
@@ -14,7 +14,7 @@ import { MessageModal } from 'src/components/molecules'
 import { useDispatch, useSelector } from 'src/store'
 import { editUser } from 'src/store/user'
 import AsyncStorage from '@react-native-community/async-storage'
-import { useNavigation, useFocusEffect } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import ImagePicker from 'react-native-image-picker'
 import { TextInput as OldTextInput } from 'react-native-paper'
 import ImageView from 'react-native-image-viewing'
@@ -59,32 +59,13 @@ const EditProfile: React.FC = () => {
     showNewPassword: false,
     showConfirmNewPassword: false
   })
-  const [message, setMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
   const [loading, setLoading] = useState(false)
   const navigation = useNavigation()
   const dispatch = useDispatch()
 
-  useFocusEffect(
-    useCallback(() => {
-      return () => {
-        setForm({
-          name: '',
-          email: '',
-          oldPassword: '',
-          newPassword: '',
-          confirmNewPassword: '',
-          picture: '',
-          showOldPassword: false,
-          showNewPassword: false,
-          showConfirmNewPassword: false
-        })
-        setMessage('')
-      }
-    }, [])
-  )
-
   const onChange = (name: keyof typeof form, text: string) => {
-    setMessage('')
     setForm({ ...form, [name]: text })
   }
 
@@ -107,19 +88,19 @@ const EditProfile: React.FC = () => {
       }
 
       if (!form.name || !form.email) {
-        setMessage('Todos campos obrigatórios devem ser preenchidos.')
+        setErrorMessage('Todos campos obrigatórios devem ser preenchidos.')
         return
       }
 
       if (form.oldPassword && !form.newPassword && !form.confirmNewPassword) {
-        setMessage(
+        setErrorMessage(
           'A nova senha e sua confirmação são obrigatórias ao informar a senha atual.'
         )
         return
       }
 
       if (form.newPassword && form.newPassword !== form.confirmNewPassword) {
-        setMessage('A confirmação de senha não é igual a senha.')
+        setErrorMessage('A confirmação de senha não é igual a senha.')
         return
       }
 
@@ -142,17 +123,17 @@ const EditProfile: React.FC = () => {
       dispatch(response)
 
       setLoading(false)
-      setMessage('Dados atualizados com sucesso!')
+      setSuccessMessage('Dados atualizados com sucesso!')
     } catch (error) {
       console.log(error)
       setLoading(false)
 
       if (error?.response?.data?.error) {
-        setMessage(error.response.data.error)
+        setErrorMessage(error.response.data.error)
         return
       }
 
-      setMessage('Falha em conectar.')
+      setErrorMessage('Falha em conectar.')
     }
   }
 
@@ -284,7 +265,12 @@ const EditProfile: React.FC = () => {
           </Box>
         </Container>
       </ScrollView>
-      <MessageModal message={message} setMessage={setMessage} />
+      <MessageModal message={errorMessage} setMessage={setErrorMessage} error />
+      <MessageModal
+        message={successMessage}
+        setMessage={setSuccessMessage}
+        success
+      />
     </>
   )
 }

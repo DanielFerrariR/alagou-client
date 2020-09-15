@@ -44,7 +44,7 @@ const AddressSearchInput: React.FC<Props> = ({
   const inputRef = useRef<any>()
   const skipRef = useRef<boolean>(false)
   const Geocoder = GeocoderLibrary as any
-  const [message, setMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
   Geocoder.init(GOOGLE_MAPS_API_KEY)
 
@@ -132,7 +132,7 @@ const AddressSearchInput: React.FC<Props> = ({
         { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
       )
     } else {
-      setMessage(
+      setErrorMessage(
         'Por favor, habilite os serviços de localização e tente novamente.'
       )
     }
@@ -215,7 +215,7 @@ const AddressSearchInput: React.FC<Props> = ({
             />
           ))}
       </Menu>
-      <MessageModal message={message} setMessage={setMessage} />
+      <MessageModal message={errorMessage} setMessage={setErrorMessage} error />
     </>
   )
 }
