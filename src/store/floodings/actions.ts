@@ -5,6 +5,10 @@ import {
   EDIT_FLOODING,
   REMOVE_FLOODING,
   UPDATE_FLOODINGS,
+  ADD_FAVORITE,
+  REMOVE_FAVORITE,
+  AddFavoriteAction,
+  RemoveFavoriteAction,
   FetchFloodingsAction,
   CreateFloodingAction,
   EditFloodingAction,
@@ -12,12 +16,30 @@ import {
   UpdateFloodingsAction,
   CreateFloodingData,
   EditFloodingData,
-  CreateFloodingAxiosResponse,
-  EditFloodingAxiosResponse,
-  RemoveFloodingAxiosResponse,
-  FetchFloodingsAxiosResponse,
   FloodingsState
 } from './types'
+
+const addFavorite = async (_id: string): Promise<AddFavoriteAction> => {
+  const response = await serverAPI.post<FloodingsState>('/add-favorite', {
+    _id
+  })
+
+  return {
+    type: ADD_FAVORITE,
+    payload: response.data
+  }
+}
+
+const removeFavorite = async (_id: string): Promise<RemoveFavoriteAction> => {
+  const response = await serverAPI.post<FloodingsState>('/remove-favorite', {
+    _id
+  })
+
+  return {
+    type: REMOVE_FAVORITE,
+    payload: response.data
+  }
+}
 
 const updateFloodings = (data: FloodingsState): UpdateFloodingsAction => {
   return {
@@ -27,9 +49,7 @@ const updateFloodings = (data: FloodingsState): UpdateFloodingsAction => {
 }
 
 const fetchFloodings = async (): Promise<FetchFloodingsAction> => {
-  const response = await serverAPI.get<FetchFloodingsAxiosResponse>(
-    '/floodings'
-  )
+  const response = await serverAPI.get<FloodingsState>('/floodings')
 
   return {
     type: FETCH_FLOODINGS,
@@ -59,10 +79,7 @@ const createFlooding = async (
   )
   formData.append('date', data.date)
 
-  const response = await serverAPI.post<CreateFloodingAxiosResponse>(
-    '/flooding',
-    formData
-  )
+  const response = await serverAPI.post<FloodingsState>('/flooding', formData)
 
   return {
     type: CREATE_FLOODING,
@@ -92,10 +109,7 @@ const editFlooding = async (
       : data.picture
   )
 
-  const response = await serverAPI.put<EditFloodingAxiosResponse>(
-    '/flooding',
-    formData
-  )
+  const response = await serverAPI.put<FloodingsState>('/flooding', formData)
 
   return {
     type: EDIT_FLOODING,
@@ -104,10 +118,9 @@ const editFlooding = async (
 }
 
 const removeFlooding = async (_id: string): Promise<RemoveFloodingAction> => {
-  const response = await serverAPI.delete<RemoveFloodingAxiosResponse>(
-    `/flooding`,
-    { data: { _id } }
-  )
+  const response = await serverAPI.delete<FloodingsState>(`/flooding`, {
+    data: { _id }
+  })
 
   return {
     type: REMOVE_FLOODING,
@@ -120,5 +133,7 @@ export {
   fetchFloodings,
   createFlooding,
   editFlooding,
-  removeFlooding
+  removeFlooding,
+  addFavorite,
+  removeFavorite
 }

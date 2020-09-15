@@ -12,6 +12,7 @@ export type FloodingsState = {
   picture: string
   severity: number
   date: Date
+  favorites: string[]
 }[]
 
 export type CreateFloodingData = {
@@ -70,13 +71,9 @@ export const REMOVE_FLOODING = 'REMOVE_FLOODING'
 
 export const UPDATE_FLOODINGS = 'UPDATE_FLOODINGS'
 
-export type CreateFloodingAxiosResponse = FloodingsState
+export const ADD_FAVORITE = 'ADD_FAVORITE'
 
-export type EditFloodingAxiosResponse = FloodingsState
-
-export type RemoveFloodingAxiosResponse = FloodingsState
-
-export type FetchFloodingsAxiosResponse = FloodingsState
+export const REMOVE_FAVORITE = 'REMOVE_FAVORITE'
 
 export interface FetchFloodingsAction {
   type: typeof FETCH_FLOODINGS
@@ -103,10 +100,22 @@ export interface UpdateFloodingsAction {
   payload: FloodingsState
 }
 
+export interface AddFavoriteAction {
+  type: typeof ADD_FAVORITE
+  payload: FloodingsState
+}
+
+export interface RemoveFavoriteAction {
+  type: typeof REMOVE_FAVORITE
+  payload: FloodingsState
+}
+
 export type FloodingActionsTypes =
   | CreateFloodingAction
   | EditFloodingAction
   | RemoveFloodingAction
   | FetchFloodingsAction
   | UpdateFloodingsAction
+  | AddFavoriteAction
+  | RemoveFavoriteAction
   | DestroySessionActionTypes

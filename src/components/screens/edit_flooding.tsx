@@ -115,7 +115,7 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
 
       dispatch(await editFlooding(editedFlooding))
 
-      navigation.navigate('FloodingList')
+      navigation.goBack()
     } catch (error) {
       console.log(error)
       setLoading(false)

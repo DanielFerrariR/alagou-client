@@ -4,15 +4,9 @@ import {
   CreateUserAction,
   EditUserAction,
   FetchUserAction,
-  AddFavoriteAction,
-  RemoveFavoriteAction,
-  AddFavoriteAxiosResponse,
-  RemoveFavoriteAxiosResponse,
   CREATE_USER,
   EDIT_USER,
   FETCH_USER,
-  ADD_FAVORITE,
-  REMOVE_FAVORITE,
   CreateUserData,
   EditUserData,
   FetchUserData,
@@ -21,40 +15,6 @@ import {
   SET_LOGGED_USER,
   SET_NOT_LOGGED_USER
 } from './types'
-
-const addFavorite = async (
-  userSession: UserState,
-  _id: string
-): Promise<AddFavoriteAction> => {
-  const response = await serverAPI.post<AddFavoriteAxiosResponse>(
-    '/add-favorite',
-    {
-      _id
-    }
-  )
-
-  return {
-    type: ADD_FAVORITE,
-    payload: { ...response.data, token: userSession.token }
-  }
-}
-
-const removeFavorite = async (
-  userSession: UserState,
-  _id: string
-): Promise<RemoveFavoriteAction> => {
-  const response = await serverAPI.post<RemoveFavoriteAxiosResponse>(
-    '/remove-favorite',
-    {
-      _id
-    }
-  )
-
-  return {
-    type: REMOVE_FAVORITE,
-    payload: { ...response.data, token: userSession.token }
-  }
-}
 
 const setLoggedUser = (userSession: UserState): SetLoggedUserAction => {
   return {
@@ -133,12 +93,4 @@ const fetchUser = async (data: FetchUserData): Promise<FetchUserAction> => {
   }
 }
 
-export {
-  createUser,
-  editUser,
-  fetchUser,
-  setLoggedUser,
-  setNotLoggedUser,
-  addFavorite,
-  removeFavorite
-}
+export { createUser, editUser, fetchUser, setLoggedUser, setNotLoggedUser }

@@ -12,9 +12,13 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { useTheme } from 'react-native-paper'
 import { formatDate, ensure } from 'src/utils'
 import ImageView from 'react-native-image-viewing'
-import { FloodingsState, removeFlooding } from 'src/store/floodings'
+import {
+  FloodingsState,
+  removeFlooding,
+  addFavorite,
+  removeFavorite
+} from 'src/store/floodings'
 import { useSelector, useDispatch } from 'src/store'
-import { addFavorite, removeFavorite } from 'src/store/user'
 import AsyncStorage from '@react-native-community/async-storage'
 import { Dimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
@@ -35,7 +39,7 @@ const FloadingList: React.FC<Props> = ({ data }) => {
     theme.colors.custom.moderate,
     theme.colors.custom.danger
   ]
-  const isFavorite = userSession.favorites.includes(data._id)
+  const isFavorite = data.favorites.includes(userSession._id)
   const [loadingFavorite, setLoadingFavorite] = useState(false)
   const [loadingExcludeCard, setLoadingExcludeCard] = useState(false)
   const navigation = useNavigation()
@@ -71,19 +75,9 @@ const FloadingList: React.FC<Props> = ({ data }) => {
       setLoadingFavorite(true)
 
       if (isFavorite) {
-        const { payload } = dispatch(
-          await removeFavorite(userSession, data._id)
-        )
-
-        const userData = JSON.stringify(payload)
-
-        await AsyncStorage.setItem('@user', userData)
+        dispatch(await removeFavorite(data._id))
       } else {
-        const { payload } = dispatch(await addFavorite(userSession, data._id))
-
-        const userData = JSON.stringify(payload)
-
-        await AsyncStorage.setItem('@user', userData)
+        dispatch(await addFavorite(data._id))
       }
     } catch (error) {
       console.log(error)

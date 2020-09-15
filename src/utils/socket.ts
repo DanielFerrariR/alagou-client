@@ -15,12 +15,6 @@ const Socket: React.FC = () => {
   //     socket.current.on('floodings', (floodings: FloodingsState) => {
   //       dispatch(updateFloodings(floodings))
   //     })
-
-  //     socket.current.on('deletedFlooding', async (_id: string) => {
-  //       if (userSession) {
-  //         dispatch(await removeFavorite(userSession, _id))
-  //       }
-  //     })
   //   }
 
   //   asyncEffect()
