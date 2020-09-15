@@ -20,8 +20,10 @@ import {
   removeFavorite
 } from 'src/store/floodings'
 import { useSelector, useDispatch } from 'src/store'
-import { Dimensions, Share } from 'react-native'
+import { Dimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import Share from 'react-native-share'
+import RNFetchBlob from 'rn-fetch-blob'
 
 interface Props {
   data: FloodingsState[0]
@@ -86,11 +88,20 @@ const FloadingList: React.FC<Props> = ({ data }) => {
     }
   }
 
-  const openShare = () => {
-    Share.share({
-      message: data.description,
-      url: data.picture
-    })
+  const openShare = async () => {
+    try {
+      const response = await RNFetchBlob.fetch('GET', data.picture)
+
+      const base64Image = `data:image/jpeg;base64,${response.data}`
+
+      await Share.open({
+        title: `Alagamento em ${data.address}`,
+        url: base64Image,
+        message: data.description
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
