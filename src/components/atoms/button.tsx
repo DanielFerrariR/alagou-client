@@ -3,7 +3,7 @@ import styled from 'styled-components/native'
 import { spacing, SpacingProps, sizing, SizingProps } from 'src/styles/system'
 import { Button } from 'react-native-paper'
 import { ViewStyle, StyleProp, TextStyle } from 'react-native'
-import { IconSource } from 'react-native-paper/lib/typescript/src/components/Icon'
+import { IconSource } from 'react-native-paper/src/components/Icon'
 import { theme } from 'src/styles'
 
 interface OldButtonProps {

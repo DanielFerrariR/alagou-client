@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { Appbar, Container, Menu } from 'src/components/atoms'
+import { Appbar, Container, MenuItem } from 'src/components/atoms'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useTheme } from 'react-native-paper'
 import { DeleteUserModal } from 'src/components/organisms'
+import { Dimensions } from 'react-native'
 
 const Settings: React.FC = () => {
   const [open, setOpen] = useState(false)
@@ -17,7 +18,7 @@ const Settings: React.FC = () => {
         <Appbar.Content title="Configurações" />
       </Appbar.Header>
       <Container>
-        <Menu.Item
+        <MenuItem
           icon={({ size }) => (
             <MaterialCommunityIcons
               name="information-outline"
@@ -28,8 +29,12 @@ const Settings: React.FC = () => {
           onPress={() => navigation.navigate('About')}
           title="Sobre o aplicativo"
           style={{ maxWidth: '100%' }}
+          contentStyle={{ maxWidth: '100%' }}
+          contentStyleWithIcon={{
+            maxWidth: Dimensions.get('window').width - 88
+          }}
         />
-        <Menu.Item
+        <MenuItem
           icon={({ size }) => (
             <MaterialCommunityIcons
               name="delete"
@@ -40,8 +45,12 @@ const Settings: React.FC = () => {
           onPress={() => setOpen(true)}
           title="Excluir conta"
           style={{ maxWidth: '100%' }}
+          contentStyle={{ maxWidth: '100%' }}
+          contentStyleWithIcon={{
+            maxWidth: Dimensions.get('window').width - 88
+          }}
         />
-        <Menu.Item
+        <MenuItem
           icon={({ size }) => (
             <MaterialCommunityIcons
               name="email"
@@ -52,6 +61,10 @@ const Settings: React.FC = () => {
           onPress={() => navigation.navigate('Support')}
           title="Suporte"
           style={{ maxWidth: '100%' }}
+          contentStyle={{ maxWidth: '100%' }}
+          contentStyleWithIcon={{
+            maxWidth: Dimensions.get('window').width - 88
+          }}
         />
       </Container>
       <DeleteUserModal open={open} setOpen={setOpen} />

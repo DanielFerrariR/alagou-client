@@ -8,7 +8,7 @@ import {
   GestureResponderEvent,
   TouchableWithoutFeedback
 } from 'react-native'
-import { IconSource } from 'react-native-paper/lib/typescript/src/components/Icon'
+import { IconSource } from 'react-native-paper/src/components/Icon'
 import { theme } from 'src/styles'
 
 interface OldIconButtonProps {

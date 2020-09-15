@@ -2,16 +2,19 @@ import React, { useCallback, useState } from 'react'
 import {
   Container,
   List,
+  ListAccordion,
   Box,
   Typography,
   ScrollView
 } from 'src/components/atoms'
 import { Header } from 'src/components/organisms'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
+import { useTheme } from 'react-native-paper'
 
 const Faq: React.FC = () => {
   const navigation = useNavigation() as any
   const [expanded, setExpanded] = useState(0)
+  const theme = useTheme()
 
   const handlePress = (id: number) => {
     if (id === expanded) {
@@ -32,15 +35,16 @@ const Faq: React.FC = () => {
   return (
     <>
       <Header />
-      <ScrollView>
+      <ScrollView style={{ backgroundColor: theme.colors.background }}>
         <Container p={2}>
-          <List.Accordion
+          <ListAccordion
             expanded={expanded === 1}
             onPress={() => handlePress(1)}
             title="Como classificar sua publicação"
-            style={{
-              elevation: 4,
+            containerStyle={{
+              overflow: 'hidden',
               borderRadius: 4,
+              elevation: 4,
               backgroundColor: 'white',
               marginBottom: 24
             }}
@@ -63,14 +67,15 @@ const Faq: React.FC = () => {
                 ullamcorper.
               </Typography>
             </Box>
-          </List.Accordion>
-          <List.Accordion
+          </ListAccordion>
+          <ListAccordion
             expanded={expanded === 2}
             onPress={() => handlePress(2)}
             title="Definições"
-            style={{
-              elevation: 4,
+            containerStyle={{
+              overflow: 'hidden',
               borderRadius: 4,
+              elevation: 4,
               backgroundColor: 'white',
               marginBottom: 24
             }}
@@ -93,12 +98,17 @@ const Faq: React.FC = () => {
                 ullamcorper.
               </Typography>
             </Box>
-          </List.Accordion>
-          <List.Accordion
+          </ListAccordion>
+          <ListAccordion
             expanded={expanded === 3}
             onPress={() => handlePress(3)}
             title="Alagamentos: quais cuidados tomar"
-            style={{ elevation: 4, borderRadius: 4, backgroundColor: 'white' }}
+            containerStyle={{
+              overflow: 'hidden',
+              borderRadius: 4,
+              elevation: 4,
+              backgroundColor: 'white'
+            }}
           >
             <Box p={2}>
               <Typography>
@@ -118,7 +128,7 @@ const Faq: React.FC = () => {
                 ullamcorper.
               </Typography>
             </Box>
-          </List.Accordion>
+          </ListAccordion>
         </Container>
       </ScrollView>
     </>

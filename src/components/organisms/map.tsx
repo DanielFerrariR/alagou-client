@@ -50,7 +50,7 @@ const Map: React.FC = () => {
             visible
             open={openFab}
             icon={openFab ? 'close' : 'plus'}
-            color="white"
+            color={theme.colors.custom.white}
             actions={[
               {
                 icon: 'plus',

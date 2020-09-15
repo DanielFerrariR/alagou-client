@@ -1,16 +1,17 @@
 import React from 'react'
 import { Box, Image, Appbar } from 'src/components/atoms'
 import { useNavigation } from '@react-navigation/native'
-import { IconButton } from 'react-native-paper'
+import { IconButton, useTheme } from 'react-native-paper'
 
 const Header: React.FC = () => {
   const navigation = useNavigation() as any
+  const theme = useTheme()
 
   return (
     <Appbar.Header>
       <IconButton
         icon="menu"
-        color="white"
+        color={theme.colors.custom.white}
         size={24}
         onPress={() => navigation.toggleDrawer()}
       />

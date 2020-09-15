@@ -27,7 +27,11 @@ const DrawerContent: React.FC = () => {
           <Typography color="custom.white" mr={1} variant="h3">
             Editar Perfil
           </Typography>
-          <MaterialCommunityIcons name="pencil" color="white" size={24} />
+          <MaterialCommunityIcons
+            name="pencil"
+            color={theme.colors.custom.white}
+            size={24}
+          />
         </Box>
       </TouchableOpacity>
       <Box
@@ -132,9 +136,30 @@ const DrawerContent: React.FC = () => {
           </Typography>
         </Box>
       </TouchableOpacity>
+      {userSession.isAdmin && (
+        <TouchableOpacity
+          mb={3}
+          onPress={() => navigation.navigate('Administration')}
+        >
+          <Box flexDirection="row" alignItems="center">
+            <MaterialCommunityIcons
+              name="account-tie"
+              color={theme.colors.custom.white}
+              size={24}
+            />
+            <Typography color="custom.white" ml={4} variant="h3">
+              Administração
+            </Typography>
+          </Box>
+        </TouchableOpacity>
+      )}
       <TouchableOpacity mb={3} onPress={() => navigation.navigate('Settings')}>
         <Box flexDirection="row" alignItems="center">
-          <MaterialCommunityIcons name="cog" color="white" size={24} />
+          <MaterialCommunityIcons
+            name="cog"
+            color={theme.colors.custom.white}
+            size={24}
+          />
           <Typography color="custom.white" ml={4} variant="h3">
             Configurações
           </Typography>
@@ -142,7 +167,11 @@ const DrawerContent: React.FC = () => {
       </TouchableOpacity>
       <TouchableOpacity mb={3} onPress={logout}>
         <Box flexDirection="row" alignItems="center">
-          <MaterialCommunityIcons name="logout" color="white" size={24} />
+          <MaterialCommunityIcons
+            name="logout"
+            color={theme.colors.custom.white}
+            size={24}
+          />
           <Typography color="custom.white" ml={4} variant="h3">
             Sair
           </Typography>

@@ -6,6 +6,7 @@ import {
   Paper,
   Image,
   Menu,
+  MenuItem,
   TouchableOpacity
 } from 'src/components/atoms'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -19,8 +20,7 @@ import {
   removeFavorite
 } from 'src/store/floodings'
 import { useSelector, useDispatch } from 'src/store'
-import AsyncStorage from '@react-native-community/async-storage'
-import { Dimensions } from 'react-native'
+import { Dimensions, Share } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
 interface Props {
@@ -84,6 +84,13 @@ const FloadingList: React.FC<Props> = ({ data }) => {
     } finally {
       setLoadingFavorite(false)
     }
+  }
+
+  const openShare = () => {
+    Share.share({
+      message: data.description,
+      url: data.picture
+    })
   }
 
   return (
@@ -151,8 +158,8 @@ const FloadingList: React.FC<Props> = ({ data }) => {
               visible={open}
               onDismiss={() => setOpen(false)}
             >
-              <Menu.Item onPress={editCard} title="Editar" />
-              <Menu.Item onPress={excludeCard} title="Excluir" />
+              <MenuItem onPress={editCard} title="Editar" />
+              <MenuItem onPress={excludeCard} title="Excluir" />
             </Menu>
           </Box>
         )}
@@ -179,22 +186,39 @@ const FloadingList: React.FC<Props> = ({ data }) => {
         </TouchableOpacity>
         <Box
           flexDirection="row"
-          justifyContent="flex-end"
-          width={1}
+          justifyContent="space-between"
+          width={Dimensions.get('window').width - 40}
+          ml={-1}
           alignItems="center"
-          ml={1}
         >
-          <MaterialCommunityIcons
-            name="checkbox-blank-circle"
-            color={severity[data.severity - 1]}
-            size={24}
-          />
-          <IconButton
-            icon="star"
-            color={isFavorite ? 'custom.star' : 'custom.starOff'}
-            size={24}
-            onPress={updateFavorite}
-          />
+          <Box flexDirection="row" alignItems="center">
+            <IconButton
+              icon="forum"
+              color="accent"
+              size={24}
+              onPress={() => {}}
+            />
+            <IconButton
+              icon="share-variant"
+              color="accent"
+              size={24}
+              onPress={openShare}
+              ml={-0.5}
+            />
+          </Box>
+          <Box flexDirection="row" alignItems="center">
+            <MaterialCommunityIcons
+              name="checkbox-blank-circle"
+              color={severity[data.severity - 1]}
+              size={24}
+            />
+            <IconButton
+              icon="star"
+              color={isFavorite ? 'custom.star' : 'custom.starOff'}
+              size={24}
+              onPress={updateFavorite}
+            />
+          </Box>
         </Box>
         <Box
           flexDirection="row"

@@ -58,7 +58,8 @@
         "no-underscore-dangle": "off",
         "react/no-array-index-key": "off",
         "import/no-mutable-exports": "off",
-        "no-param-reassign": "off"
+        "no-param-reassign": "off",
+        "@typescript-eslint/naming-convention": "off"
       }
     }
   ]

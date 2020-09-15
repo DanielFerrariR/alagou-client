@@ -67,7 +67,7 @@ const DeleteUserModal: React.FC<Props> = ({ open, setOpen }) => {
     <>
       <Portal>
         <Dialog visible={open} onDismiss={() => setOpen(false)}>
-          <Dialog.Content>
+          <Box p={2}>
             <Box width={1} flexDirection="row" justifyContent="center" mb={3}>
               <MaterialCommunityIcons
                 name="alert-outline"
@@ -89,16 +89,22 @@ const DeleteUserModal: React.FC<Props> = ({ open, setOpen }) => {
               label="Senha"
               placeholder="Digite sua senha"
               onChangeText={(text) => onChange('password', text)}
+              mb={3}
             />
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button mode="text" onPress={() => setOpen(false)} mr={1}>
-              Cancelar
-            </Button>
-            <Button mode="text" onPress={submit} loading={loading}>
-              Excluir
-            </Button>
-          </Dialog.Actions>
+            <Box flexDirection="row">
+              <Button
+                mode="outlined"
+                onPress={() => setOpen(false)}
+                style={{ borderWidth: 1, flex: 1 }}
+                mr={2}
+              >
+                Cancelar
+              </Button>
+              <Button onPress={submit} loading={loading} style={{ flex: 1 }}>
+                Excluir
+              </Button>
+            </Box>
+          </Box>
         </Dialog>
       </Portal>
       <MessageModal message={errorMessage} setMessage={setErrorMessage} error />

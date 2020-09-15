@@ -23,7 +23,7 @@ const MessageModal: React.FC<Props> = ({
   return (
     <Portal>
       <Dialog visible={!!message} onDismiss={() => setMessage('')}>
-        <Dialog.Content>
+        <Box p={2}>
           {error && (
             <Box width={1} flexDirection="row" justifyContent="center" mb={3}>
               <MaterialCommunityIcons
@@ -51,13 +51,13 @@ const MessageModal: React.FC<Props> = ({
               />
             </Box>
           )}
-          <Typography textAlign="center">{message}</Typography>
-        </Dialog.Content>
-        <Dialog.Actions>
-          <Button mode="text" onPress={() => setMessage('')} width={80}>
+          <Typography textAlign="center" mb={3}>
+            {message}
+          </Typography>
+          <Button onPress={() => setMessage('')} width={1}>
             Ok
           </Button>
-        </Dialog.Actions>
+        </Box>
       </Dialog>
     </Portal>
   )

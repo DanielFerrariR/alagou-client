@@ -19,7 +19,9 @@ import {
   AddFlooding,
   EditFlooding,
   Support,
-  About
+  About,
+  Administration,
+  AlertsDescription
 } from 'src/components/screens'
 import store from 'src/utils/redux'
 import { useSelector } from 'src/store'
@@ -120,6 +122,14 @@ const Routes: React.FC = () => {
                 <Stack.Screen name="EditProfile" component={EditProfile} />
                 <Stack.Screen name="Support" component={Support} />
                 <Stack.Screen name="About" component={About} />
+                <Stack.Screen
+                  name="AlertsDescription"
+                  component={AlertsDescription}
+                />
+                <Stack.Screen
+                  name="Administration"
+                  component={Administration}
+                />
               </>
             ) : (
               <>

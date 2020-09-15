@@ -8,6 +8,7 @@ import React, {
 import {
   TextInput,
   Menu,
+  MenuItem,
   TextInputProps,
   Box,
   ActivityIndicator
@@ -55,12 +56,6 @@ const AddressSearchInput: React.FC<Props> = ({
       return
     }
 
-    if (skipRef.current) {
-      inputRef.current.blur()
-
-      return
-    }
-
     const asyncEffect = async () => {
       try {
         const response = await GoogleMapsAPI.get<GetLocationsAxiosResponse>(
@@ -74,6 +69,12 @@ const AddressSearchInput: React.FC<Props> = ({
         })
 
         setResults(newResults)
+
+        if (skipRef.current) {
+          inputRef.current.blur()
+
+          return
+        }
 
         if (newResults?.length) {
           setOpenSearchBox(true)
@@ -159,10 +160,21 @@ const AddressSearchInput: React.FC<Props> = ({
     setOpenSearchBox(false)
   }
 
+  const onClickMenuitem = (item: string) => {
+    if (searchAddress === item) {
+      inputRef.current.blur()
+
+      return
+    }
+
+    skipRef.current = true
+    setSearchAddress(item)
+  }
+
   return (
     <>
       <Menu
-        visible={openSearchBox}
+        visible={openSearchBox && !!results && results.length > 0}
         onDismiss={() => setOpenSearchBox(false)}
         style={{
           width: Dimensions.get('window').width - 32,
@@ -196,7 +208,7 @@ const AddressSearchInput: React.FC<Props> = ({
             />
             {loadingLocation ? (
               <Box position="absolute" style={{ top: 26, right: 15 }}>
-                <ActivityIndicator animating size={18} />
+                <ActivityIndicator animating size={18} color="accent" />
               </Box>
             ) : null}
           </Box>
@@ -204,14 +216,12 @@ const AddressSearchInput: React.FC<Props> = ({
       >
         {results &&
           results.map((each) => (
-            <Menu.Item
+            <MenuItem
               key={each}
-              onPress={() => {
-                skipRef.current = true
-                setSearchAddress(each)
-              }}
+              onPress={() => onClickMenuitem(each)}
               title={each}
               style={{ maxWidth: '100%' }}
+              contentStyle={{ maxWidth: '100%' }}
             />
           ))}
       </Menu>
