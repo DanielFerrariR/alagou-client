@@ -51,7 +51,7 @@ const MessageModal: React.FC<Props> = ({
               />
             </Box>
           )}
-          <Typography>{message}</Typography>
+          <Typography textAlign="center">{message}</Typography>
         </Dialog.Content>
         <Dialog.Actions>
           <Button mode="text" onPress={() => setMessage('')} width={80}>
