@@ -50,7 +50,7 @@ const Contributions: React.FC = () => {
                 <Box
                   px={2}
                   pt={index === 0 ? 2 : 0}
-                  mb={filteredFloodings.length - 1 > index ? 3 : 9}
+                  mb={filteredFloodings.length - 1 > index ? 3 : 2}
                 >
                   <FloodingCard data={item} />
                 </Box>

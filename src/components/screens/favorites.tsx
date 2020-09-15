@@ -7,12 +7,12 @@ import { fetchFloodings } from 'src/store/floodings'
 import { useDispatch, useSelector } from 'src/store'
 import { ensure } from 'src/utils'
 
-const Contributions: React.FC = () => {
+const Favorites: React.FC = () => {
   const navigation = useNavigation()
   const userSession = ensure(useSelector((state) => state.user))
   const floodings = useSelector((state) => state.floodings)
   const filteredFloodings = floodings?.filter((each) =>
-    userSession.favorites.includes(each._id)
+    each.favorites.includes(userSession._id)
   )
   const dispatch = useDispatch()
 
@@ -50,7 +50,7 @@ const Contributions: React.FC = () => {
                 <Box
                   px={2}
                   pt={index === 0 ? 2 : 0}
-                  mb={filteredFloodings.length - 1 > index ? 3 : 9}
+                  mb={filteredFloodings.length - 1 > index ? 3 : 2}
                 >
                   <FloodingCard data={item} />
                 </Box>
@@ -78,4 +78,4 @@ const Contributions: React.FC = () => {
   )
 }
 
-export default Contributions
+export default Favorites
