@@ -6480,10 +6480,10 @@ react-native-screens@2.10.1:
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.10.1.tgz#06d22fae87ef0ce51c616c34a199726db1403b95"
   integrity sha512-Z2kKSk4AwWRQNCBmTjViuBQK0/Lx0jc25TZptn/2gKYUCOuVRvCekoA26u0Tsb3BIQ8tWDsZW14OwDlFUXW1aw==
 
-react-native-share@3.8.0:
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-3.8.0.tgz#602bed51309a509afecfb28a89385d8ae3f17dca"
-  integrity sha512-7g8UfnotZDdSBQ75PE0kuUIACzg8wvkWXOcOgkscg5WcUjBvU3T4jeH9ki3J84PnLLBXBerCa2Z6Xu3UO2/gZA==
+react-native-share@3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-3.7.0.tgz#5b5bcc87530ddaaabcb8b70a9366dce88a6f9495"
+  integrity sha512-MCTGiPcBfelrnX/7n82N5eQAl31F6xljqFK2CWbPDTSt7bbJUZH3Znvy8KYePLYqAr7HVrk621eanQN6vSFMzA==
 
 react-native-shimmer@0.6.0:
   version "0.6.0"

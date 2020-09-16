@@ -9,6 +9,7 @@ import {
   MenuItem,
   TouchableOpacity
 } from 'src/components/atoms'
+import { MessageModal } from 'src/components/molecules'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useTheme } from 'react-native-paper'
 import { formatDate, ensure } from 'src/utils'
@@ -23,8 +24,8 @@ import { useSelector, useDispatch } from 'src/store'
 import { Dimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import Share from 'react-native-share'
+import RNFetchBlob from 'rn-fetch-blob'
 import ChatModal from './chat_modal'
-// import RNFetchBlob from 'rn-fetch-blob'
 
 interface Props {
   data: FloodingsState[0]
@@ -47,6 +48,7 @@ const FloadingList: React.FC<Props> = ({ data }) => {
   const [loadingExcludeCard, setLoadingExcludeCard] = useState(false)
   const navigation = useNavigation()
   const [openChatModal, setOpenChatModal] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const editCard = () => {
     setOpen(false)
@@ -92,18 +94,17 @@ const FloadingList: React.FC<Props> = ({ data }) => {
 
   const openShare = async () => {
     try {
-      // https://github.com/react-native-community/react-native-share/issues/862
-      // const response = await RNFetchBlob.fetch('GET', data.picture)
+      const response = await RNFetchBlob.fetch('GET', data.picture)
 
-      // const base64Image = `data:image/png;base64,${response.data}`
+      const base64Image = `data:image/png;base64,${response.data}`
 
       await Share.open({
         message: JSON.stringify({
           Descrição: data.description,
           Endereço: data.address,
           Foto: data.picture
-        })
-        // url: base64Image
+        }),
+        url: base64Image
       })
     } catch (error) {
       console.log(error)
@@ -248,6 +249,7 @@ const FloadingList: React.FC<Props> = ({ data }) => {
           </Typography>
         </Box>
       </Paper>
+      <MessageModal message={errorMessage} setMessage={setErrorMessage} error />
       <ChatModal open={openChatModal} setOpen={setOpenChatModal} />
     </>
   )
