@@ -139,16 +139,21 @@ const ChatModal: React.FC<Props> = ({ open, setOpen }) => {
                         width={32}
                         mb={3}
                       >
-                        <Image
-                          source={
-                            item.userPicture
-                              ? { uri: item.userPicture }
-                              : require('src/images/no_picture.png')
-                          }
-                          width={32}
-                          height={32}
+                        <Box
+                          bgColor="white"
                           borderRadius={32 / 2}
-                        />
+                          overflow="hidden"
+                        >
+                          <Image
+                            source={
+                              item.userPicture  
+                                ? { uri: item.userPicture }
+                                : require('src/images/no_picture.png')
+                            }
+                            width={32}
+                            height={32}
+                          />
+                        </Box>
                       </TouchableOpacity>
                     </Box>
                     <Box mt={2}>
