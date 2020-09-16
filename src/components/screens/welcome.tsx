@@ -26,8 +26,8 @@ const Welcome: React.FC = () => {
           mode="outlined"
           mb={3}
           onPress={() => navigation.navigate('Consult')}
-          style={{ borderWidth: 1, borderColor: 'white' }}
-          labelStyle={{ color: 'white' }}
+          style={{ borderWidth: 1, borderColor: theme.colors.custom.white }}
+          labelStyle={{ color: theme.colors.custom.white }}
           width={1}
           color="custom.white"
         >
@@ -41,7 +41,7 @@ const Welcome: React.FC = () => {
         >
           Login
         </Button>
-        <Box position="absolute" style={{ top: '100%' }}>
+        <Box position="absolute" top="100%">
           <Typography variant="h4" color="custom.white">
             Versão {packageJson.version}
           </Typography>

@@ -1,10 +1,10 @@
 export interface PositionProps {
   position?: 'relative' | 'absolute'
   zIndex?: number
-  top?: number
-  right?: number
-  bottom?: number
-  left?: number
+  top?: string
+  right?: string
+  bottom?: string
+  left?: string
 }
 
 const position = (props: any): string => {

@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { Box, FlatList, Container, Appbar } from 'src/components/atoms'
-import { FloodingCard } from 'src/components/molecules'
+import { FloodingCard } from 'src/components/organisms'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import Shimmer from 'react-native-shimmer'
 import { fetchFloodings } from 'src/store/floodings'

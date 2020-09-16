@@ -114,8 +114,8 @@ const Login: React.FC = () => {
           mode="outlined"
           mb={3}
           onPress={() => navigation.navigate('Welcome')}
-          style={{ borderWidth: 1, borderColor: 'white' }}
-          labelStyle={{ color: 'white' }}
+          style={{ borderWidth: 1, borderColor: theme.colors.custom.white }}
+          labelStyle={{ color: theme.colors.custom.white }}
           width={1}
           color="custom.white"
         >

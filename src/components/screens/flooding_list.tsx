@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react'
 import { Box, FlatList, Container } from 'src/components/atoms'
-import { Header } from 'src/components/organisms'
-import { FloodingCard } from 'src/components/molecules'
+import { Header, FloodingCard } from 'src/components/organisms'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import Shimmer from 'react-native-shimmer'
 import { fetchFloodings } from 'src/store/floodings'
@@ -37,7 +36,7 @@ const FloadingList: React.FC = () => {
           <Box>
             <FlatList
               data={floodings}
-              keyExtractor={(item) => String(item._id)}
+              keyExtractor={(item) => item._id}
               renderItem={({ item, index }) => (
                 <Box
                   px={2}

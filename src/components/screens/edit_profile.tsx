@@ -16,7 +16,7 @@ import { editUser } from 'src/store/user'
 import AsyncStorage from '@react-native-community/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import ImagePicker from 'react-native-image-picker'
-import { TextInput as OldTextInput } from 'react-native-paper'
+import { TextInput as OldTextInput, useTheme } from 'react-native-paper'
 import ImageView from 'react-native-image-viewing'
 import { ensure } from 'src/utils'
 
@@ -64,6 +64,7 @@ const EditProfile: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const navigation = useNavigation()
   const dispatch = useDispatch()
+  const theme = useTheme()
 
   const onChange = (name: keyof typeof form, text: string) => {
     setForm({ ...form, [name]: text })
@@ -258,7 +259,7 @@ const EditProfile: React.FC = () => {
               onPress={onSubmit}
               loading={loading}
               color="accent"
-              labelStyle={{ color: 'white' }}
+              labelStyle={{ color: theme.colors.custom.white }}
             >
               Atualizar
             </Button>

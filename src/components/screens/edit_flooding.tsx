@@ -9,7 +9,8 @@ import {
   TouchableOpacity,
   Button,
   Container,
-  RadioButton
+  RadioButton,
+  IconButton
 } from 'src/components/atoms'
 import ImagePicker from 'react-native-image-picker'
 import ImageView from 'react-native-image-viewing'
@@ -151,8 +152,15 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
           label="Localização *"
           placeholder="Informe a localização"
         />
-        <Box flexDirection="row" alignItems="center" mb={3}>
+        <Box flexDirection="row" alignItems="center">
           <Typography fontWeight="bold">Classificação:</Typography>
+          <IconButton
+            icon="information-outline"
+            color="accent"
+            onPress={() => navigation.navigate('Faq')}
+          />
+        </Box>
+        <Box flexDirection="row" alignItems="center" mb={3}>
           <RadioButton.Group
             onValueChange={(value) =>
               setForm({ ...form, severity: value as any })
@@ -198,7 +206,7 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
         </Box>
         <Button
           color="accent"
-          labelStyle={{ color: 'white' }}
+          labelStyle={{ color: theme.colors.custom.white }}
           onPress={submit}
           loading={loading}
         >

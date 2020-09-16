@@ -12,6 +12,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { useTheme } from 'react-native-paper'
 import { serverAPI } from 'src/services'
 import { eventEmitterInstance } from 'src/utils'
+import { useKeyboard } from 'src/hooks'
 
 interface Props {
   open: boolean
@@ -25,6 +26,7 @@ const DeleteUserModal: React.FC<Props> = ({ open, setOpen }) => {
   const theme = useTheme()
   const [errorMessage, setErrorMessage] = useState('')
   const [loading, setLoading] = useState(false)
+  const isKeyboardVisible = useKeyboard()
 
   const submit = async () => {
     try {
@@ -66,7 +68,11 @@ const DeleteUserModal: React.FC<Props> = ({ open, setOpen }) => {
   return (
     <>
       <Portal>
-        <Dialog visible={open} onDismiss={() => setOpen(false)}>
+        <Dialog
+          visible={open}
+          onDismiss={() => setOpen(false)}
+          style={{ marginBottom: isKeyboardVisible ? 200 : undefined }}
+        >
           <Box p={2}>
             <Box width={1} flexDirection="row" justifyContent="center" mb={3}>
               <MaterialCommunityIcons
