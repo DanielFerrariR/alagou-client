@@ -7,10 +7,14 @@ import {
   Image,
   Menu,
   MenuItem,
-  TouchableOpacity
+  TouchableOpacity,
+  Portal,
+  Dialog,
+  Button,
+  TextInput
 } from 'src/components/atoms'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { useTheme } from 'react-native-paper'
+import { useTheme, TextInput as OldTextInput } from 'react-native-paper'
 import { formatDate, ensure } from 'src/utils'
 import ImageView from 'react-native-image-viewing'
 import {
@@ -44,6 +48,7 @@ const FloadingList: React.FC<Props> = ({ data }) => {
   const isFavorite = data.favorites.includes(userSession._id)
   const [loadingFavorite, setLoadingFavorite] = useState(false)
   const [loadingExcludeCard, setLoadingExcludeCard] = useState(false)
+  const [openChatModal, setOpenChatModal] = useState(false)
   const navigation = useNavigation()
 
   const editCard = () => {
@@ -211,7 +216,7 @@ const FloadingList: React.FC<Props> = ({ data }) => {
               icon="forum"
               color="accent"
               size={24}
-              onPress={() => {}}
+              onPress={() => setOpenChatModal(true)}
             />
             <IconButton
               icon="share-variant"
@@ -246,6 +251,32 @@ const FloadingList: React.FC<Props> = ({ data }) => {
           </Typography>
         </Box>
       </Paper>
+      <Portal>
+        <Dialog
+          visible={openChatModal}
+          onDismiss={() => setOpenChatModal(false)}
+        >
+          <Box p={2}>
+            <Typography textAlign="center" mb={3} fontWeight="bold">
+              Comentários
+            </Typography>
+            <Box flexDirection="row" alignItems="center">
+              <TextInput
+                width={Dimensions.get('window').width - 148}
+                placeholder="Escreva um comentário"
+                style={{ marginTop: -6, marginRight: 4 }}
+              />
+              <TouchableOpacity onPress={() => {}}>
+                <MaterialCommunityIcons
+                  name="send-circle"
+                  color={theme.colors.primary}
+                  size={64}
+                />
+              </TouchableOpacity>
+            </Box>
+          </Box>
+        </Dialog>
+      </Portal>
     </>
   )
 }
