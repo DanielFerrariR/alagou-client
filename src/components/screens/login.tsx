@@ -15,7 +15,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import { useTheme, TextInput as OldTextInput } from 'react-native-paper'
 import { Logo } from 'src/images'
-import { Keyboard, Animated } from 'react-native'
+import { Keyboard } from 'react-native'
 import { useKeyboard } from 'src/hooks'
 
 const Login: React.FC = () => {
