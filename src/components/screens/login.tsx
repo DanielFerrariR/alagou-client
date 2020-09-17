@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import {
   Typography,
   Button,
@@ -15,6 +15,8 @@ import AsyncStorage from '@react-native-community/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import { useTheme, TextInput as OldTextInput } from 'react-native-paper'
 import { Logo } from 'src/images'
+import { Keyboard, Animated } from 'react-native'
+import { useKeyboard } from 'src/hooks'
 
 const Login: React.FC = () => {
   const userSession = useSelector((state) => state.user)
@@ -28,6 +30,7 @@ const Login: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const navigation = useNavigation()
   const [loading, setLoading] = useState(false)
+  const isKeyboardVisible = useKeyboard()
 
   useEffect(() => {
     if (userSession) {
@@ -41,6 +44,8 @@ const Login: React.FC = () => {
 
   const onSubmit = async () => {
     try {
+      Keyboard.dismiss()
+
       if (loading) {
         return
       }
@@ -84,7 +89,11 @@ const Login: React.FC = () => {
         barStyle="dark-content"
       />
       <Container bgColor="custom.white">
-        <Box height={0.4} alignItems="center" justifyContent="center">
+        <Box
+          height={isKeyboardVisible ? 0 : 200}
+          alignItems="center"
+          justifyContent="center"
+        >
           <Logo />
         </Box>
         <Box flex={1} p={2} bgColor="primary">

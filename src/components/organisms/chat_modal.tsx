@@ -39,9 +39,9 @@ const ChatModal: React.FC<Props> = ({ open, setOpen, data }) => {
       return
     }
 
-    dispatch(await addComment(data._id, message))
-
     setMessage('')
+
+    dispatch(await addComment(data._id, message))
   }
 
   return (

@@ -24,6 +24,7 @@ import { GOOGLE_MAPS_API_KEY } from '@env'
 import { editFlooding } from 'src/store/floodings'
 import { useSelector, useDispatch } from 'src/store'
 import { ensure } from 'src/utils'
+import { Keyboard } from 'react-native'
 
 interface Form {
   description: string
@@ -92,6 +93,8 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
 
   const submit = async () => {
     try {
+      Keyboard.dismiss()
+
       if (loading) {
         return
       }

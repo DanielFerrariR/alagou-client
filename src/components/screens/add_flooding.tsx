@@ -23,6 +23,7 @@ import GeocoderLibrary from 'react-native-geocoding'
 import { GOOGLE_MAPS_API_KEY } from '@env'
 import { createFlooding } from 'src/store/floodings'
 import { useDispatch } from 'src/store'
+import { Keyboard } from 'react-native'
 
 interface Form {
   description: string
@@ -77,6 +78,8 @@ const AddFlodding: React.FC = () => {
 
   const submit = async () => {
     try {
+      Keyboard.dismiss()
+
       if (loading) {
         return
       }

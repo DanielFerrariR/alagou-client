@@ -17,6 +17,7 @@ import ImagePicker from 'react-native-image-picker'
 import { TextInput as OldTextInput, useTheme } from 'react-native-paper'
 import ImageView from 'react-native-image-viewing'
 import { ensure } from 'src/utils'
+import { Keyboard } from 'react-native'
 
 interface Form {
   name: string
@@ -81,6 +82,8 @@ const EditProfile: React.FC = () => {
 
   const onSubmit = async () => {
     try {
+      Keyboard.dismiss()
+
       if (loading) {
         return
       }

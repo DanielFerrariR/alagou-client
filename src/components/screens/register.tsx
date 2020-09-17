@@ -17,6 +17,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 import ImagePicker from 'react-native-image-picker'
 import { TextInput as OldTextInput, useTheme } from 'react-native-paper'
 import ImageView from 'react-native-image-viewing'
+import { Keyboard } from 'react-native'
 
 interface Form {
   name: string
@@ -75,6 +76,8 @@ const Register: React.FC = () => {
 
   const onSubmit = async () => {
     try {
+      Keyboard.dismiss()
+
       if (loading) {
         return
       }
