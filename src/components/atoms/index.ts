@@ -15,6 +15,7 @@ export { default as RadioButton } from './radio_button'
 export { default as MenuItem } from './menu_item'
 export { default as ListAccordion } from './list_accordion'
 export { default as Divider } from './divider'
+export { default as StatusBar } from './status_bar'
 
 export { default as TextInput } from './text_input'
 export * from './text_input'

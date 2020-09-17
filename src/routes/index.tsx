@@ -21,7 +21,8 @@ import {
   Support,
   About,
   Administration,
-  AlertsDescription
+  AlertsDescription,
+  Loading
 } from 'src/components/screens'
 import store from 'src/utils/redux'
 import { useSelector } from 'src/store'
@@ -102,50 +103,46 @@ const Routes: React.FC = () => {
 
   return (
     <>
-      {userSession === null ? null : (
-        <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{
-              gestureEnabled: false,
-              headerShown: false
-            }}
-          >
-            {userSession ? (
-              <>
-                <Stack.Screen name="DrawerFlow" component={DrawerFlow} />
-                <Stack.Screen name="Settings" component={Settings} />
-                <Stack.Screen name="AddFlooding" component={AddFlooding} />
-                <Stack.Screen name="EditFlooding" component={EditFlooding} />
-                <Stack.Screen name="Alerts" component={Alerts} />
-                <Stack.Screen name="Contributions" component={Contributions} />
-                <Stack.Screen name="Favorites" component={Favorites} />
-                <Stack.Screen name="EditProfile" component={EditProfile} />
-                <Stack.Screen name="Support" component={Support} />
-                <Stack.Screen name="About" component={About} />
-                <Stack.Screen
-                  name="AlertsDescription"
-                  component={AlertsDescription}
-                />
-                <Stack.Screen
-                  name="Administration"
-                  component={Administration}
-                />
-              </>
-            ) : (
-              <>
-                <Stack.Screen name="Welcome" component={Welcome} />
-                <Stack.Screen name="Consult" component={Consult} />
-                <Stack.Screen name="Login" component={Login} />
-                <Stack.Screen name="Register" component={Register} />
-                <Stack.Screen
-                  name="ForgotPassword"
-                  component={ForgotPassword}
-                />
-              </>
-            )}
-          </Stack.Navigator>
-        </NavigationContainer>
-      )}
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            gestureEnabled: false,
+            headerShown: false
+          }}
+        >
+          {userSession === null ? (
+            <Stack.Screen name="Loading" component={Loading} />
+          ) : null}
+          {userSession ? (
+            <>
+              <Stack.Screen name="DrawerFlow" component={DrawerFlow} />
+              <Stack.Screen name="Settings" component={Settings} />
+              <Stack.Screen name="AddFlooding" component={AddFlooding} />
+              <Stack.Screen name="EditFlooding" component={EditFlooding} />
+              <Stack.Screen name="Alerts" component={Alerts} />
+              <Stack.Screen name="Contributions" component={Contributions} />
+              <Stack.Screen name="Favorites" component={Favorites} />
+              <Stack.Screen name="EditProfile" component={EditProfile} />
+              <Stack.Screen name="Support" component={Support} />
+              <Stack.Screen name="About" component={About} />
+              <Stack.Screen
+                name="AlertsDescription"
+                component={AlertsDescription}
+              />
+              <Stack.Screen name="Administration" component={Administration} />
+            </>
+          ) : null}
+          {userSession === false ? (
+            <>
+              <Stack.Screen name="Welcome" component={Welcome} />
+              <Stack.Screen name="Consult" component={Consult} />
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="Register" component={Register} />
+              <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+            </>
+          ) : null}
+        </Stack.Navigator>
+      </NavigationContainer>
     </>
   )
 }

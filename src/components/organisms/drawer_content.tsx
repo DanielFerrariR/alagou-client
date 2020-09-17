@@ -5,17 +5,21 @@ import { useSelector } from 'src/store'
 import { useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import ImageView from 'react-native-image-viewing'
-import { ensure, eventEmitterInstance } from 'src/utils'
+import { eventEmitterInstance } from 'src/utils'
 import { Alert } from 'src/images'
 
 const DrawerContent: React.FC = () => {
   const [openPicture, setOpenPicture] = useState(false)
-  const userSession = ensure(useSelector((state) => state.user))
+  const userSession = useSelector((state) => state.user)
   const theme = useTheme()
   const navigation = useNavigation()
 
   const logout = async () => {
     eventEmitterInstance.emit('logout')
+  }
+
+  if (!userSession) {
+    return null
   }
 
   return (

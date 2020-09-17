@@ -1,14 +1,14 @@
 import React, { useCallback } from 'react'
-import { Box, FlatList, Container, Appbar } from 'src/components/atoms'
+import { Box, FlatList, Container } from 'src/components/atoms'
 import { FloodingCard } from 'src/components/organisms'
-import { useNavigation, useFocusEffect } from '@react-navigation/native'
+import { useFocusEffect } from '@react-navigation/native'
 import Shimmer from 'react-native-shimmer'
 import { fetchFloodings } from 'src/store/floodings'
 import { useDispatch, useSelector } from 'src/store'
 import { ensure } from 'src/utils'
+import { BackHeader } from 'src/components/molecules'
 
 const Contributions: React.FC = () => {
-  const navigation = useNavigation()
   const userSession = ensure(useSelector((state) => state.user))
   const floodings = useSelector((state) => state.floodings)
   const filteredFloodings = floodings?.filter(
@@ -32,14 +32,7 @@ const Contributions: React.FC = () => {
 
   return (
     <>
-      <Appbar.Header>
-        <Appbar.BackAction
-          onPress={() => {
-            navigation.goBack()
-          }}
-        />
-        <Appbar.Content title="Contribuições" />
-      </Appbar.Header>
+      <BackHeader title="Contribuições" />
       <Container>
         {filteredFloodings ? (
           <Box>

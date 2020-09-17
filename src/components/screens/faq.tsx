@@ -1,15 +1,14 @@
 import React, { useCallback, useState } from 'react'
 import {
   Container,
-  List,
   ListAccordion,
   Box,
   Typography,
   ScrollView
 } from 'src/components/atoms'
-import { Header } from 'src/components/organisms'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import { useTheme } from 'react-native-paper'
+import { Header } from 'src/components/molecules'
 
 const Faq: React.FC = () => {
   const navigation = useNavigation() as any

@@ -15,9 +15,13 @@ const FetchReduxStore: React.FC = () => {
         if (userData) {
           const newUserData = JSON.parse(userData)
 
-          dispatch(setLoggedUser(newUserData))
+          setTimeout(() => {
+            dispatch(setLoggedUser(newUserData))
+          }, 1000)
         } else {
-          dispatch(setNotLoggedUser())
+          setTimeout(() => {
+            dispatch(setNotLoggedUser())
+          }, 1000)
         }
       } catch (error) {
         console.log(error)

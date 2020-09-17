@@ -1,16 +1,18 @@
 import React from 'react'
-import { useNavigation } from '@react-navigation/native'
-import { Appbar, Container, Typography } from 'src/components/atoms'
+import { Container, Typography, StatusBar } from 'src/components/atoms'
+import { useTheme } from 'react-native-paper'
+import { BackHeader } from 'src/components/molecules'
 
 const ForgotPassword: React.FC = () => {
-  const navigation = useNavigation()
+  const theme = useTheme()
 
   return (
     <>
-      <Appbar.Header>
-        <Appbar.BackAction onPress={() => navigation.navigate('Login')} />
-        <Appbar.Content title="Alterar senha" />
-      </Appbar.Header>
+      <StatusBar
+        backgroundColor={theme.colors.primary}
+        barStyle="dark-content"
+      />
+      <BackHeader title="Alterar senha" />
       <Container>
         <Typography>ForgotPassword</Typography>
       </Container>

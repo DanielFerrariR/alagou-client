@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import {
-  Appbar,
   Typography,
   Box,
   TextInput,
@@ -14,7 +13,11 @@ import {
 } from 'src/components/atoms'
 import ImagePicker from 'react-native-image-picker'
 import ImageView from 'react-native-image-viewing'
-import { AddressSearchInput, MessageModal } from 'src/components/molecules'
+import {
+  BackHeader,
+  AddressSearchInput,
+  MessageModal
+} from 'src/components/molecules'
 import { useTheme } from 'react-native-paper'
 import GeocoderLibrary from 'react-native-geocoding'
 import { GOOGLE_MAPS_API_KEY } from '@env'
@@ -133,10 +136,7 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
 
   return (
     <>
-      <Appbar.Header>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Editar alagamento" />
-      </Appbar.Header>
+      <BackHeader title="Editar alagamento" />
       <Container p={2}>
         <TextInput
           label="Descrição *"

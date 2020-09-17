@@ -1,4 +1,4 @@
-const DESTROY_SESSION = 'DESTROY_SESSION'
+export const DESTROY_SESSION = 'DESTROY_SESSION'
 
 interface DestroySessionAction {
   type: typeof DESTROY_SESSION

@@ -1,18 +1,13 @@
 import React from 'react'
-import { Appbar, Container, MenuItem, Divider } from 'src/components/atoms'
-import { useNavigation } from '@react-navigation/native'
+import { Container, MenuItem, Divider } from 'src/components/atoms'
 import { Dimensions } from 'react-native'
 import { Water, Alert } from 'src/images'
+import { BackHeader } from 'src/components/molecules'
 
 const Administration: React.FC = () => {
-  const navigation = useNavigation()
-
   return (
     <>
-      <Appbar.Header>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Administração" />
-      </Appbar.Header>
+      <BackHeader title="Administração" />
       <Container>
         <MenuItem
           icon={() => <Water />}

@@ -1,7 +1,7 @@
 import React from 'react'
-import { Container, Typography, Appbar } from 'src/components/atoms'
-import { useNavigation } from '@react-navigation/native'
+import { Container, Typography } from 'src/components/atoms'
 import { formatDate, ensure } from 'src/utils'
+import { BackHeader } from 'src/components/molecules'
 
 interface Props {
   route: {
@@ -15,7 +15,6 @@ interface Props {
 
 const Alerts: React.FC<Props> = ({ route }) => {
   const { _id } = route.params
-  const navigation = useNavigation()
   const alerts = [
     {
       _id: 1,
@@ -43,10 +42,7 @@ const Alerts: React.FC<Props> = ({ route }) => {
 
   return (
     <>
-      <Appbar.Header>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Alertas" />
-      </Appbar.Header>
+      <BackHeader title="Alertas" />
       <Container p={2}>
         <Typography variant="h4" mb={1}>
           {formatDate(alert.date).split(' ')[0]}

@@ -5,16 +5,14 @@ import {
   Button,
   Box,
   TouchableOpacity,
-  Appbar,
   Image,
   ScrollView,
   Container
 } from 'src/components/atoms'
-import { MessageModal } from 'src/components/molecules'
+import { MessageModal, BackHeader } from 'src/components/molecules'
 import { useDispatch, useSelector } from 'src/store'
 import { editUser } from 'src/store/user'
 import AsyncStorage from '@react-native-community/async-storage'
-import { useNavigation } from '@react-navigation/native'
 import ImagePicker from 'react-native-image-picker'
 import { TextInput as OldTextInput, useTheme } from 'react-native-paper'
 import ImageView from 'react-native-image-viewing'
@@ -62,7 +60,6 @@ const EditProfile: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
   const [loading, setLoading] = useState(false)
-  const navigation = useNavigation()
   const dispatch = useDispatch()
   const theme = useTheme()
 
@@ -140,10 +137,7 @@ const EditProfile: React.FC = () => {
 
   return (
     <>
-      <Appbar.Header>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Editar Perfil" />
-      </Appbar.Header>
+      <BackHeader title="Editar Perfil" />
       <ScrollView keyboardShouldPersistTaps="handled">
         <Container>
           <Box justifyContent="center" alignItems="center" mt={4}>

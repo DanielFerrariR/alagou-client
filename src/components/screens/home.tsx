@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
-import { Header, Map } from 'src/components/organisms'
+import { Map } from 'src/components/organisms'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
-
+import { Header } from 'src/components/molecules'
 import { fetchFloodings } from 'src/store/floodings'
 import { useDispatch } from 'src/store'
 

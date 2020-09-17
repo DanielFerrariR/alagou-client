@@ -5,16 +5,15 @@ import {
   Button,
   Box,
   TouchableOpacity,
-  Appbar,
   Image,
   ScrollView,
-  Container
+  Container,
+  StatusBar
 } from 'src/components/atoms'
-import { MessageModal } from 'src/components/molecules'
+import { MessageModal, BackHeader } from 'src/components/molecules'
 import { useDispatch } from 'src/store'
 import { createUser } from 'src/store/user'
 import AsyncStorage from '@react-native-community/async-storage'
-import { useNavigation } from '@react-navigation/native'
 import ImagePicker from 'react-native-image-picker'
 import { TextInput as OldTextInput, useTheme } from 'react-native-paper'
 import ImageView from 'react-native-image-viewing'
@@ -55,7 +54,6 @@ const Register: React.FC = () => {
   })
   const [errorMessage, setErrorMessage] = useState('')
   const [loading, setLoading] = useState(false)
-  const navigation = useNavigation()
   const dispatch = useDispatch()
   const theme = useTheme()
 
@@ -127,10 +125,11 @@ const Register: React.FC = () => {
 
   return (
     <>
-      <Appbar.Header>
-        <Appbar.BackAction onPress={() => navigation.navigate('Login')} />
-        <Appbar.Content title="Faça seu cadastro" />
-      </Appbar.Header>
+      <StatusBar
+        backgroundColor={theme.colors.primary}
+        barStyle="dark-content"
+      />
+      <BackHeader title="Faça seu cadastro" />
       <ScrollView keyboardShouldPersistTaps="handled">
         <Container>
           <Box justifyContent="center" alignItems="center" mt={4}>

@@ -1,3 +1,4 @@
+import { DESTROY_SESSION } from '../destroy_session'
 import {
   UserState,
   UserActionsTypes,
@@ -15,6 +16,8 @@ const userReducer = (
   action: UserActionsTypes
 ): UserState | false | null => {
   switch (action.type) {
+    case DESTROY_SESSION:
+      return false
     case CREATE_USER:
       return action.payload
     case EDIT_USER:

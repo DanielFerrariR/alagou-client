@@ -3,7 +3,6 @@ import {
   Container,
   Box,
   Typography,
-  Appbar,
   FlatList,
   Paper
 } from 'src/components/atoms'
@@ -12,6 +11,7 @@ import { formatDate } from 'src/utils'
 import { Dimensions } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useTheme, TouchableRipple } from 'react-native-paper'
+import { BackHeader } from 'src/components/molecules'
 
 const Alerts: React.FC = () => {
   const navigation = useNavigation()
@@ -47,10 +47,7 @@ const Alerts: React.FC = () => {
 
   return (
     <>
-      <Appbar.Header>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Alertas" />
-      </Appbar.Header>
+      <BackHeader title="Alertas" />
       <Container>
         <FlatList
           data={alerts}

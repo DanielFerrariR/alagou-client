@@ -1,16 +1,11 @@
 import React from 'react'
-import { Appbar, Container, Typography } from 'src/components/atoms'
-import { useNavigation } from '@react-navigation/native'
+import { Container, Typography } from 'src/components/atoms'
+import { BackHeader } from 'src/components/molecules'
 
 const About: React.FC = () => {
-  const navigation = useNavigation()
-
   return (
     <>
-      <Appbar.Header>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Sobre o aplicativo" />
-      </Appbar.Header>
+      <BackHeader title="Sobre o aplicativo" />
       <Container p={2}>
         <Typography>
           Lorem ipsum varius leo ullamcorper diam, etiam varius arcu sem

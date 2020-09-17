@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { Appbar, Container, MenuItem, Divider } from 'src/components/atoms'
+import { Container, MenuItem, Divider } from 'src/components/atoms'
 import { DeleteUserModal } from 'src/components/organisms'
 import { Dimensions } from 'react-native'
 import { Information, Delete, Email } from 'src/images'
+import { BackHeader } from 'src/components/molecules'
 
 const Settings: React.FC = () => {
   const [open, setOpen] = useState(false)
@@ -11,10 +12,7 @@ const Settings: React.FC = () => {
 
   return (
     <>
-      <Appbar.Header>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Configurações" />
-      </Appbar.Header>
+      <BackHeader title="Configurações" />
       <Container>
         <MenuItem
           icon={() => <Information />}
