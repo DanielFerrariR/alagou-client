@@ -94,19 +94,29 @@ const FloadingList: React.FC<Props> = ({ data }) => {
 
   const openShare = async () => {
     try {
-      const response = await RNFetchBlob.fetch('GET', data.picture)
+      if (data.picture) {
+        const response = await RNFetchBlob.fetch('GET', data.picture)
 
-      const base64Image = `data:image/png;base64,${response.data}`
+        const base64Image = `data:image/png;base64,${response.data}`
 
-      await Share.open({
-        message: JSON.stringify({
-          Descrição: data.description,
-          Endereço: data.address,
-          Foto: data.picture,
-          Data: formatDate(data.date)
-        }),
-        url: base64Image
-      })
+        await Share.open({
+          message: JSON.stringify({
+            Descrição: data.description,
+            Endereço: data.address,
+            Foto: data.picture,
+            Data: formatDate(new Date(data.date))
+          }),
+          url: base64Image
+        })
+      } else {
+        await Share.open({
+          message: JSON.stringify({
+            Descrição: data.description,
+            Endereço: data.address,
+            Data: formatDate(new Date(data.date))
+          })
+        })
+      }
     } catch (error) {
       console.log(error)
     }
