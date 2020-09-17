@@ -6,6 +6,7 @@ import { useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import ImageView from 'react-native-image-viewing'
 import { ensure, eventEmitterInstance } from 'src/utils'
+import { Alert } from 'src/images'
 
 const DrawerContent: React.FC = () => {
   const [openPicture, setOpenPicture] = useState(false)
@@ -126,11 +127,9 @@ const DrawerContent: React.FC = () => {
       </TouchableOpacity>
       <TouchableOpacity mb={8} onPress={() => navigation.navigate('Alerts')}>
         <Box flexDirection="row" alignItems="center">
-          <MaterialCommunityIcons
-            name="alert-circle"
-            color={theme.colors.custom.alert}
-            size={24}
-          />
+          <Box width={24} height={24} p={0.125}>
+            <Alert width={20} height={20} />
+          </Box>
           <Typography color="custom.white" ml={4} variant="h3">
             Alertas
           </Typography>

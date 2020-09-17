@@ -58,7 +58,7 @@ const Map: React.FC = () => {
                 onPress: () => navigation.navigate('AddFlooding')
               },
               {
-                icon: 'calendar-today',
+                icon: 'calendar-range',
                 label: 'Data',
                 onPress: () => console.log('Abrir calendario')
               },

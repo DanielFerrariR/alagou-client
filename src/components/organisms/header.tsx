@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Image, Appbar } from 'src/components/atoms'
 import { useNavigation } from '@react-navigation/native'
 import { IconButton, useTheme } from 'react-native-paper'
+import { HeaderLogo } from 'src/images'
 
 const Header: React.FC = () => {
   const navigation = useNavigation() as any
@@ -10,7 +11,13 @@ const Header: React.FC = () => {
   return (
     <Appbar.Header>
       <IconButton
-        icon="menu"
+        icon={() => (
+          <Image
+            source={require('src/images/header_menu.png')}
+            height={16}
+            width={24}
+          />
+        )}
         color={theme.colors.custom.white}
         size={24}
         onPress={() => navigation.toggleDrawer()}
@@ -22,7 +29,7 @@ const Header: React.FC = () => {
         justifyContent="center"
         pointerEvents="none"
       >
-        <Image ml={-1} source={require('src/images/header_logo.png')} />
+        <HeaderLogo height={32} />
       </Box>
     </Appbar.Header>
   )

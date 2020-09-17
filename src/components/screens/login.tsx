@@ -5,7 +5,6 @@ import {
   Box,
   TouchableOpacity,
   Container,
-  Image,
   TextInput
 } from 'src/components/atoms'
 import { MessageModal } from 'src/components/molecules'
@@ -14,6 +13,7 @@ import { fetchUser } from 'src/store/user'
 import AsyncStorage from '@react-native-community/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import { useTheme, TextInput as OldTextInput } from 'react-native-paper'
+import { Logo } from 'src/images'
 
 const Login: React.FC = () => {
   const theme = useTheme()
@@ -72,7 +72,7 @@ const Login: React.FC = () => {
   return (
     <Container bgColor="custom.white">
       <Box height={0.4} alignItems="center" justifyContent="center">
-        <Image source={require('src/images/logo.png')} />
+        <Logo />
       </Box>
       <Box flex={1} p={2} bgColor="primary">
         <TextInput

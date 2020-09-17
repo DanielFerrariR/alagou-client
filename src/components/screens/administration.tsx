@@ -1,13 +1,11 @@
 import React from 'react'
-import { Appbar, Container, MenuItem } from 'src/components/atoms'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { useTheme } from 'react-native-paper'
+import { Appbar, Container, MenuItem, Divider } from 'src/components/atoms'
 import { useNavigation } from '@react-navigation/native'
 import { Dimensions } from 'react-native'
+import { Water, Alert } from 'src/images'
 
 const Administration: React.FC = () => {
   const navigation = useNavigation()
-  const theme = useTheme()
 
   return (
     <>
@@ -17,13 +15,7 @@ const Administration: React.FC = () => {
       </Appbar.Header>
       <Container>
         <MenuItem
-          icon={({ size }) => (
-            <MaterialCommunityIcons
-              name="water"
-              color={theme.colors.custom.water}
-              size={size}
-            />
-          )}
+          icon={() => <Water />}
           onPress={() => {}}
           title="Importar CSV com alagamentos"
           style={{ maxWidth: '100%' }}
@@ -32,14 +24,9 @@ const Administration: React.FC = () => {
             maxWidth: Dimensions.get('window').width - 88
           }}
         />
+        <Divider />
         <MenuItem
-          icon={({ size }) => (
-            <MaterialCommunityIcons
-              name="alert-circle"
-              color={theme.colors.custom.alert}
-              size={size}
-            />
-          )}
+          icon={() => <Alert />}
           onPress={() => {}}
           title="Gerenciar alertas"
           style={{ maxWidth: '100%' }}
@@ -48,6 +35,7 @@ const Administration: React.FC = () => {
             maxWidth: Dimensions.get('window').width - 88
           }}
         />
+        <Divider />
       </Container>
     </>
   )

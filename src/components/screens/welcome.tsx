@@ -1,8 +1,9 @@
 import React from 'react'
-import { Typography, Button, Box, Container, Image } from 'src/components/atoms'
+import { Typography, Button, Box, Container } from 'src/components/atoms'
 import { useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
-import packageJson from '../../../package.json'
+import { Logo } from 'src/images'
+import packageJson from 'src/../package.json'
 
 const Welcome: React.FC = () => {
   const theme = useTheme()
@@ -11,7 +12,7 @@ const Welcome: React.FC = () => {
   return (
     <Container bgColor="custom.white">
       <Box flex={1} alignItems="center" justifyContent="center">
-        <Image source={require('src/images/logo.png')} />
+        <Logo />
       </Box>
       <Box
         p={2}

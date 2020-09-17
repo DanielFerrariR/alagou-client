@@ -1,5 +1,10 @@
 declare module '*.svg' {
-  const content: string
+  interface Props {
+    width?: number
+    height?: number
+  }
+
+  const content: React.FC<Props>
 
   export default content
 }

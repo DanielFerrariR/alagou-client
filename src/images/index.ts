@@ -1,0 +1,7 @@
+export { default as Information } from './information.svg'
+export { default as Delete } from './delete.svg'
+export { default as Email } from './email.svg'
+export { default as Water } from './water.svg'
+export { default as Alert } from './alert.svg'
+export { default as Logo } from './logo.svg'
+export { default as HeaderLogo } from './header_logo.svg'

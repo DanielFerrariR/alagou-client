@@ -1,15 +1,13 @@
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { Appbar, Container, MenuItem } from 'src/components/atoms'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { useTheme } from 'react-native-paper'
+import { Appbar, Container, MenuItem, Divider } from 'src/components/atoms'
 import { DeleteUserModal } from 'src/components/organisms'
 import { Dimensions } from 'react-native'
+import { Information, Delete, Email } from 'src/images'
 
 const Settings: React.FC = () => {
   const [open, setOpen] = useState(false)
   const navigation = useNavigation()
-  const theme = useTheme()
 
   return (
     <>
@@ -19,13 +17,7 @@ const Settings: React.FC = () => {
       </Appbar.Header>
       <Container>
         <MenuItem
-          icon={({ size }) => (
-            <MaterialCommunityIcons
-              name="information-outline"
-              color={theme.colors.custom.information}
-              size={size}
-            />
-          )}
+          icon={() => <Information />}
           onPress={() => navigation.navigate('About')}
           title="Sobre o aplicativo"
           style={{ maxWidth: '100%' }}
@@ -34,14 +26,9 @@ const Settings: React.FC = () => {
             maxWidth: Dimensions.get('window').width - 88
           }}
         />
+        <Divider />
         <MenuItem
-          icon={({ size }) => (
-            <MaterialCommunityIcons
-              name="delete"
-              color={theme.colors.custom.trash}
-              size={size}
-            />
-          )}
+          icon={() => <Delete />}
           onPress={() => setOpen(true)}
           title="Excluir conta"
           style={{ maxWidth: '100%' }}
@@ -50,14 +37,9 @@ const Settings: React.FC = () => {
             maxWidth: Dimensions.get('window').width - 88
           }}
         />
+        <Divider />
         <MenuItem
-          icon={({ size }) => (
-            <MaterialCommunityIcons
-              name="email"
-              color={theme.colors.custom.email}
-              size={size}
-            />
-          )}
+          icon={() => <Email />}
           onPress={() => navigation.navigate('Support')}
           title="Suporte"
           style={{ maxWidth: '100%' }}
@@ -66,6 +48,7 @@ const Settings: React.FC = () => {
             maxWidth: Dimensions.get('window').width - 88
           }}
         />
+        <Divider />
       </Container>
       <DeleteUserModal open={open} setOpen={setOpen} />
     </>
