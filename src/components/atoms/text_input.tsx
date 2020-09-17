@@ -123,7 +123,9 @@ const StyledTextInput: any = styled(TextInput)`
 
 const ThemedTextInput: React.FC<TextInputProps> = React.forwardRef(
   (props, ref) => {
-    return <StyledTextInput ref={ref} mode="outlined" {...props} />
+    return (
+      <StyledTextInput ref={ref} mode="outlined" maxLength={100} {...props} />
+    )
   }
 )
 

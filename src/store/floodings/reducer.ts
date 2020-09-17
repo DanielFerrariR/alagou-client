@@ -7,7 +7,8 @@ import {
   REMOVE_FLOODING,
   UPDATE_FLOODINGS,
   ADD_FAVORITE,
-  REMOVE_FAVORITE
+  REMOVE_FAVORITE,
+  ADD_COMMENT
 } from './types'
 
 const initialState = null
@@ -30,6 +31,8 @@ const FloodingReducer = (
     case ADD_FAVORITE:
       return action.payload
     case REMOVE_FAVORITE:
+      return action.payload
+    case ADD_COMMENT:
       return action.payload
     default:
       return state

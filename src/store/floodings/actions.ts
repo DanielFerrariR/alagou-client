@@ -7,6 +7,7 @@ import {
   UPDATE_FLOODINGS,
   ADD_FAVORITE,
   REMOVE_FAVORITE,
+  ADD_COMMENT,
   AddFavoriteAction,
   RemoveFavoriteAction,
   FetchFloodingsAction,
@@ -14,6 +15,7 @@ import {
   EditFloodingAction,
   RemoveFloodingAction,
   UpdateFloodingsAction,
+  AddCommentAction,
   CreateFloodingData,
   EditFloodingData,
   FloodingsState
@@ -128,6 +130,21 @@ const removeFlooding = async (_id: string): Promise<RemoveFloodingAction> => {
   }
 }
 
+const addComment = async (
+  _id: string,
+  message: string
+): Promise<AddCommentAction> => {
+  const response = await serverAPI.post<FloodingsState>(`/add-comment`, {
+    _id,
+    message
+  })
+
+  return {
+    type: ADD_COMMENT,
+    payload: response.data
+  }
+}
+
 export {
   updateFloodings,
   fetchFloodings,
@@ -135,5 +152,6 @@ export {
   editFlooding,
   removeFlooding,
   addFavorite,
-  removeFavorite
+  removeFavorite,
+  addComment
 }

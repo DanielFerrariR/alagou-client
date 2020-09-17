@@ -97,7 +97,6 @@ const AddFlodding: React.FC = () => {
         longitude,
         picture: form.picture,
         severity: Number(form.severity),
-        date: new Date().getTime()
       }
 
       dispatch(await createFlooding(newFlooding))
@@ -191,7 +190,7 @@ const AddFlodding: React.FC = () => {
         </Box>
         <Button
           color="accent"
-          labelStyle={{ color: 'white' }}
+          labelStyle={{ color: theme.colors.custom.white }}
           onPress={submit}
           loading={loading}
         >

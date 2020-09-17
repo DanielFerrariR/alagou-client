@@ -14,68 +14,34 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { useTheme } from 'react-native-paper'
 import { formatDate, ensure } from 'src/utils'
 import ImageView from 'react-native-image-viewing'
-import { useSelector } from 'src/store'
+import { useSelector, useDispatch } from 'src/store'
 import { Dimensions } from 'react-native'
 import { useKeyboard } from 'src/hooks'
+import { FloodingsState, addComment } from 'src/store/floodings'
 
 interface Props {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
+  data: FloodingsState[0]
 }
 
-const ChatModal: React.FC<Props> = ({ open, setOpen }) => {
+const ChatModal: React.FC<Props> = ({ open, setOpen, data }) => {
   const userSession = ensure(useSelector((state) => state.user))
   const [openPicture, setOpenPicture] = useState(false)
   const isKeyboardVisible = useKeyboard()
   const theme = useTheme()
-  const [messages, setMessages] = useState([
-    {
-      _id: 'dsadadadadsa',
-      message: 'primeiro',
-      userId: userSession._id,
-      userName: userSession.name,
-      userPicture: userSession.picture,
-      date: new Date()
-    },
-    {
-      _id: 'dasdsadasddd2saa',
-      message: 'dsadsaddsdasdasdasdasdasdasdsdasdsadasdsadasdasasa',
-      userId: 'ddadsdasdwdq313',
-      userName: userSession.name,
-      userPicture: userSession.picture,
-      date: new Date()
-    },
-    {
-      _id: 'dasdsadasddd1saa',
-      message: 'dsadsaddsdasdasdasdasdasdasdsdasdsadasdsadasdasasa',
-      userId: userSession._id,
-      userName: userSession.name,
-      userPicture: userSession.picture,
-      date: new Date()
-    },
-    {
-      _id: 'dasdsadasddd3saa',
-      message: 'ultimo',
-      userId: 'ddadsdasdwdq313',
-      userName: userSession.name,
-      userPicture: userSession.picture,
-      date: new Date()
+  const [message, setMessage] = useState('')
+  const dispatch = useDispatch()
+  const invertedMessages = [...data.messages].reverse()
+
+  const addMessage = async () => {
+    if (!message) {
+      return
     }
-  ])
 
-  const addMessage = () => {
-    const newMessages = [...messages]
+    dispatch(await addComment(data._id, message))
 
-    newMessages.unshift({
-      _id: 'dasdsadasd3123dd3313saa',
-      message: 'novo',
-      userId: userSession._id,
-      userName: userSession.name,
-      userPicture: userSession.picture,
-      date: new Date()
-    })
-
-    setMessages(newMessages)
+    setMessage('')
   }
 
   return (
@@ -106,11 +72,11 @@ const ChatModal: React.FC<Props> = ({ open, setOpen }) => {
             <Box height={320} mb={3}>
               <FlatList
                 inverted
-                data={messages}
+                data={invertedMessages}
                 keyExtractor={(item) => String(item._id)}
                 renderItem={({ item, index }) => (
                   <Box
-                    mt={messages.length - 1 > index ? 2 : 0}
+                    mt={data.messages.length - 1 > index ? 2 : 0}
                     alignSelf={
                       item.userId === userSession._id
                         ? 'flex-end'
@@ -146,7 +112,7 @@ const ChatModal: React.FC<Props> = ({ open, setOpen }) => {
                         >
                           <Image
                             source={
-                              item.userPicture  
+                              item.userPicture
                                 ? { uri: item.userPicture }
                                 : require('src/images/no_picture.png')
                             }
@@ -211,7 +177,7 @@ const ChatModal: React.FC<Props> = ({ open, setOpen }) => {
                           variant="h4"
                           textAlign="right"
                         >
-                          {formatDate(item.date)}
+                          {formatDate(new Date(item.date))}
                         </Typography>
                       </Box>
                     </Box>
@@ -225,6 +191,8 @@ const ChatModal: React.FC<Props> = ({ open, setOpen }) => {
                 placeholder="Escreva um comentário"
                 mt={-0.75}
                 mr={0.5}
+                onChangeText={(text) => setMessage(text)}
+                value={message}
               />
               <TouchableOpacity onPress={addMessage}>
                 <MaterialCommunityIcons

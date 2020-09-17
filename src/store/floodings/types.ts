@@ -13,6 +13,14 @@ export type FloodingsState = {
   severity: number
   date: Date
   favorites: string[]
+  messages: {
+    _id: string
+    message: string
+    userId: string
+    userName: string
+    userPicture: string
+    date: Date
+  }[]
 }[]
 
 export type CreateFloodingData = {
@@ -35,7 +43,6 @@ export type CreateFloodingData = {
       }
     | string
   severity: number
-  date: number
 }
 
 export type EditFloodingData = {
@@ -75,6 +82,8 @@ export const ADD_FAVORITE = 'ADD_FAVORITE'
 
 export const REMOVE_FAVORITE = 'REMOVE_FAVORITE'
 
+export const ADD_COMMENT = 'ADD_COMMENT'
+
 export interface FetchFloodingsAction {
   type: typeof FETCH_FLOODINGS
   payload: FloodingsState
@@ -110,6 +119,11 @@ export interface RemoveFavoriteAction {
   payload: FloodingsState
 }
 
+export interface AddCommentAction {
+  type: typeof ADD_COMMENT
+  payload: FloodingsState
+}
+
 export type FloodingActionsTypes =
   | CreateFloodingAction
   | EditFloodingAction
@@ -118,4 +132,5 @@ export type FloodingActionsTypes =
   | UpdateFloodingsAction
   | AddFavoriteAction
   | RemoveFavoriteAction
+  | AddCommentAction
   | DestroySessionActionTypes

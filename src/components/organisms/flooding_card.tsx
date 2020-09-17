@@ -102,7 +102,8 @@ const FloadingList: React.FC<Props> = ({ data }) => {
         message: JSON.stringify({
           Descrição: data.description,
           Endereço: data.address,
-          Foto: data.picture
+          Foto: data.picture,
+          Data: formatDate(data.date)
         }),
         url: base64Image
       })
@@ -250,7 +251,7 @@ const FloadingList: React.FC<Props> = ({ data }) => {
         </Box>
       </Paper>
       <MessageModal message={errorMessage} setMessage={setErrorMessage} error />
-      <ChatModal open={openChatModal} setOpen={setOpenChatModal} />
+      <ChatModal open={openChatModal} setOpen={setOpenChatModal} data={data} />
     </>
   )
 }
