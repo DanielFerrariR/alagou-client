@@ -69,6 +69,13 @@ const FloadingList: React.FC<Props> = ({ data }) => {
     } catch (error) {
       console.log(error)
       setLoadingExcludeCard(false)
+
+      if (error?.response?.data?.error) {
+        setErrorMessage(error.response.data.error)
+        return
+      }
+
+      setErrorMessage('Falha em conectar.')
     }
   }
 
@@ -85,10 +92,18 @@ const FloadingList: React.FC<Props> = ({ data }) => {
       } else {
         dispatch(await addFavorite(data._id))
       }
+
+      setLoadingFavorite(false)
     } catch (error) {
       console.log(error)
-    } finally {
       setLoadingFavorite(false)
+
+      if (error?.response?.data?.error) {
+        setErrorMessage(error.response.data.error)
+        return
+      }
+
+      setErrorMessage('Falha em conectar.')
     }
   }
 
