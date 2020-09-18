@@ -14,8 +14,8 @@ import { fetchUser } from 'src/store/user'
 import AsyncStorage from '@react-native-community/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import { useTheme, TextInput as OldTextInput } from 'react-native-paper'
-import { Logo } from 'src/images'
-import { Keyboard } from 'react-native'
+import { Logo, Wave } from 'src/images'
+import { Keyboard, Dimensions } from 'react-native'
 import { useKeyboard } from 'src/hooks'
 
 const Login: React.FC = () => {
@@ -99,6 +99,15 @@ const Login: React.FC = () => {
           <Logo />
         </Box>
         <Box flex={1} p={2} bgColor="primary">
+          <Box
+            position="absolute"
+            width={Dimensions.get('window').width + 16}
+            left="-16px"
+            height={100}
+            top="-80px"
+          >
+            <Wave />
+          </Box>
           <TextInput
             mode="flat"
             label="Email *"
