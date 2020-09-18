@@ -15,6 +15,7 @@
 - [Workspace](#workspace)
 - [Configuration](#configuration)
 - [Building for production](#building-for-production)
+- [Deep Linking](#deep-linking)
 
 ## Workspace
 
@@ -162,3 +163,13 @@ yarn android:build:apk
 2. **For ios**
 
 Currently not supported, because I'm missing a mac. It will need some fixes.
+
+# Deep Linking
+
+Test it with npx uri-scheme open <schemeName>://<Route>/<Param>/<Param>/... --android
+
+SchemeName is defined in AndroidManifest.xml
+Route is defined in routes
+Param is defined in routes
+
+Example: npx uri-scheme open alagou://ForgotPassword/123 --android

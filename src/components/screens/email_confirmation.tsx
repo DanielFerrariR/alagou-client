@@ -12,7 +12,7 @@ interface Props {
   }
 }
 
-const ForgotPassword: React.FC<Props> = ({ route }) => {
+const EmailConfirmation: React.FC<Props> = ({ route }) => {
   const theme = useTheme()
 
   console.log(route)
@@ -24,13 +24,13 @@ const ForgotPassword: React.FC<Props> = ({ route }) => {
         barStyle="dark-content"
       />
       <Appbar.Header>
-        <Appbar.Content title="Alterar senha" />
+        <Appbar.Content title="Confirmação de Email" />
       </Appbar.Header>
       <Container>
-        <Typography>ForgotPassword</Typography>
+        <Typography>EmailConfirmation</Typography>
       </Container>
     </>
   )
 }
 
-export default ForgotPassword
+export default EmailConfirmation

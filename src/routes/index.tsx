@@ -22,7 +22,8 @@ import {
   About,
   Administration,
   AlertsDescription,
-  Loading
+  Loading,
+  EmailConfirmation
 } from 'src/components/screens'
 import store from 'src/utils/redux'
 import { useSelector } from 'src/store'
@@ -103,7 +104,24 @@ const Routes: React.FC = () => {
 
   return (
     <>
-      <NavigationContainer>
+      <NavigationContainer
+        fallback={<Loading />}
+        linking={{
+          prefixes: ['alagou://'],
+          config: {
+            screens: {
+              EmailConfirmation: {
+                path: 'EmailConfirmation/:token',
+                parse: { token: Number }
+              },
+              ForgotPassword: {
+                path: 'ForgotPassword/:token',
+                parse: { token: Number }
+              }
+            }
+          }
+        }}
+      >
         <Stack.Navigator
           screenOptions={{
             gestureEnabled: false,
@@ -138,9 +156,13 @@ const Routes: React.FC = () => {
               <Stack.Screen name="Consult" component={Consult} />
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Register" component={Register} />
-              <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
             </>
           ) : null}
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+          <Stack.Screen
+            name="EmailConfirmation"
+            component={EmailConfirmation}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>

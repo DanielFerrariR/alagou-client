@@ -213,7 +213,7 @@ const EditProfile: React.FC = () => {
                   onPress={() =>
                     setForm({ ...form, showOldPassword: !form.showOldPassword })
                   }
-                  name={form.showOldPassword ? 'eye' : 'eye-off'}
+                  name={form.showOldPassword ? 'eye-off' : 'eye'}
                 />
               }
             />
@@ -229,7 +229,7 @@ const EditProfile: React.FC = () => {
                   onPress={() =>
                     setForm({ ...form, showNewPassword: !form.showNewPassword })
                   }
-                  name={form.showNewPassword ? 'eye' : 'eye-off'}
+                  name={form.showNewPassword ? 'eye-off' : 'eye'}
                 />
               }
             />
@@ -248,7 +248,7 @@ const EditProfile: React.FC = () => {
                       showConfirmNewPassword: !form.showConfirmNewPassword
                     })
                   }
-                  name={form.showConfirmNewPassword ? 'eye' : 'eye-off'}
+                  name={form.showConfirmNewPassword ? 'eye-off' : 'eye'}
                 />
               }
             />

@@ -129,7 +129,7 @@ const Login: React.FC = () => {
                 onPress={() =>
                   setForm({ ...form, showPassword: !form.showPassword })
                 }
-                name={form.showPassword ? 'eye' : 'eye-off'}
+                name={form.showPassword ? 'eye-off' : 'eye'}
               />
             }
           />
