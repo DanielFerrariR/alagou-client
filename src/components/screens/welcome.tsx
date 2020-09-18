@@ -6,7 +6,6 @@ import {
   Container,
   StatusBar
 } from 'src/components/atoms'
-import { Wave } from 'src/components/molecules'
 import { useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { Logo } from 'src/images'
@@ -35,7 +34,6 @@ const Welcome: React.FC = () => {
           position="relative"
           bgColor="primary"
         >
-          <Wave />
           <Button
             mode="outlined"
             mb={3}

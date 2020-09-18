@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
   Container,
   TextInput,
-  StatusBar,
+  StatusBar
 } from 'src/components/atoms'
-import { MessageModal, Wave } from 'src/components/molecules'
+import { MessageModal } from 'src/components/molecules'
 import { useDispatch, useSelector } from 'src/store'
 import { fetchUser } from 'src/store/user'
 import AsyncStorage from '@react-native-community/async-storage'
@@ -85,7 +85,9 @@ const Login: React.FC = () => {
   return (
     <>
       <StatusBar
-        backgroundColor={theme.colors.custom.white}
+        backgroundColor={
+          isKeyboardVisible ? theme.colors.primary : theme.colors.custom.white
+        }
         barStyle="dark-content"
       />
       <Container bgColor="custom.white">
@@ -97,7 +99,6 @@ const Login: React.FC = () => {
           <Logo />
         </Box>
         <Box flex={1} p={2} bgColor="primary">
-          <Wave />
           <TextInput
             mode="flat"
             label="Email *"
