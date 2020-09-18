@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useCallback } from 'react'
+import { useFocusEffect } from '@react-navigation/native'
 
 /**
  * A hook to update a setInterval in each run
@@ -12,15 +13,20 @@ const useInterval = (callback: any, delay: number | null): void => {
     savedCallback.current = callback
   }, [callback])
 
-  useEffect((): any => {
-    const tick = () => {
-      savedCallback.current()
-    }
-    if (delay !== null) {
-      const id = setInterval(tick, delay)
-      return () => clearInterval(id)
-    }
-  }, [delay])
+  useFocusEffect(
+    useCallback(() => {
+      const tick = () => {
+        savedCallback.current()
+      }
+
+      if (delay !== null) {
+        const id = setInterval(tick, delay)
+        return () => clearInterval(id)
+      }
+
+      return undefined
+    }, [delay])
+  )
 }
 
 export default useInterval

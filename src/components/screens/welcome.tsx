@@ -6,6 +6,7 @@ import {
   Container,
   StatusBar
 } from 'src/components/atoms'
+import { Wave } from 'src/components/molecules'
 import { useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { Logo } from 'src/images'
@@ -21,19 +22,20 @@ const Welcome: React.FC = () => {
         backgroundColor={theme.colors.custom.white}
         barStyle="dark-content"
       />
-      <Container bgColor="custom.white">
+      <Container bgColor="custom.white" flex={1}>
         <Box flex={1} alignItems="center" justifyContent="center">
           <Logo />
         </Box>
         <Box
           p={2}
           flex={1}
-          bgColor="primary"
           flexDirection="column"
           alignItems="center"
           justifyContent="center"
           position="relative"
+          bgColor="primary"
         >
+          <Wave />
           <Button
             mode="outlined"
             mb={3}
