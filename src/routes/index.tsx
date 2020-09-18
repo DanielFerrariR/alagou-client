@@ -23,7 +23,8 @@ import {
   Administration,
   AlertsDescription,
   Loading,
-  EmailConfirmation
+  EmailConfirmation,
+  ResetPassword
 } from 'src/components/screens'
 import store from 'src/utils/redux'
 import { useSelector } from 'src/store'
@@ -112,11 +113,11 @@ const Routes: React.FC = () => {
             screens: {
               EmailConfirmation: {
                 path: 'EmailConfirmation/:token',
-                parse: { token: Number }
+                parse: { token: String }
               },
-              ForgotPassword: {
-                path: 'ForgotPassword/:token',
-                parse: { token: Number }
+              ResetPassword: {
+                path: 'ResetPassword/:token',
+                parse: { token: String }
               }
             }
           }
@@ -156,13 +157,14 @@ const Routes: React.FC = () => {
               <Stack.Screen name="Consult" component={Consult} />
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Register" component={Register} />
+              <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
             </>
           ) : null}
-          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
           <Stack.Screen
             name="EmailConfirmation"
             component={EmailConfirmation}
           />
+          <Stack.Screen name="ResetPassword" component={ResetPassword} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

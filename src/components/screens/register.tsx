@@ -214,7 +214,7 @@ const Register: React.FC = () => {
                       showConfirmPassword: !form.showConfirmPassword
                     })
                   }
-                  name={form.showConfirmPassword ? 'eye' : 'eye-off'}
+                  name={form.showConfirmPassword ? 'eye-off' : 'eye'}
                 />
               }
             />

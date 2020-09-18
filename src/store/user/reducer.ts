@@ -6,7 +6,8 @@ import {
   EDIT_USER,
   FETCH_USER,
   SET_NOT_LOGGED_USER,
-  SET_LOGGED_USER
+  SET_LOGGED_USER,
+  SET_USER_CONFIRMED_EMAIL
 } from './types'
 
 const initialState = null
@@ -27,6 +28,8 @@ const userReducer = (
     case SET_LOGGED_USER:
       return action.payload
     case SET_NOT_LOGGED_USER:
+      return action.payload
+    case SET_USER_CONFIRMED_EMAIL:
       return action.payload
     default:
       return state

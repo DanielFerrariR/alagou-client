@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  Container
+  Container,
+  HelperText
 } from 'src/components/atoms'
 import { MessageModal, BackHeader } from 'src/components/molecules'
 import { useDispatch, useSelector } from 'src/store'
@@ -18,6 +19,7 @@ import { TextInput as OldTextInput, useTheme } from 'react-native-paper'
 import ImageView from 'react-native-image-viewing'
 import { ensure } from 'src/utils'
 import { Keyboard } from 'react-native'
+import { serverAPI } from 'src/services'
 
 interface Form {
   name: string
@@ -44,6 +46,10 @@ interface Form {
   showConfirmNewPassword: boolean
 }
 
+interface ResentEmailAxiosResponse {
+  message: string
+}
+
 const EditProfile: React.FC = () => {
   const userSession = ensure(useSelector((state) => state.user))
   const [openpicture, setOpenpicture] = useState(false)
@@ -61,6 +67,7 @@ const EditProfile: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
   const [loading, setLoading] = useState(false)
+  const [loadingResentEmail, setLoadingResentEmail] = useState(false)
   const dispatch = useDispatch()
   const theme = useTheme()
 
@@ -78,6 +85,33 @@ const EditProfile: React.FC = () => {
         setForm({ ...form, picture: response as any })
       }
     })
+  }
+
+  const sendEmail = async () => {
+    try {
+      if (loadingResentEmail) {
+        return
+      }
+
+      setLoadingResentEmail(true)
+
+      const response = await serverAPI.get<ResentEmailAxiosResponse>(
+        '/resent-email'
+      )
+
+      setLoadingResentEmail(false)
+      setSuccessMessage(response.data.message)
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+
+      if (error?.response?.data?.error) {
+        setErrorMessage(error.response.data.error)
+        return
+      }
+
+      setErrorMessage('Falha em conectar.')
+    }
   }
 
   const onSubmit = async () => {
@@ -197,10 +231,17 @@ const EditProfile: React.FC = () => {
             <TextInput
               label="Email *"
               placeholder="Digite seu e-mail"
-              mb={3}
+              mb={!userSession.isEmailConfirmed ? 0 : 3}
               onChangeText={(text) => onChange('email', text)}
               value={form.email}
             />
+            {!userSession.isEmailConfirmed ? (
+              <TouchableOpacity onPress={sendEmail} mb={1}>
+                <HelperText type="info" visible>
+                  Email não verificado. Pressione aqui para enviar novamente.
+                </HelperText>
+              </TouchableOpacity>
+            ) : null}
             <TextInput
               label="Senha Atual"
               placeholder="Digite sua senha atual"

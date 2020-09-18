@@ -8,6 +8,7 @@ export type UserState = {
   token: string
   level: number
   isAdmin: boolean
+  isEmailConfirmed: boolean
 }
 
 export const CREATE_USER = 'CREATE_USER'
@@ -19,6 +20,8 @@ export const FETCH_USER = 'FETCH_USER'
 export const SET_LOGGED_USER = 'SET_LOGGED_USER'
 
 export const SET_NOT_LOGGED_USER = 'SET_NOT_LOGGED_USER'
+
+export const SET_USER_CONFIRMED_EMAIL = 'SET_USER_CONFIRMED_EMAIL'
 
 export interface CreateUserData {
   name: string
@@ -91,10 +94,16 @@ export interface SetNotLoggedUserAction {
   payload: false
 }
 
+export interface SetUserConfirmedEmailAction {
+  type: typeof SET_USER_CONFIRMED_EMAIL
+  payload: UserState
+}
+
 export type UserActionsTypes =
   | CreateUserAction
   | EditUserAction
   | FetchUserAction
   | SetLoggedUserAction
   | SetNotLoggedUserAction
+  | SetUserConfirmedEmailAction
   | DestroySessionActionTypes

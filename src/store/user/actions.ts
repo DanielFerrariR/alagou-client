@@ -12,8 +12,10 @@ import {
   FetchUserData,
   SetLoggedUserAction,
   SetNotLoggedUserAction,
+  SetUserConfirmedEmailAction,
   SET_LOGGED_USER,
-  SET_NOT_LOGGED_USER
+  SET_NOT_LOGGED_USER,
+  SET_USER_CONFIRMED_EMAIL
 } from './types'
 
 const setLoggedUser = (userSession: UserState): SetLoggedUserAction => {
@@ -93,4 +95,20 @@ const fetchUser = async (data: FetchUserData): Promise<FetchUserAction> => {
   }
 }
 
-export { createUser, editUser, fetchUser, setLoggedUser, setNotLoggedUser }
+const setUserConfirmedEmail = (
+  userSession: UserState
+): SetUserConfirmedEmailAction => {
+  return {
+    type: SET_USER_CONFIRMED_EMAIL,
+    payload: { userSession, isEmailConfirmed: true }
+  }
+}
+
+export {
+  createUser,
+  editUser,
+  fetchUser,
+  setLoggedUser,
+  setNotLoggedUser,
+  setUserConfirmedEmail
+}

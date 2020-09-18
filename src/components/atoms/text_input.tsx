@@ -105,6 +105,7 @@ interface OldTextInputProps {
    * @optional
    */
   theme?: ReactNativePaper.Theme
+  maxLength?: number
 }
 
 interface ExtraProps {
