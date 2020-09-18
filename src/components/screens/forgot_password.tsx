@@ -19,10 +19,7 @@ const ForgotPassword: React.FC<Props> = ({ route }) => {
 
   return (
     <>
-      <StatusBar
-        backgroundColor={theme.colors.primary}
-        barStyle="dark-content"
-      />
+      <StatusBar backgroundColor={theme.colors.primary} />
       <Appbar.Header>
         <Appbar.Content title="Alterar senha" />
       </Appbar.Header>
