@@ -1,20 +1,52 @@
-import React, { useCallback } from 'react'
-import { Box, FlatList, Container } from 'src/components/atoms'
+import React, { useCallback, useState, useEffect } from 'react'
+import { Box, FlatList, Container, TextInput } from 'src/components/atoms'
 import { FloodingCard } from 'src/components/organisms'
 import { useFocusEffect } from '@react-navigation/native'
 import Shimmer from 'react-native-shimmer'
-import { fetchFloodings } from 'src/store/floodings'
+import { FloodingsState, fetchFloodings } from 'src/store/floodings'
 import { useDispatch, useSelector } from 'src/store'
-import { ensure } from 'src/utils'
+import { ensure, formatDate } from 'src/utils'
 import { BackHeader } from 'src/components/molecules'
+import matchSorter from 'match-sorter'
 
 const Contributions: React.FC = () => {
   const userSession = ensure(useSelector((state) => state.user))
   const floodings = useSelector((state) => state.floodings)
-  const filteredFloodings = floodings?.filter(
-    (each) => each.userId === userSession._id
-  )
+  const [
+    filteredFloodings,
+    setFilteredFloodings
+  ] = useState<FloodingsState | null>(null)
+  const [searchText, setSearchText] = useState('')
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (!floodings) {
+      return
+    }
+
+    const newFilteredFloodings = floodings.filter(
+      (each) => each.userId === userSession._id
+    )
+
+    setFilteredFloodings(newFilteredFloodings)
+  }, [floodings])
+
+  useEffect(() => {
+    if (!floodings || !filteredFloodings) {
+      return
+    }
+
+    const newFilteredFloodings = matchSorter(floodings, searchText, {
+      keys: [
+        'userName',
+        'description',
+        'address',
+        (item) => formatDate(new Date(item.date))
+      ]
+    })
+
+    setFilteredFloodings(newFilteredFloodings)
+  }, [searchText])
 
   useFocusEffect(
     useCallback(() => {
@@ -34,17 +66,21 @@ const Contributions: React.FC = () => {
     <>
       <BackHeader title="Contribuições" />
       <Container>
+        <TextInput
+          mx={2}
+          mt={1}
+          mb={3}
+          label="Filtro"
+          placeholder="Digite sua busca"
+          onChangeText={(text) => setSearchText(text)}
+        />
         {filteredFloodings ? (
           <Box>
             <FlatList
               data={filteredFloodings}
-              keyExtractor={(item) => String(item._id)}
+              keyExtractor={(item) => item._id}
               renderItem={({ item, index }) => (
-                <Box
-                  px={2}
-                  pt={index === 0 ? 2 : 0}
-                  mb={filteredFloodings.length - 1 > index ? 3 : 2}
-                >
+                <Box px={2} mb={filteredFloodings.length - 1 > index ? 3 : 14}>
                   <FloodingCard data={item} />
                 </Box>
               )}

@@ -1,16 +1,44 @@
-import React, { useCallback } from 'react'
-import { Box, FlatList, Container } from 'src/components/atoms'
+import React, { useCallback, useState, useEffect } from 'react'
+import { Box, FlatList, Container, TextInput } from 'src/components/atoms'
 import { FloodingCard } from 'src/components/organisms'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import Shimmer from 'react-native-shimmer'
-import { fetchFloodings } from 'src/store/floodings'
+import { FloodingsState, fetchFloodings } from 'src/store/floodings'
 import { useDispatch, useSelector } from 'src/store'
 import { Header } from 'src/components/molecules'
+import matchSorter from 'match-sorter'
+import { formatDate } from 'src/utils'
 
 const FloadingList: React.FC = () => {
   const navigation = useNavigation() as any
   const floodings = useSelector((state) => state.floodings)
   const dispatch = useDispatch()
+  const [searchText, setSearchText] = useState('')
+  const [
+    filteredFloodings,
+    setFilteredFloodings
+  ] = useState<FloodingsState | null>(null)
+
+  useEffect(() => {
+    setFilteredFloodings(floodings)
+  }, [floodings])
+
+  useEffect(() => {
+    if (!floodings || !filteredFloodings) {
+      return
+    }
+
+    const newFilteredFloodings = matchSorter(floodings, searchText, {
+      keys: [
+        'userName',
+        'description',
+        'address',
+        (item) => formatDate(new Date(item.date))
+      ]
+    })
+
+    setFilteredFloodings(newFilteredFloodings)
+  }, [searchText])
 
   useFocusEffect(
     useCallback(() => {
@@ -33,17 +61,21 @@ const FloadingList: React.FC = () => {
     <>
       <Header />
       <Container>
-        {floodings ? (
+        <TextInput
+          mx={2}
+          mt={1}
+          mb={3}
+          label="Filtro"
+          placeholder="Digite sua busca"
+          onChangeText={(text) => setSearchText(text)}
+        />
+        {filteredFloodings ? (
           <Box>
             <FlatList
-              data={floodings}
+              data={filteredFloodings}
               keyExtractor={(item) => item._id}
               renderItem={({ item, index }) => (
-                <Box
-                  px={2}
-                  pt={index === 0 ? 2 : 0}
-                  mb={floodings.length - 1 > index ? 3 : 2}
-                >
+                <Box px={2} mb={filteredFloodings.length - 1 > index ? 3 : 14}>
                   <FloodingCard data={item} />
                 </Box>
               )}

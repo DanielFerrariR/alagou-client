@@ -13,7 +13,7 @@ export type FloodingsState = {
   severity: number
   date: Date
   favorites: string[]
-  messages: {
+  messages: { 
     _id: string
     message: string
     userId: string
