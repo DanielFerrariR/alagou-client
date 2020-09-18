@@ -90,7 +90,7 @@ const Login: React.FC = () => {
       />
       <Container bgColor="custom.white">
         <Box
-          height={isKeyboardVisible ? 0 : 200}
+          height={isKeyboardVisible ? 0 : 0.4}
           alignItems="center"
           justifyContent="center"
         >
