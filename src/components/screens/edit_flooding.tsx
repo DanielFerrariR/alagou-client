@@ -23,11 +23,10 @@ import GeocoderLibrary from 'react-native-geocoding'
 import { GOOGLE_MAPS_API_KEY } from '@env'
 import { editFlooding } from 'src/store/floodings'
 import { useSelector, useDispatch } from 'src/store'
-import { ensure } from 'src/utils'
 import { Keyboard } from 'react-native'
 
 interface Form {
-  description: string
+  title: string
   picture:
     | {
         fileSize: number
@@ -56,18 +55,18 @@ interface Props {
 }
 
 const EditFlooding: React.FC<Props> = ({ route }) => {
-  const floodings = ensure(useSelector((state) => state.floodings))
-  const flooding = ensure(
-    floodings.find((each) => each._id === route.params._id)
-  )
+  const floodings = useSelector((state) => state.floodings)
+  const flooding = floodings?.find((each) => each._id === route.params._id)
   const [openImage, setOpenImage] = useState(false)
   const [form, setForm] = useState<Form>({
-    description: flooding.description,
-    picture: flooding.picture,
-    severity: String(flooding.severity) as Form['severity']
+    title: (flooding && flooding.title) || '',
+    picture: (flooding && flooding.picture) || '',
+    severity: String(flooding && flooding.severity) as Form['severity']
   })
   const navigation = useNavigation()
-  const [searchAddress, setSearchAddress] = useState(flooding.address)
+  const [searchAddress, setSearchAddress] = useState(
+    (flooding && flooding.address) || ''
+  )
   const theme = useTheme()
   const Geocoder = GeocoderLibrary as any
   const [loading, setLoading] = useState(false)
@@ -99,7 +98,7 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
         return
       }
 
-      if (!form.description || !searchAddress || !form.severity) {
+      if (!form.title || !searchAddress || !form.severity) {
         setErrorMessage('Todos campos obrigatórios devem ser preenchidos.')
         return
       }
@@ -113,7 +112,7 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
 
       const editedFlooding = {
         _id: route.params._id,
-        description: form.description,
+        title: form.title,
         address: searchAddress,
         latitude,
         longitude,
@@ -142,18 +141,18 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
       <BackHeader title="Editar alagamento" />
       <Container p={2}>
         <TextInput
-          label="Descrição *"
-          placeholder="Descreva o alagamento"
+          label="Título *"
+          placeholder="Digite o título"
           mb={3}
-          onChangeText={(text) => onChange('description', text)}
-          value={form.description}
+          onChangeText={(text) => onChange('title', text)}
+          value={form.title}
         />
         <AddressSearchInput
           searchAddress={searchAddress}
           setSearchAddress={setSearchAddress}
           mb={3}
-          label="Localização *"
-          placeholder="Informe a localização"
+          label="Endereço *"
+          placeholder="Digite o endereço"
         />
         <Box flexDirection="row" alignItems="center">
           <Typography fontWeight="bold">Classificação:</Typography>

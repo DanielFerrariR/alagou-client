@@ -122,7 +122,6 @@ const AddressSearchInput: React.FC<Props> = ({
 
             skipRef.current = true
             setSearchAddress(address)
-            setLoadingLocation(false)
           } catch (error) {
             console.log(error)
           }
@@ -130,19 +129,15 @@ const AddressSearchInput: React.FC<Props> = ({
         (error) => {
           console.log(error.code, error.message)
         },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+        { enableHighAccuracy: true }
       )
     } else {
       setErrorMessage(
         'Por favor, habilite os serviços de localização e tente novamente.'
       )
     }
-  }
 
-  const onFocusInput = () => {
-    if (searchAddress) {
-      setOpenSearchBox(true)
-    }
+    setLoadingLocation(false)
   }
 
   const onBlurInput = () => {
@@ -185,19 +180,18 @@ const AddressSearchInput: React.FC<Props> = ({
             <TextInput
               ref={inputRef}
               onBlur={onBlurInput}
-              onFocus={onFocusInput}
               onChangeText={(text) => setSearchAddress(text)}
               value={searchAddress}
               right={
                 searchAddress ? (
                   <OldTextInput.Icon
-                    color={theme.colors.accent}
+                    color={theme.colors.placeholder}
                     onPress={() => setSearchAddress('')}
                     name="close"
                   />
                 ) : (
                   <OldTextInput.Icon
-                    color={theme.colors.accent}
+                    color={theme.colors.placeholder}
                     onPress={() => getLocation()}
                     name="crosshairs"
                     style={{ display: loadingLocation ? 'none' : undefined }}

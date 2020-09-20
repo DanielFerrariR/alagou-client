@@ -123,6 +123,7 @@ const ResetPassword: React.FC<Props> = ({ route }) => {
           secureTextEntry={!form.showOldPassword}
           right={
             <OldTextInput.Icon
+              color={theme.colors.placeholder}
               onPress={() =>
                 setForm({ ...form, showOldPassword: !form.showOldPassword })
               }
@@ -139,6 +140,7 @@ const ResetPassword: React.FC<Props> = ({ route }) => {
           secureTextEntry={!form.showNewPassword}
           right={
             <OldTextInput.Icon
+              color={theme.colors.placeholder}
               onPress={() =>
                 setForm({ ...form, showNewPassword: !form.showNewPassword })
               }
@@ -155,6 +157,7 @@ const ResetPassword: React.FC<Props> = ({ route }) => {
           secureTextEntry={!form.showConfirmNewPassword}
           right={
             <OldTextInput.Icon
+              color={theme.colors.placeholder}
               onPress={() =>
                 setForm({
                   ...form,

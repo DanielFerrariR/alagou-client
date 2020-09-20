@@ -8,7 +8,8 @@ import {
   Image,
   ScrollView,
   Container,
-  HelperText
+  HelperText,
+  ActivityIndicator
 } from 'src/components/atoms'
 import { MessageModal, BackHeader } from 'src/components/molecules'
 import { useDispatch, useSelector } from 'src/store'
@@ -51,15 +52,15 @@ interface ResentEmailAxiosResponse {
 }
 
 const EditProfile: React.FC = () => {
-  const userSession = ensure(useSelector((state) => state.user))
+  const userSession = useSelector((state) => state.user)
   const [openpicture, setOpenpicture] = useState(false)
   const [form, setForm] = useState<Form>({
-    name: userSession.name,
-    email: userSession.email,
+    name: (userSession && userSession.name) || '',
+    email: (userSession && userSession.email) || '',
     oldPassword: '',
     newPassword: '',
     confirmNewPassword: '',
-    picture: userSession.picture,
+    picture: (userSession && userSession.picture) || '',
     showOldPassword: false,
     showNewPassword: false,
     showConfirmNewPassword: false
@@ -141,7 +142,7 @@ const EditProfile: React.FC = () => {
 
       setLoading(true)
 
-      const response = await editUser(userSession, {
+      const response = await editUser(ensure(userSession), {
         name: form.name,
         email: form.email,
         oldPassword: form.oldPassword,
@@ -174,142 +175,165 @@ const EditProfile: React.FC = () => {
 
   return (
     <>
-      <BackHeader title="Editar Perfil" />
-      <ScrollView keyboardShouldPersistTaps="handled">
-        <Container>
-          <Box justifyContent="center" alignItems="center" mt={4}>
-            <ImageView
-              images={[
-                form.picture
-                  ? {
-                      uri:
-                        typeof form.picture !== 'string'
-                          ? form.picture.uri
-                          : form.picture
+      {userSession ? (
+        <>
+          <BackHeader title="Editar Perfil" />
+          <ScrollView keyboardShouldPersistTaps="handled">
+            <Container>
+              <Box justifyContent="center" alignItems="center" mt={4}>
+                <ImageView
+                  images={[
+                    form.picture
+                      ? {
+                          uri:
+                            typeof form.picture !== 'string'
+                              ? form.picture.uri
+                              : form.picture
+                        }
+                      : require('src/images/no_picture.png')
+                  ]}
+                  imageIndex={0}
+                  visible={openpicture}
+                  onRequestClose={() => setOpenpicture(false)}
+                />
+                <TouchableOpacity
+                  onPress={() => setOpenpicture(true)}
+                  width={148}
+                  mb={1}
+                >
+                  <Image
+                    source={
+                      form.picture
+                        ? {
+                            uri:
+                              typeof form.picture !== 'string'
+                                ? form.picture.uri
+                                : form.picture
+                          }
+                        : require('src/images/no_picture.png')
                     }
-                  : require('src/images/no_picture.png')
-              ]}
-              imageIndex={0}
-              visible={openpicture}
-              onRequestClose={() => setOpenpicture(false)}
-            />
-            <TouchableOpacity
-              onPress={() => setOpenpicture(true)}
-              width={148}
-              mb={1}
-            >
-              <Image
-                source={
-                  form.picture
-                    ? {
-                        uri:
-                          typeof form.picture !== 'string'
-                            ? form.picture.uri
-                            : form.picture
+                    width={148}
+                    height={148}
+                    borderRadius={148 / 2}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleChoosePhoto}>
+                  <Typography variant="h3" color="primary" fontWeight="bold">
+                    Adicionar Foto
+                  </Typography>
+                </TouchableOpacity>
+              </Box>
+              <Box mt={3} p={2} mb={4}>
+                <TextInput
+                  label="Nome *"
+                  placeholder="Digite seu nome"
+                  mb={3}
+                  onChangeText={(text) => onChange('name', text)}
+                  value={form.name}
+                />
+                <TextInput
+                  label="Email *"
+                  placeholder="Digite seu e-mail"
+                  mb={!userSession.isEmailConfirmed ? 0 : 3}
+                  onChangeText={(text) => onChange('email', text)}
+                  value={form.email}
+                />
+                {!userSession.isEmailConfirmed ? (
+                  <TouchableOpacity onPress={sendEmail} mb={1}>
+                    <Box flexDirection="row" alignItems="center">
+                      <HelperText type="info" visible>
+                        Email não verificado. Pressione aqui para enviar
+                        novamente.
+                      </HelperText>
+                      {loadingResentEmail ? (
+                        <ActivityIndicator animating size={16} color="accent" />
+                      ) : null}
+                    </Box>
+                  </TouchableOpacity>
+                ) : null}
+                <TextInput
+                  label="Senha Atual"
+                  placeholder="Digite sua senha atual"
+                  mb={3}
+                  onChangeText={(text) => onChange('oldPassword', text)}
+                  value={form.oldPassword}
+                  secureTextEntry={!form.showOldPassword}
+                  right={
+                    <OldTextInput.Icon
+                      color={theme.colors.placeholder}
+                      onPress={() =>
+                        setForm({
+                          ...form,
+                          showOldPassword: !form.showOldPassword
+                        })
                       }
-                    : require('src/images/no_picture.png')
-                }
-                width={148}
-                height={148}
-                borderRadius={148 / 2}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={handleChoosePhoto}>
-              <Typography variant="h3" color="primary" fontWeight="bold">
-                Adicionar Foto
-              </Typography>
-            </TouchableOpacity>
-          </Box>
-          <Box mt={3} p={2} mb={4}>
-            <TextInput
-              label="Nome *"
-              placeholder="Digite seu nome"
-              mb={3}
-              onChangeText={(text) => onChange('name', text)}
-              value={form.name}
-            />
-            <TextInput
-              label="Email *"
-              placeholder="Digite seu e-mail"
-              mb={!userSession.isEmailConfirmed ? 0 : 3}
-              onChangeText={(text) => onChange('email', text)}
-              value={form.email}
-            />
-            {!userSession.isEmailConfirmed ? (
-              <TouchableOpacity onPress={sendEmail} mb={1}>
-                <HelperText type="info" visible>
-                  Email não verificado. Pressione aqui para enviar novamente.
-                </HelperText>
-              </TouchableOpacity>
-            ) : null}
-            <TextInput
-              label="Senha Atual"
-              placeholder="Digite sua senha atual"
-              mb={3}
-              onChangeText={(text) => onChange('oldPassword', text)}
-              value={form.oldPassword}
-              secureTextEntry={!form.showOldPassword}
-              right={
-                <OldTextInput.Icon
-                  onPress={() =>
-                    setForm({ ...form, showOldPassword: !form.showOldPassword })
+                      name={form.showOldPassword ? 'eye-off' : 'eye'}
+                    />
                   }
-                  name={form.showOldPassword ? 'eye-off' : 'eye'}
                 />
-              }
-            />
-            <TextInput
-              label="Nova senha"
-              placeholder="Digite sua nova senha"
-              mb={3}
-              onChangeText={(text) => onChange('newPassword', text)}
-              value={form.newPassword}
-              secureTextEntry={!form.showNewPassword}
-              right={
-                <OldTextInput.Icon
-                  onPress={() =>
-                    setForm({ ...form, showNewPassword: !form.showNewPassword })
+                <TextInput
+                  label="Nova senha"
+                  placeholder="Digite sua nova senha"
+                  mb={3}
+                  onChangeText={(text) => onChange('newPassword', text)}
+                  value={form.newPassword}
+                  secureTextEntry={!form.showNewPassword}
+                  right={
+                    <OldTextInput.Icon
+                      color={theme.colors.placeholder}
+                      onPress={() =>
+                        setForm({
+                          ...form,
+                          showNewPassword: !form.showNewPassword
+                        })
+                      }
+                      name={form.showNewPassword ? 'eye-off' : 'eye'}
+                    />
                   }
-                  name={form.showNewPassword ? 'eye-off' : 'eye'}
                 />
-              }
-            />
-            <TextInput
-              label="Confirmação da nova senha"
-              placeholder="Digite a confirmação da nova senha"
-              mb={3}
-              onChangeText={(text) => onChange('confirmNewPassword', text)}
-              value={form.confirmNewPassword}
-              secureTextEntry={!form.showConfirmNewPassword}
-              right={
-                <OldTextInput.Icon
-                  onPress={() =>
-                    setForm({
-                      ...form,
-                      showConfirmNewPassword: !form.showConfirmNewPassword
-                    })
+                <TextInput
+                  label="Confirmação da nova senha"
+                  placeholder="Digite a confirmação da nova senha"
+                  mb={3}
+                  onChangeText={(text) => onChange('confirmNewPassword', text)}
+                  value={form.confirmNewPassword}
+                  secureTextEntry={!form.showConfirmNewPassword}
+                  right={
+                    <OldTextInput.Icon
+                      color={theme.colors.placeholder}
+                      onPress={() =>
+                        setForm({
+                          ...form,
+                          showConfirmNewPassword: !form.showConfirmNewPassword
+                        })
+                      }
+                      name={form.showConfirmNewPassword ? 'eye-off' : 'eye'}
+                    />
                   }
-                  name={form.showConfirmNewPassword ? 'eye-off' : 'eye'}
                 />
-              }
-            />
-            <Button
-              onPress={onSubmit}
-              loading={loading}
-              color="accent"
-              labelStyle={{ color: theme.colors.custom.white }}
-            >
-              Atualizar
-            </Button>
-          </Box>
-        </Container>
-      </ScrollView>
-      <MessageModal message={errorMessage} setMessage={setErrorMessage} error />
-      <MessageModal
-        message={successMessage}
-        setMessage={setSuccessMessage}
-        success
-      />
+                <Button
+                  onPress={onSubmit}
+                  loading={loading}
+                  color="accent"
+                  labelStyle={{ color: theme.colors.custom.white }}
+                >
+                  Atualizar
+                </Button>
+              </Box>
+            </Container>
+          </ScrollView>
+          <MessageModal
+            message={errorMessage}
+            setMessage={setErrorMessage}
+            error
+          />
+          <MessageModal
+            message={successMessage}
+            setMessage={setSuccessMessage}
+            success
+          />
+        </>
+      ) : null}
     </>
   )
 }

@@ -28,7 +28,7 @@ import {
 } from 'src/components/screens'
 import store from 'src/utils/redux'
 import { useSelector } from 'src/store'
-import { Provider as PaperProvider } from 'react-native-paper'
+import { Provider as PaperProvider, Colors } from 'react-native-paper'
 import { theme } from 'src/styles'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -39,6 +39,7 @@ import {
   LogoutListenner
 } from 'src/utils'
 import { createDrawerNavigator } from '@react-navigation/drawer'
+import { StyleSheet } from 'react-native'
 
 const Tab = createMaterialBottomTabNavigator()
 const Stack = createStackNavigator()
@@ -46,13 +47,19 @@ const Drawer = createDrawerNavigator()
 
 const MainFlow = () => {
   return (
-    <Tab.Navigator shifting>
+    <Tab.Navigator
+      barStyle={{
+        backgroundColor: Colors.grey200,
+        borderTopWidth: StyleSheet.hairlineWidth
+      }}
+      activeColor={theme.colors.accent}
+      inactiveColor={Colors.grey600}
+    >
       <Tab.Screen
         name="Home"
         component={Home}
         options={{
           tabBarLabel: 'Home',
-          tabBarColor: theme.colors.accent,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" color={color} size={24} />
           )
@@ -63,7 +70,6 @@ const MainFlow = () => {
         component={FloodingList}
         options={{
           tabBarLabel: 'Alagamentos',
-          tabBarColor: theme.colors.accent,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="format-list-bulleted"
@@ -78,7 +84,6 @@ const MainFlow = () => {
         component={Faq}
         options={{
           tabBarLabel: 'Dúvidas',
-          tabBarColor: theme.colors.accent,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="help-circle"

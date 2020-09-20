@@ -64,7 +64,7 @@ const createFlooding = async (
 ): Promise<CreateFloodingAction> => {
   const formData = new FormData()
 
-  formData.append('description', data.description)
+  formData.append('title', data.title)
   formData.append('address', data.address)
   formData.append('latitude', data.latitude)
   formData.append('longitude', data.longitude)
@@ -79,7 +79,6 @@ const createFlooding = async (
         }
       : data.picture
   )
-  formData.append('date', data.date)
 
   const response = await serverAPI.post<FloodingsState>('/flooding', formData)
 
@@ -95,7 +94,7 @@ const editFlooding = async (
   const formData = new FormData()
 
   formData.append('_id', data._id)
-  formData.append('description', data.description)
+  formData.append('title', data.title)
   formData.append('address', data.address)
   formData.append('latitude', data.latitude)
   formData.append('longitude', data.longitude)

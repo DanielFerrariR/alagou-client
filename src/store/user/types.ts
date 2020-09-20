@@ -6,7 +6,6 @@ export type UserState = {
   email: string
   picture: string
   token: string
-  level: number
   isAdmin: boolean
   isEmailConfirmed: boolean
 }

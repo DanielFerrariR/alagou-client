@@ -12,7 +12,7 @@ import {
 import { MessageModal } from 'src/components/molecules'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useTheme } from 'react-native-paper'
-import { formatDate, ensure } from 'src/utils'
+import { formatDate } from 'src/utils'
 import ImageView from 'react-native-image-viewing'
 import {
   FloodingsState,
@@ -32,7 +32,7 @@ interface Props {
 }
 
 const FloadingList: React.FC<Props> = ({ data }) => {
-  const userSession = ensure(useSelector((state) => state.user))
+  const userSession = useSelector((state) => state.user)
   const dispatch = useDispatch()
   const [openPicture, setOpenPicture] = useState(false)
   const [openUserPicture, setOpenUserPicture] = useState(false)
@@ -43,7 +43,7 @@ const FloadingList: React.FC<Props> = ({ data }) => {
     theme.colors.custom.moderate,
     theme.colors.custom.danger
   ]
-  const isFavorite = data.favorites.includes(userSession._id)
+  const isFavorite = userSession && data.favorites.includes(userSession._id)
   const [loadingFavorite, setLoadingFavorite] = useState(false)
   const [loadingExcludeCard, setLoadingExcludeCard] = useState(false)
   const navigation = useNavigation()
@@ -116,7 +116,7 @@ const FloadingList: React.FC<Props> = ({ data }) => {
 
         await Share.open({
           message: JSON.stringify({
-            Descrição: data.description,
+            Título: data.title,
             Endereço: data.address,
             Foto: data.picture,
             Data: formatDate(new Date(data.date))
@@ -126,7 +126,7 @@ const FloadingList: React.FC<Props> = ({ data }) => {
       } else {
         await Share.open({
           message: JSON.stringify({
-            Descrição: data.description,
+            Título: data.title,
             Endereço: data.address,
             Data: formatDate(new Date(data.date))
           })
@@ -139,144 +139,156 @@ const FloadingList: React.FC<Props> = ({ data }) => {
 
   return (
     <>
-      <Paper p={2}>
-        <Box flexDirection="row" alignItems="center" mb={2}>
-          <ImageView
-            images={[
-              data.userPicture
-                ? { uri: data.userPicture }
-                : require('src/images/no_picture.png')
-            ]}
-            imageIndex={0}
-            visible={openUserPicture}
-            onRequestClose={() => setOpenUserPicture(false)}
-          />
-          <TouchableOpacity
-            onPress={() => setOpenUserPicture(true)}
-            width={48}
-            mr={1}
-          >
-            <Image
-              source={
-                data.userPicture
-                  ? { uri: data.userPicture }
-                  : require('src/images/no_picture.png')
-              }
-              width={48}
-              height={48}
-              borderRadius={48 / 2}
-            />
-          </TouchableOpacity>
-          <Box width={Dimensions.get('window').width - 148}>
-            <Typography variant="h4" ellipsizeMode="tail" numberOfLines={1}>
-              {data.userName}
-            </Typography>
-            <Typography
-              fontWeight="bold"
-              ellipsizeMode="tail"
-              numberOfLines={1}
-              variant="h3"
-            >
-              {data.description}
-            </Typography>
-            <Typography variant="h4" ellipsizeMode="tail" numberOfLines={1}>
-              {data.address}
-            </Typography>
-          </Box>
-        </Box>
-        {data.userId === userSession._id && (
-          <Box
-            position="absolute"
-            flexDirection="row"
-            justifyContent="flex-end"
-            width={1}
-            ml={4}
-          >
-            <Menu
-              anchor={
-                <IconButton
-                  icon="dots-vertical"
-                  onPress={() => setOpen(true)}
+      {userSession ? (
+        <>
+          <Paper p={2}>
+            <Box flexDirection="row" alignItems="center" mb={2}>
+              <ImageView
+                images={[
+                  data.userPicture
+                    ? { uri: data.userPicture }
+                    : require('src/images/no_picture.png')
+                ]}
+                imageIndex={0}
+                visible={openUserPicture}
+                onRequestClose={() => setOpenUserPicture(false)}
+              />
+              <TouchableOpacity
+                onPress={() => setOpenUserPicture(true)}
+                width={48}
+                mr={1}
+              >
+                <Image
+                  source={
+                    data.userPicture
+                      ? { uri: data.userPicture }
+                      : require('src/images/no_picture.png')
+                  }
+                  width={48}
+                  height={48}
+                  borderRadius={48 / 2}
                 />
-              }
-              visible={open}
-              onDismiss={() => setOpen(false)}
+              </TouchableOpacity>
+              <Box width={Dimensions.get('window').width - 148}>
+                <Typography variant="h4" ellipsizeMode="tail" numberOfLines={1}>
+                  {data.userName}
+                </Typography>
+                <Typography
+                  fontWeight="bold"
+                  ellipsizeMode="tail"
+                  numberOfLines={1}
+                  variant="h3"
+                >
+                  {data.title}
+                </Typography>
+                <Typography variant="h4" ellipsizeMode="tail" numberOfLines={1}>
+                  {data.address}
+                </Typography>
+              </Box>
+            </Box>
+            {data.userId === userSession._id && (
+              <Box
+                position="absolute"
+                flexDirection="row"
+                justifyContent="flex-end"
+                width={1}
+                ml={4}
+              >
+                <Menu
+                  anchor={
+                    <IconButton
+                      icon="dots-vertical"
+                      onPress={() => setOpen(true)}
+                    />
+                  }
+                  visible={open}
+                  onDismiss={() => setOpen(false)}
+                >
+                  <MenuItem onPress={editCard} title="Editar" />
+                  <MenuItem onPress={excludeCard} title="Excluir" />
+                </Menu>
+              </Box>
+            )}
+            <ImageView
+              images={[
+                data.picture
+                  ? { uri: data.picture }
+                  : require('src/images/no_flooding_picture.png')
+              ]}
+              imageIndex={0}
+              visible={openPicture}
+              onRequestClose={() => setOpenPicture(false)}
+            />
+            <TouchableOpacity onPress={() => setOpenPicture(true)} width={1}>
+              <Image
+                source={
+                  data.picture
+                    ? { uri: data.picture }
+                    : require('src/images/no_flooding_picture.png')
+                }
+                width={1}
+                height={148}
+              />
+            </TouchableOpacity>
+            <Box
+              flexDirection="row"
+              justifyContent="space-between"
+              width={Dimensions.get('window').width - 40}
+              ml={-1}
+              alignItems="center"
             >
-              <MenuItem onPress={editCard} title="Editar" />
-              <MenuItem onPress={excludeCard} title="Excluir" />
-            </Menu>
-          </Box>
-        )}
-        <ImageView
-          images={[
-            data.picture
-              ? { uri: data.picture }
-              : require('src/images/no_flooding_picture.png')
-          ]}
-          imageIndex={0}
-          visible={openPicture}
-          onRequestClose={() => setOpenPicture(false)}
-        />
-        <TouchableOpacity onPress={() => setOpenPicture(true)} width={1}>
-          <Image
-            source={
-              data.picture
-                ? { uri: data.picture }
-                : require('src/images/no_flooding_picture.png')
-            }
-            width={1}
-            height={148}
+              <Box flexDirection="row" alignItems="center">
+                <IconButton
+                  icon="forum"
+                  color="accent"
+                  size={24}
+                  onPress={() => setOpenChatModal(true)}
+                />
+                <IconButton
+                  icon="share-variant"
+                  color="accent"
+                  size={24}
+                  onPress={openShare}
+                  ml={-0.5}
+                />
+              </Box>
+              <Box flexDirection="row" alignItems="center">
+                <MaterialCommunityIcons
+                  name="checkbox-blank-circle"
+                  color={severity[data.severity - 1]}
+                  size={24}
+                />
+                <IconButton
+                  icon="star"
+                  color={isFavorite ? 'custom.star' : 'custom.starOff'}
+                  size={24}
+                  onPress={updateFavorite}
+                />
+              </Box>
+            </Box>
+            <Box
+              flexDirection="row"
+              justifyContent="flex-end"
+              width={1}
+              alignItems="center"
+            >
+              <Typography variant="h4">
+                {formatDate(new Date(data.date))}
+              </Typography>
+            </Box>
+          </Paper>
+          <MessageModal
+            message={errorMessage}
+            setMessage={setErrorMessage}
+            error
           />
-        </TouchableOpacity>
-        <Box
-          flexDirection="row"
-          justifyContent="space-between"
-          width={Dimensions.get('window').width - 40}
-          ml={-1}
-          alignItems="center"
-        >
-          <Box flexDirection="row" alignItems="center">
-            <IconButton
-              icon="forum"
-              color="accent"
-              size={24}
-              onPress={() => setOpenChatModal(true)}
-            />
-            <IconButton
-              icon="share-variant"
-              color="accent"
-              size={24}
-              onPress={openShare}
-              ml={-0.5}
-            />
-          </Box>
-          <Box flexDirection="row" alignItems="center">
-            <MaterialCommunityIcons
-              name="checkbox-blank-circle"
-              color={severity[data.severity - 1]}
-              size={24}
-            />
-            <IconButton
-              icon="star"
-              color={isFavorite ? 'custom.star' : 'custom.starOff'}
-              size={24}
-              onPress={updateFavorite}
-            />
-          </Box>
-        </Box>
-        <Box
-          flexDirection="row"
-          justifyContent="flex-end"
-          width={1}
-          alignItems="center"
-        >
-          <Typography variant="h4">
-            {formatDate(new Date(data.date))}
-          </Typography>
-        </Box>
-      </Paper>
-      <MessageModal message={errorMessage} setMessage={setErrorMessage} error />
-      <ChatModal open={openChatModal} setOpen={setOpenChatModal} data={data} />
+          <ChatModal
+            open={openChatModal}
+            setOpen={setOpenChatModal}
+            data={data}
+          />
+        </>
+      ) : null}
     </>
   )
 }

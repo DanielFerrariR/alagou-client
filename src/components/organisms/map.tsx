@@ -1,16 +1,18 @@
 import React from 'react'
-import MapView, { Circle } from 'react-native-maps'
-import { Box, ActivityIndicator } from 'src/components/atoms'
+import MapView, { Circle, Marker, Callout } from 'react-native-maps'
+import { Box, ActivityIndicator, Typography } from 'src/components/atoms'
 import { MessageModal } from 'src/components/molecules'
 import { useLocation } from 'src/hooks'
 import { FAB, Portal, Provider, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
+import { useSelector } from 'src/store'
 
 const Map: React.FC = () => {
   const theme = useTheme()
   const navigation = useNavigation()
   const [location, errorMessage, setErrorMessage] = useLocation()
   const [openFab, setOpenFab] = React.useState(false)
+  const floodings = useSelector((state) => state.floodings)
 
   return (
     <>
@@ -27,7 +29,7 @@ const Map: React.FC = () => {
         ) : (
           <MapView
             style={{ height: '100%' }}
-            initialRegion={{
+            region={{
               latitudeDelta: 0.01,
               longitudeDelta: 0.01,
               ...location.coords
@@ -41,6 +43,30 @@ const Map: React.FC = () => {
               strokeColor={theme.colors.custom.userLocationStroke}
               fillColor={theme.colors.custom.userLocationStroke}
             />
+            {floodings
+              ? floodings.map((each) => (
+                  <Marker
+                    key={each._id}
+                    image={require('src/images/flooding_place.png')}
+                    coordinate={{
+                      latitude: each.latitude,
+                      longitude: each.longitude
+                    }}
+                  >
+                    <Callout
+                      onPress={() =>
+                        navigation.navigate('FloodingList', {
+                          _id: each._id
+                        })
+                      }
+                    >
+                      <Box width={100}>
+                        <Typography>This is a plain Box</Typography>
+                      </Box>
+                    </Callout>
+                  </Marker>
+                ))
+              : null}
           </MapView>
         )}
       </Box>

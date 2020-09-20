@@ -192,6 +192,7 @@ const Register: React.FC = () => {
               secureTextEntry={!form.showPassword}
               right={
                 <OldTextInput.Icon
+                  color={theme.colors.placeholder}
                   onPress={() =>
                     setForm({ ...form, showPassword: !form.showPassword })
                   }
@@ -208,6 +209,7 @@ const Register: React.FC = () => {
               secureTextEntry={!form.showConfirmPassword}
               right={
                 <OldTextInput.Icon
+                  color={theme.colors.placeholder}
                   onPress={() =>
                     setForm({
                       ...form,

@@ -1,5 +1,11 @@
 import React, { useCallback, useState, useEffect } from 'react'
-import { Box, FlatList, Container, TextInput } from 'src/components/atoms'
+import {
+  Box,
+  FlatList,
+  Container,
+  TextInput,
+  Button
+} from 'src/components/atoms'
 import { FloodingCard } from 'src/components/organisms'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import Shimmer from 'react-native-shimmer'
@@ -8,8 +14,19 @@ import { useDispatch, useSelector } from 'src/store'
 import { Header } from 'src/components/molecules'
 import matchSorter from 'match-sorter'
 import { formatDate } from 'src/utils'
+import { useTheme, TextInput as OldTextInput } from 'react-native-paper'
 
-const FloadingList: React.FC = () => {
+interface Props {
+  route: {
+    key: string
+    name: string
+    params: {
+      _id: string
+    }
+  }
+}
+
+const FloadingList: React.FC<Props> = ({ route }) => {
   const navigation = useNavigation() as any
   const floodings = useSelector((state) => state.floodings)
   const dispatch = useDispatch()
@@ -18,10 +35,27 @@ const FloadingList: React.FC = () => {
     filteredFloodings,
     setFilteredFloodings
   ] = useState<FloodingsState | null>(null)
+  const theme = useTheme()
+  const [isRouteFiltered, setIsRouteFiltered] = useState(false)
 
   useEffect(() => {
-    setFilteredFloodings(floodings)
-  }, [floodings])
+    console.log('hello')
+  }, [])
+
+  useFocusEffect(
+    useCallback(() => {
+      if (floodings && route?.params) {
+        setFilteredFloodings(
+          floodings.filter((each) => each._id === route?.params?._id)
+        )
+        setIsRouteFiltered(true)
+
+        return
+      }
+
+      setFilteredFloodings(floodings)
+    }, [route, floodings])
+  )
 
   useEffect(() => {
     if (!floodings || !filteredFloodings) {
@@ -31,7 +65,7 @@ const FloadingList: React.FC = () => {
     const newFilteredFloodings = matchSorter(floodings, searchText, {
       keys: [
         'userName',
-        'description',
+        'title',
         'address',
         (item) => formatDate(new Date(item.date))
       ]
@@ -39,6 +73,11 @@ const FloadingList: React.FC = () => {
 
     setFilteredFloodings(newFilteredFloodings)
   }, [searchText])
+
+  const cleanFilter = () => {
+    setFilteredFloodings(floodings)
+    setIsRouteFiltered(false)
+  }
 
   useFocusEffect(
     useCallback(() => {
@@ -53,6 +92,8 @@ const FloadingList: React.FC = () => {
       asyncUseCallback()
       return () => {
         navigation.closeDrawer()
+        setSearchText('')
+        cleanFilter()
       }
     }, [])
   )
@@ -61,14 +102,37 @@ const FloadingList: React.FC = () => {
     <>
       <Header />
       <Container>
-        <TextInput
-          mx={2}
-          mt={1}
-          mb={3}
-          label="Filtro"
-          placeholder="Digite sua busca"
-          onChangeText={(text) => setSearchText(text)}
-        />
+        {isRouteFiltered ? (
+          <Button
+            mx={2}
+            mt={2}
+            mb={3}
+            color="accent"
+            labelStyle={{ color: theme.colors.custom.white }}
+            onPress={cleanFilter}
+          >
+            Limpar Filtro
+          </Button>
+        ) : (
+          <TextInput
+            mx={2}
+            mt={1}
+            mb={3}
+            label="Filtro"
+            placeholder="Digite sua busca"
+            onChangeText={(text) => setSearchText(text)}
+            value={searchText}
+            right={
+              searchText ? (
+                <OldTextInput.Icon
+                  color={theme.colors.placeholder}
+                  onPress={() => setSearchText('')}
+                  name="close"
+                />
+              ) : null
+            }
+          />
+        )}
         {filteredFloodings ? (
           <Box>
             <FlatList
@@ -82,7 +146,7 @@ const FloadingList: React.FC = () => {
             />
           </Box>
         ) : (
-          <Box p={2}>
+          <Box px={2}>
             {[...new Array(3)].map((_each, index) => (
               <Box mb={3} key={index}>
                 <Shimmer>

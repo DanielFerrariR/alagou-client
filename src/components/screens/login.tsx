@@ -126,6 +126,7 @@ const Login: React.FC = () => {
             mb={3}
             right={
               <OldTextInput.Icon
+                color={theme.colors.placeholder}
                 onPress={() =>
                   setForm({ ...form, showPassword: !form.showPassword })
                 }

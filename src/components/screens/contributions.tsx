@@ -1,16 +1,16 @@
-import React, { useCallback, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, FlatList, Container, TextInput } from 'src/components/atoms'
 import { FloodingCard } from 'src/components/organisms'
-import { useFocusEffect } from '@react-navigation/native'
 import Shimmer from 'react-native-shimmer'
 import { FloodingsState, fetchFloodings } from 'src/store/floodings'
 import { useDispatch, useSelector } from 'src/store'
-import { ensure, formatDate } from 'src/utils'
+import { formatDate } from 'src/utils'
 import { BackHeader } from 'src/components/molecules'
 import matchSorter from 'match-sorter'
+import { useTheme, TextInput as OldTextInput } from 'react-native-paper'
 
 const Contributions: React.FC = () => {
-  const userSession = ensure(useSelector((state) => state.user))
+  const userSession = useSelector((state) => state.user)
   const floodings = useSelector((state) => state.floodings)
   const [
     filteredFloodings,
@@ -18,9 +18,14 @@ const Contributions: React.FC = () => {
   ] = useState<FloodingsState | null>(null)
   const [searchText, setSearchText] = useState('')
   const dispatch = useDispatch()
+  const theme = useTheme()
 
   useEffect(() => {
     if (!floodings) {
+      return
+    }
+
+    if (!userSession) {
       return
     }
 
@@ -29,7 +34,7 @@ const Contributions: React.FC = () => {
     )
 
     setFilteredFloodings(newFilteredFloodings)
-  }, [floodings])
+  }, [floodings, userSession])
 
   useEffect(() => {
     if (!floodings || !filteredFloodings) {
@@ -39,7 +44,7 @@ const Contributions: React.FC = () => {
     const newFilteredFloodings = matchSorter(floodings, searchText, {
       keys: [
         'userName',
-        'description',
+        'title',
         'address',
         (item) => formatDate(new Date(item.date))
       ]
@@ -48,19 +53,17 @@ const Contributions: React.FC = () => {
     setFilteredFloodings(newFilteredFloodings)
   }, [searchText])
 
-  useFocusEffect(
-    useCallback(() => {
-      const asyncUseCallback = async () => {
-        try {
-          dispatch(await fetchFloodings())
-        } catch (error) {
-          console.log(error)
-        }
+  useEffect(() => {
+    const asyncEffect = async () => {
+      try {
+        dispatch(await fetchFloodings())
+      } catch (error) {
+        console.log(error)
       }
+    }
 
-      asyncUseCallback()
-    }, [])
-  )
+    asyncEffect()
+  }, [])
 
   return (
     <>
@@ -72,7 +75,17 @@ const Contributions: React.FC = () => {
           mb={3}
           label="Filtro"
           placeholder="Digite sua busca"
+          value={searchText}
           onChangeText={(text) => setSearchText(text)}
+          right={
+            searchText ? (
+              <OldTextInput.Icon
+                color={theme.colors.placeholder}
+                onPress={() => setSearchText('')}
+                name="close"
+              />
+            ) : null
+          }
         />
         {filteredFloodings ? (
           <Box>
@@ -87,7 +100,7 @@ const Contributions: React.FC = () => {
             />
           </Box>
         ) : (
-          <Box p={2}>
+          <Box px={2}>
             {[...new Array(3)].map((_each, index) => (
               <Box mb={3} key={index}>
                 <Shimmer>

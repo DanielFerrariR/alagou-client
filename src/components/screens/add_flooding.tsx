@@ -26,7 +26,7 @@ import { useDispatch } from 'src/store'
 import { Keyboard } from 'react-native'
 
 interface Form {
-  description: string
+  title: string
   picture:
     | string
     | {
@@ -47,7 +47,7 @@ interface Form {
 const AddFlodding: React.FC = () => {
   const [openImage, setOpenImage] = useState(false)
   const [form, setForm] = useState<Form>({
-    description: '',
+    title: '',
     picture: '',
     severity: '1'
   })
@@ -84,7 +84,7 @@ const AddFlodding: React.FC = () => {
         return
       }
 
-      if (!form.description || !searchAddress || !form.severity) {
+      if (!form.title || !searchAddress || !form.severity) {
         setErrorMessage('Todos campos obrigatórios devem ser preenchidos.')
         return
       }
@@ -97,7 +97,7 @@ const AddFlodding: React.FC = () => {
       const longitude = location.results[0].geometry.location.lng
 
       const newFlooding = {
-        description: form.description,
+        title: form.title,
         address: searchAddress,
         latitude,
         longitude,
@@ -126,18 +126,18 @@ const AddFlodding: React.FC = () => {
       <BackHeader title="Adicionar alagamento" />
       <Container p={2}>
         <TextInput
-          label="Descrição *"
-          placeholder="Descreva o alagamento"
+          label="Título *"
+          placeholder="Digite o título"
           mb={3}
-          onChangeText={(text) => onChange('description', text)}
-          value={form.description}
+          onChangeText={(text) => onChange('title', text)}
+          value={form.title}
         />
         <AddressSearchInput
           searchAddress={searchAddress}
           setSearchAddress={setSearchAddress}
           mb={3}
-          label="Localização *"
-          placeholder="Informe a localização"
+          label="Endereço *"
+          placeholder="Digite o endereço"
         />
         <Box flexDirection="row" alignItems="center">
           <Typography fontWeight="bold">Classificação:</Typography>

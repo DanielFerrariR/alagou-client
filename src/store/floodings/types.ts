@@ -5,7 +5,7 @@ export type FloodingsState = {
   userId: string
   userName: string
   userPicture: string
-  description: string
+  title: string
   address: string
   latitude: number
   longitude: number
@@ -24,7 +24,7 @@ export type FloodingsState = {
 }[]
 
 export type CreateFloodingData = {
-  description: string
+  title: string
   address: string
   latitude: number
   longitude: number
@@ -47,7 +47,7 @@ export type CreateFloodingData = {
 
 export type EditFloodingData = {
   _id: string
-  description: string
+  title: string
   address: string
   latitude: number
   longitude: number

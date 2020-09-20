@@ -40,7 +40,12 @@ const useLocation = (): UseLocation => {
         (error) => {
           console.log(error.code, error.message)
         },
-        { enableHighAccuracy: true, interval: 1000, distanceFilter: 10 }
+        {
+          enableHighAccuracy: true,
+          interval: 1000,
+          fastestInterval: 1000,
+          distanceFilter: 0
+        }
       )
     } else {
       setErrorMessage('Por favor, habilite o serviço de localização.')
