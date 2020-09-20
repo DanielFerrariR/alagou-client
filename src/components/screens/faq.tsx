@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import {
   Container,
   ListAccordion,
@@ -6,12 +6,10 @@ import {
   Typography,
   ScrollView
 } from 'src/components/atoms'
-import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import { useTheme } from 'react-native-paper'
 import { Header } from 'src/components/molecules'
 
 const Faq: React.FC = () => {
-  const navigation = useNavigation() as any
   const [expanded, setExpanded] = useState(0)
   const theme = useTheme()
 
@@ -22,14 +20,6 @@ const Faq: React.FC = () => {
       setExpanded(id)
     }
   }
-
-  useFocusEffect(
-    useCallback(() => {
-      return () => {
-        navigation.closeDrawer()
-      }
-    }, [])
-  )
 
   return (
     <>

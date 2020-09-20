@@ -17,6 +17,7 @@ export { default as ListAccordion } from './list_accordion'
 export { default as Divider } from './divider'
 export { default as StatusBar } from './status_bar'
 export { default as HelperText } from './helper_text'
+export { default as TouchableRipple } from './touchable_ripple'
 
 export { default as TextInput } from './text_input'
 export * from './text_input'

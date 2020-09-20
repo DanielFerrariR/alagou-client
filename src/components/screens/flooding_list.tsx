@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Box,
   FlatList,
@@ -7,7 +7,6 @@ import {
   Button
 } from 'src/components/atoms'
 import { FloodingCard } from 'src/components/organisms'
-import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import Shimmer from 'react-native-shimmer'
 import { FloodingsState, fetchFloodings } from 'src/store/floodings'
 import { useDispatch, useSelector } from 'src/store'
@@ -22,12 +21,11 @@ interface Props {
     name: string
     params: {
       _id: string
-    }
+    } | null
   }
 }
 
 const FloadingList: React.FC<Props> = ({ route }) => {
-  const navigation = useNavigation() as any
   const floodings = useSelector((state) => state.floodings)
   const dispatch = useDispatch()
   const [searchText, setSearchText] = useState('')
@@ -39,23 +37,35 @@ const FloadingList: React.FC<Props> = ({ route }) => {
   const [isRouteFiltered, setIsRouteFiltered] = useState(false)
 
   useEffect(() => {
-    console.log('hello')
+    const asyncEffect = async () => {
+      try {
+        dispatch(await fetchFloodings())
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    asyncEffect()
   }, [])
 
-  useFocusEffect(
-    useCallback(() => {
-      if (floodings && route?.params) {
-        setFilteredFloodings(
-          floodings.filter((each) => each._id === route?.params?._id)
-        )
-        setIsRouteFiltered(true)
+  useEffect(() => {
+    return () => {
+      route.params = null
+    }
+  }, [])
 
-        return
-      }
+  useEffect(() => {
+    if (floodings && route?.params) {
+      setFilteredFloodings(
+        floodings.filter((each) => each._id === route?.params?._id)
+      )
+      setIsRouteFiltered(true)
 
-      setFilteredFloodings(floodings)
-    }, [route, floodings])
-  )
+      return
+    }
+
+    setFilteredFloodings(floodings)
+  }, [route, floodings])
 
   useEffect(() => {
     if (!floodings || !filteredFloodings) {
@@ -78,25 +88,6 @@ const FloadingList: React.FC<Props> = ({ route }) => {
     setFilteredFloodings(floodings)
     setIsRouteFiltered(false)
   }
-
-  useFocusEffect(
-    useCallback(() => {
-      const asyncUseCallback = async () => {
-        try {
-          dispatch(await fetchFloodings())
-        } catch (error) {
-          console.log(error)
-        }
-      }
-
-      asyncUseCallback()
-      return () => {
-        navigation.closeDrawer()
-        setSearchText('')
-        cleanFilter()
-      }
-    }, [])
-  )
 
   return (
     <>

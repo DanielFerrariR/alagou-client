@@ -28,40 +28,37 @@ import {
 } from 'src/components/screens'
 import store from 'src/utils/redux'
 import { useSelector } from 'src/store'
-import { Provider as PaperProvider, Colors } from 'react-native-paper'
+import { Provider as PaperProvider } from 'react-native-paper'
 import { theme } from 'src/styles'
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import {
   DrawerNavigator,
   Socket,
   FetchReduxStore,
-  LogoutListenner
+  LogoutListenner,
+  CustomTabBar
 } from 'src/utils'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import { StyleSheet } from 'react-native'
 
-const Tab = createMaterialBottomTabNavigator()
+const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator()
 
 const MainFlow = () => {
   return (
     <Tab.Navigator
-      barStyle={{
-        backgroundColor: Colors.grey200,
-        borderTopWidth: StyleSheet.hairlineWidth
-      }}
-      activeColor={theme.colors.accent}
-      inactiveColor={Colors.grey600}
+      screenOptions={{ unmountOnBlur: true }}
+      tabBarOptions={{ keyboardHidesTabBar: true }}
+      tabBar={(props) => <CustomTabBar {...props} />}
     >
       <Tab.Screen
         name="Home"
         component={Home}
         options={{
           tabBarLabel: 'Home',
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={color} size={24} />
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
           )
         }}
       />
@@ -70,11 +67,11 @@ const MainFlow = () => {
         component={FloodingList}
         options={{
           tabBarLabel: 'Alagamentos',
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="format-list-bulleted"
               color={color}
-              size={24}
+              size={size}
             />
           )
         }}
@@ -84,11 +81,11 @@ const MainFlow = () => {
         component={Faq}
         options={{
           tabBarLabel: 'Dúvidas',
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="help-circle"
               color={color}
-              size={24}
+              size={size}
             />
           )
         }}
