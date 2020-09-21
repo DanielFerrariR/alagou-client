@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import MapView, { Circle, Marker, Callout } from 'react-native-maps'
-import { Box, ActivityIndicator, Typography } from 'src/components/atoms'
+import { Box, ActivityIndicator, Typography, Image } from 'src/components/atoms'
 import { MessageModal } from 'src/components/molecules'
 import { useLocation } from 'src/hooks'
 import { FAB, Portal, Provider, useTheme } from 'react-native-paper'
@@ -109,16 +109,18 @@ const Map: React.FC<Props> = ({ route }) => {
                   return (
                     <Marker
                       key={each._id}
-                      image={
-                        each.isVerified
-                          ? require('src/images/flooding_place_verified_larger.png')
-                          : require('src/images/flooding_place_larger.png')
-                      }
                       coordinate={{
                         latitude: each.latitude,
                         longitude: each.longitude
                       }}
                     >
+                      <Image
+                        source={
+                          each.isVerified
+                            ? require('src/images/flooding_place_verified_larger.png')
+                            : require('src/images/flooding_place_larger.png')
+                        }
+                      />
                       <Callout
                         onPress={() =>
                           navigation.navigate('FloodingList', {

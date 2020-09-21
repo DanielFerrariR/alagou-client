@@ -33,7 +33,8 @@ const CustomTabBar: React.FC<BottomTabBarProps<BottomTabBarOptions>> = ({
       height={DEFAULT_TABBAR_HEIGHT}
       overflow="hidden"
       borderTopWidth={StyleSheet.hairlineWidth}
-      bgColor="custom.white"
+      borderBottomWidth={StyleSheet.hairlineWidth}
+      bgColor="background"
       display={isKeyboardShown ? 'none' : undefined}
     >
       {state.routes.map((route, index) => {

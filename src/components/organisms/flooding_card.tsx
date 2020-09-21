@@ -260,9 +260,13 @@ const FloadingList: React.FC<Props> = ({ data }) => {
                             source={require('src/images/flooding_place_verified_small.png')}
                           />
                         )
-                      : 'water'
+                      : () => (
+                          <Image
+                            source={require('src/images/flooding_place_small.png')}
+                          />
+                        )
                   }
-                  color={data.isVerified ? 'primary' : 'accent'}
+                  color="accent"
                   size={24}
                   onPress={() => navigation.navigate('Home', { data })}
                   ml={-0.5}
