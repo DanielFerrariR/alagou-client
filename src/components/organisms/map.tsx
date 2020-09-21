@@ -7,6 +7,7 @@ import { FAB, Portal, Provider, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'src/store'
 import { FloodingsState } from 'src/store/floodings'
+import ChooseMapTypeModal from './choose_map_type_modal'
 
 interface Props {
   route?: {
@@ -23,6 +24,14 @@ interface Region {
   longitude: number
 }
 
+type MapType =
+  | 'standard'
+  | 'satellite'
+  | 'hybrid'
+  | 'terrain'
+  | 'none'
+  | 'mutedStandard'
+
 const Map: React.FC<Props> = ({ route }) => {
   const theme = useTheme()
   const navigation = useNavigation()
@@ -31,6 +40,8 @@ const Map: React.FC<Props> = ({ route }) => {
   const floodings = useSelector((state) => state.floodings)
   const [region, setRegion] = useState<Region>()
   const [onlyOnce, setOnlyOnce] = useState(false)
+  const [mapType, setMapType] = useState<MapType>('standard')
+  const [openChooseMapType, setOpenChooseMapType] = useState(false)
 
   useEffect(() => {
     if (onlyOnce) {
@@ -50,7 +61,13 @@ const Map: React.FC<Props> = ({ route }) => {
     }
   }, [location])
 
-  console.log(region)
+  useEffect(() => {
+    return () => {
+      if (route) {
+        route.params = null
+      }
+    }
+  }, [])
 
   return (
     <>
@@ -66,9 +83,10 @@ const Map: React.FC<Props> = ({ route }) => {
           </Box>
         ) : (
           <MapView
-            // initialRegion={(newRegion) => setRegion(newRegion)}
+            mapType={mapType}
+            onRegionChangeComplete={(newRegion) => setRegion(newRegion)}
             style={{ height: '100%' }}
-            initialRegion={{
+            region={{
               latitudeDelta: 0.01,
               longitudeDelta: 0.01,
               ...region
@@ -83,28 +101,59 @@ const Map: React.FC<Props> = ({ route }) => {
               />
             ) : null}
             {floodings
-              ? floodings.map((each) => (
-                  <Marker
-                    key={each._id}
-                    image={require('src/images/flooding_place.png')}
-                    coordinate={{
-                      latitude: each.latitude,
-                      longitude: each.longitude
-                    }}
-                  >
-                    <Callout
-                      onPress={() =>
-                        navigation.navigate('FloodingList', {
-                          _id: each._id
-                        })
+              ? floodings.map((each) => {
+                  const sameLocationFloodings = floodings.filter(
+                    (insideEach) => insideEach.address === each.address
+                  )
+
+                  return (
+                    <Marker
+                      key={each._id}
+                      image={
+                        each.isVerified
+                          ? require('src/images/flooding_place_verified_larger.png')
+                          : require('src/images/flooding_place_larger.png')
                       }
+                      coordinate={{
+                        latitude: each.latitude,
+                        longitude: each.longitude
+                      }}
                     >
-                      <Box width={100}>
-                        <Typography>This is a plain Box</Typography>
-                      </Box>
-                    </Callout>
-                  </Marker>
-                ))
+                      <Callout
+                        onPress={() =>
+                          navigation.navigate('FloodingList', {
+                            data: sameLocationFloodings
+                          })
+                        }
+                      >
+                        <Box width={200}>
+                          <Typography
+                            ellipsizeMode="tail"
+                            numberOfLines={3}
+                            variant="h3"
+                          >
+                            <Typography fontWeight="bold" variant="h3">
+                              Endereço:
+                            </Typography>
+                            &nbsp;
+                            {each.address}
+                          </Typography>
+                          <Typography
+                            ellipsizeMode="tail"
+                            numberOfLines={3}
+                            variant="h3"
+                          >
+                            <Typography fontWeight="bold" variant="h3">
+                              Alagamentos neste local:
+                            </Typography>
+                            &nbsp;
+                            {sameLocationFloodings.length}
+                          </Typography>
+                        </Box>
+                      </Callout>
+                    </Marker>
+                  )
+                })
               : null}
           </MapView>
         )}
@@ -130,7 +179,7 @@ const Map: React.FC<Props> = ({ route }) => {
               {
                 icon: 'buffer',
                 label: 'Tipo de mapa',
-                onPress: () => console.log('Abrir tipo de mapa')
+                onPress: () => setOpenChooseMapType(true)
               },
               {
                 icon: 'crosshairs',
@@ -147,6 +196,12 @@ const Map: React.FC<Props> = ({ route }) => {
         </Portal>
       </Provider>
       <MessageModal message={errorMessage} setMessage={setErrorMessage} error />
+      <ChooseMapTypeModal
+        openChooseMapType={openChooseMapType}
+        setOpenChooseMapType={setOpenChooseMapType}
+        mapType={mapType}
+        setMapType={setMapType}
+      />
     </>
   )
 }

@@ -253,7 +253,15 @@ const FloadingList: React.FC<Props> = ({ data }) => {
                   ml={-0.5}
                 />
                 <IconButton
-                  icon="water"
+                  icon={
+                    data.isVerified
+                      ? () => (
+                          <Image
+                            source={require('src/images/flooding_place_verified_small.png')}
+                          />
+                        )
+                      : 'water'
+                  }
                   color={data.isVerified ? 'primary' : 'accent'}
                   size={24}
                   onPress={() => navigation.navigate('Home', { data })}
