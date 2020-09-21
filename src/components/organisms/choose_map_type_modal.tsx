@@ -18,15 +18,15 @@ type MapType =
   | 'mutedStandard'
 
 interface Props {
-  openChooseMapType: boolean
-  setOpenChooseMapType: Dispatch<SetStateAction<boolean>>
+  openChooseMapTypeModal: boolean
+  setOpenChooseMapTypeModal: Dispatch<SetStateAction<boolean>>
   mapType: MapType
   setMapType: Dispatch<SetStateAction<MapType>>
 }
 
 const ChooseMapTypeModal: React.FC<Props> = ({
-  openChooseMapType,
-  setOpenChooseMapType,
+  openChooseMapTypeModal,
+  setOpenChooseMapTypeModal,
   mapType,
   setMapType
 }) => {
@@ -34,8 +34,8 @@ const ChooseMapTypeModal: React.FC<Props> = ({
     <>
       <Portal>
         <Dialog
-          visible={openChooseMapType}
-          onDismiss={() => setOpenChooseMapType(false)}
+          visible={openChooseMapTypeModal}
+          onDismiss={() => setOpenChooseMapTypeModal(false)}
         >
           <Box p={2}>
             <Typography mb={3}>Selecione o tipo de mapa:</Typography>
@@ -43,7 +43,7 @@ const ChooseMapTypeModal: React.FC<Props> = ({
               <TouchableOpacity
                 onPress={() => {
                   setMapType('standard')
-                  setOpenChooseMapType(false)
+                  setOpenChooseMapTypeModal(false)
                 }}
                 width={1 / 3}
                 px={1}
@@ -73,7 +73,7 @@ const ChooseMapTypeModal: React.FC<Props> = ({
               <TouchableOpacity
                 onPress={() => {
                   setMapType('satellite')
-                  setOpenChooseMapType(false)
+                  setOpenChooseMapTypeModal(false)
                 }}
                 width={1 / 3}
                 px={1}
@@ -103,7 +103,7 @@ const ChooseMapTypeModal: React.FC<Props> = ({
               <TouchableOpacity
                 onPress={() => {
                   setMapType('terrain')
-                  setOpenChooseMapType(false)
+                  setOpenChooseMapTypeModal(false)
                 }}
                 width={1 / 3}
                 px={1}

@@ -41,7 +41,7 @@ const Map: React.FC<Props> = ({ route }) => {
   const [region, setRegion] = useState<Region>()
   const [onlyOnce, setOnlyOnce] = useState(false)
   const [mapType, setMapType] = useState<MapType>('standard')
-  const [openChooseMapType, setOpenChooseMapType] = useState(false)
+  const [openChooseMapTypeModal, setOpenChooseMapTypeModal] = useState(false)
 
   useEffect(() => {
     if (onlyOnce) {
@@ -179,7 +179,7 @@ const Map: React.FC<Props> = ({ route }) => {
               {
                 icon: 'buffer',
                 label: 'Tipo de mapa',
-                onPress: () => setOpenChooseMapType(true)
+                onPress: () => setOpenChooseMapTypeModal(true)
               },
               {
                 icon: 'crosshairs',
@@ -197,8 +197,8 @@ const Map: React.FC<Props> = ({ route }) => {
       </Provider>
       <MessageModal message={errorMessage} setMessage={setErrorMessage} error />
       <ChooseMapTypeModal
-        openChooseMapType={openChooseMapType}
-        setOpenChooseMapType={setOpenChooseMapType}
+        openChooseMapTypeModal={openChooseMapTypeModal}
+        setOpenChooseMapTypeModal={setOpenChooseMapTypeModal}
         mapType={mapType}
         setMapType={setMapType}
       />
