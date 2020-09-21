@@ -26,7 +26,6 @@
   "dependencies": {
     "@react-native-community/art": "1.2.0",
     "@react-native-community/async-storage": "1.11.0",
-    "@react-native-community/datetimepicker": "3.0.2",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "5.8.0",
     "@react-navigation/drawer": "5.9.0",
@@ -47,6 +46,7 @@
     "react-native-image-viewing": "0.2.0",
     "react-native-maps": "0.27.1",
     "react-native-paper": "4.0.1",
+    "react-native-paper-dates": "0.1.6",
     "react-native-reanimated": "1.13.0",
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "2.10.1",

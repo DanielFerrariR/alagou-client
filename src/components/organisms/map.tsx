@@ -5,12 +5,9 @@ import {
   ActivityIndicator,
   Typography,
   Image,
-  Dialog,
   Portal,
   FAB,
-  Provider,
-  Button,
-  TextInput
+  Provider
 } from 'src/components/atoms'
 import { MessageModal } from 'src/components/molecules'
 import { useLocation } from 'src/hooks'
@@ -19,8 +16,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'src/store'
 import { FloodingsState } from 'src/store/floodings'
 import { formatDate } from 'src/utils'
-import DateTimePicker from '@react-native-community/datetimepicker'
-import { Platform } from 'react-native'
+import { DatePickerModal } from 'react-native-paper-dates'
 import ChooseMapTypeModal from './choose_map_type_modal'
 
 interface Props {
@@ -50,17 +46,25 @@ const Map: React.FC<Props> = ({ route }) => {
   const theme = useTheme()
   const navigation = useNavigation()
   const [openChooseMapTypeModal, setOpenChooseMapTypeModal] = useState(false)
-  const [openChooseDateModal, setOpenChooseDateModal] = useState(false)
   const [location, errorMessage, setErrorMessage] = useLocation()
-  const [openFab, setOpenFab] = React.useState(false)
+  const [openFab, setOpenFab] = useState(false)
   const floodings = useSelector((state) => state.floodings)
   const [region, setRegion] = useState<Region>()
   const [onlyOnce, setOnlyOnce] = useState(false)
   const [mapType, setMapType] = useState<MapType>('standard')
-  const [beginDate, setBeginDate] = useState(new Date())
-  const [endDate, setEndDate] = useState(new Date())
-  const [showEndPicker, setShowEndPicker] = useState(false)
-  const [showBeginPicker, setShowBeginPicker] = useState(false)
+  const [openDatePickerModal, setOpenDatePickerModal] = useState(false)
+  const [dateRange, setDateRange] = useState({
+    startDate: new Date(),
+    endDate: new Date()
+  })
+  const onDismiss = useCallback(() => {
+    setOpenDatePickerModal(false)
+  }, [setOpenDatePickerModal])
+
+  const onChange = useCallback(({ startDate, endDate }) => {
+    setOpenDatePickerModal(false)
+    setDateRange({ startDate, endDate })
+  }, [])
 
   useEffect(() => {
     if (onlyOnce) {
@@ -87,6 +91,8 @@ const Map: React.FC<Props> = ({ route }) => {
       }
     }
   }, [])
+
+  console.log(dateRange)
 
   return (
     <>
@@ -195,7 +201,7 @@ const Map: React.FC<Props> = ({ route }) => {
               {
                 icon: 'calendar-range',
                 label: 'Data',
-                onPress: () => setOpenChooseDateModal(true)
+                onPress: () => setOpenDatePickerModal(true)
               },
               {
                 icon: 'buffer',
@@ -223,51 +229,18 @@ const Map: React.FC<Props> = ({ route }) => {
         mapType={mapType}
         setMapType={setMapType}
       />
-      <Portal>
-        <Dialog
-          visible={openChooseDateModal}
-          onDismiss={() => setOpenChooseDateModal(false)}
-        >
-          <Box p={2}>
-            <Box>
-              <TextInput />
-              <Button onPress={() => setShowBeginPicker(true)}>
-                Selecione a data de início:
-              </Button>
-              <Typography>{formatDate(beginDate)}</Typography>
-              {showBeginPicker && (
-                <DateTimePicker
-                  mode="date"
-                  value={beginDate}
-                  onChange={(_event, selectedDate) => {
-                    const currentDate = selectedDate || beginDate
-
-                    setShowBeginPicker(Platform.OS === 'ios')
-                    setBeginDate(currentDate)
-                  }}
-                />
-              )}
-              <Button onPress={() => setShowEndPicker(true)}>
-                Selecione a data de fim:
-              </Button>
-              <Typography>{formatDate(endDate)}</Typography>
-              {showEndPicker && (
-                <DateTimePicker
-                  mode="date"
-                  value={endDate}
-                  onChange={(_event, selectedDate) => {
-                    const currentDate = selectedDate || endDate
-
-                    setShowEndPicker(Platform.OS === 'ios')
-                    setEndDate(currentDate)
-                  }}
-                />
-              )}
-              <Button onPress={() => setShowEndPicker(true)}>Buscar</Button>
-            </Box>
-          </Box>
-        </Dialog>
-      </Portal>
+      <DatePickerModal
+        mode="range"
+        visible={openDatePickerModal}
+        onDismiss={onDismiss}
+        startDate={dateRange.startDate}
+        endDate={dateRange.endDate}
+        onConfirm={onChange}
+        saveLabel="Salvar"
+        label="Selecione o período"
+        startLabel="De"
+        endLabel="Até"
+      />
     </>
   )
 }
