@@ -20,7 +20,7 @@ interface Props {
     key: string
     name: string
     params: {
-      _id: string
+      data: FloodingsState[0]
     } | null
   }
 }
@@ -57,7 +57,7 @@ const FloadingList: React.FC<Props> = ({ route }) => {
   useEffect(() => {
     if (floodings && route?.params) {
       setFilteredFloodings(
-        floodings.filter((each) => each._id === route?.params?._id)
+        floodings.filter((each) => each._id === route?.params?.data._id)
       )
       setIsRouteFiltered(true)
 

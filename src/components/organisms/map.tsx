@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import MapView, { Circle, Marker, Callout } from 'react-native-maps'
 import { Box, ActivityIndicator, Typography } from 'src/components/atoms'
 import { MessageModal } from 'src/components/molecules'
@@ -6,18 +6,56 @@ import { useLocation } from 'src/hooks'
 import { FAB, Portal, Provider, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'src/store'
+import { FloodingsState } from 'src/store/floodings'
 
-const Map: React.FC = () => {
+interface Props {
+  route?: {
+    key: string
+    name: string
+    params: {
+      data: FloodingsState[0]
+    } | null
+  }
+}
+
+interface Region {
+  latitude: number
+  longitude: number
+}
+
+const Map: React.FC<Props> = ({ route }) => {
   const theme = useTheme()
   const navigation = useNavigation()
   const [location, errorMessage, setErrorMessage] = useLocation()
   const [openFab, setOpenFab] = React.useState(false)
   const floodings = useSelector((state) => state.floodings)
+  const [region, setRegion] = useState<Region>()
+  const [onlyOnce, setOnlyOnce] = useState(false)
+
+  useEffect(() => {
+    if (onlyOnce) {
+      return
+    }
+
+    if (location) {
+      if (route?.params) {
+        setRegion({
+          latitude: route.params.data.latitude,
+          longitude: route.params.data.longitude
+        })
+      } else {
+        setRegion(location.coords)
+      }
+      setOnlyOnce(true)
+    }
+  }, [location])
+
+  console.log(region)
 
   return (
     <>
       <Box height={1}>
-        {!location ? (
+        {!region ? (
           <Box
             flexDirection="column"
             justifyContent="center"
@@ -28,21 +66,22 @@ const Map: React.FC = () => {
           </Box>
         ) : (
           <MapView
+            // initialRegion={(newRegion) => setRegion(newRegion)}
             style={{ height: '100%' }}
-            region={{
+            initialRegion={{
               latitudeDelta: 0.01,
               longitudeDelta: 0.01,
-              ...location.coords
+              ...region
             }}
           >
-            <Circle
-              center={{
-                ...location.coords
-              }}
-              radius={30}
-              strokeColor={theme.colors.custom.userLocationStroke}
-              fillColor={theme.colors.custom.userLocationStroke}
-            />
+            {location ? (
+              <Circle
+                center={{ ...location.coords }}
+                radius={30}
+                strokeColor={theme.colors.custom.userLocationStroke}
+                fillColor={theme.colors.custom.userLocationStroke}
+              />
+            ) : null}
             {floodings
               ? floodings.map((each) => (
                   <Marker
@@ -96,7 +135,11 @@ const Map: React.FC = () => {
               {
                 icon: 'crosshairs',
                 label: 'Minha Localização',
-                onPress: () => console.log('Localizar')
+                onPress: () => {
+                  if (location) {
+                    setRegion({ ...location.coords })
+                  }
+                }
               }
             ]}
             onStateChange={({ open }) => setOpenFab(open)}

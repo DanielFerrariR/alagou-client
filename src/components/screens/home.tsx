@@ -1,10 +1,20 @@
 import React, { useEffect } from 'react'
 import { Map } from 'src/components/organisms'
 import { Header } from 'src/components/molecules'
-import { fetchFloodings } from 'src/store/floodings'
 import { useDispatch } from 'src/store'
+import { fetchFloodings, FloodingsState } from 'src/store/floodings'
 
-const Home: React.FC = () => {
+interface Props {
+  route: {
+    key: string
+    name: string
+    params: {
+      data: FloodingsState[0]
+    } | null
+  }
+}
+
+const Home: React.FC<Props> = ({ route }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -22,7 +32,7 @@ const Home: React.FC = () => {
   return (
     <>
       <Header />
-      <Map />
+      <Map route={route} />
     </>
   )
 }

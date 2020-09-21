@@ -252,6 +252,13 @@ const FloadingList: React.FC<Props> = ({ data }) => {
                   onPress={openShare}
                   ml={-0.5}
                 />
+                <IconButton
+                  icon="water"
+                  color={data.isVerified ? 'primary' : 'accent'}
+                  size={24}
+                  onPress={() => navigation.navigate('Home', { data })}
+                  ml={-0.5}
+                />
               </Box>
               <Box flexDirection="row" alignItems="center">
                 <MaterialCommunityIcons
