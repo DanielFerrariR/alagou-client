@@ -4,7 +4,7 @@ type Hours = string | number
 type Minutes = string | number
 
 interface Options {
-  showHours: boolean
+  omitHours: boolean
 }
 
 /**
@@ -27,7 +27,7 @@ const formatDate = (date: Date, options?: Options): string => {
 
   minutes = minutes < 10 ? `0${minutes}` : minutes
 
-  if (options?.showHours) {
+  if (!options?.omitHours) {
     return `${day}/${month}/${year} ${hours}:${minutes}`
   }
 

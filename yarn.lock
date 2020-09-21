@@ -1179,6 +1179,69 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
+"@formatjs/ecma402-abstract@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@formatjs/ecma402-abstract/-/ecma402-abstract-1.2.2.tgz#4810bdbd696d3805c535fd0620b7c8f45ab3164f"
+  integrity sha512-mLCoAPGlXCVskb/ojBO6iurGqwo6sZvAl8pRC4N25bz4LPWExAM9LsOo057zN3Br1JxUM3RZHG4YGnVt+nSRYQ==
+
+"@formatjs/intl-datetimeformat@2.6.7":
+  version "2.6.7"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-datetimeformat/-/intl-datetimeformat-2.6.7.tgz#b154aebe4c2c6670b3adb6d0751c1ead217a3974"
+  integrity sha512-LVp6swM9LyLv2N0jMvA4y2bxK9Z7GxO8E+2OnzgUxrG3o9uSLMzJ+06+6e8yNyOaRvcqxBBasJ70mZ1FuLBBmg==
+  dependencies:
+    "@formatjs/ecma402-abstract" "^1.2.2"
+
+"@formatjs/intl-displaynames@3.3.8":
+  version "3.3.8"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-displaynames/-/intl-displaynames-3.3.8.tgz#37a3698e135e00908c4314c1085a90d4b9381f61"
+  integrity sha512-HLoiQFCkwjq1ix7xmLC9DAp0sSXBmD2JuzfHiGKrWU8RIbNcHVzbIL4NgkuXkxvnkADXsK67OtfpuQs8kMZ0qw==
+  dependencies:
+    "@formatjs/ecma402-abstract" "^1.2.2"
+
+"@formatjs/intl-getcanonicallocales@1.4.5", "@formatjs/intl-getcanonicallocales@^1.4.5":
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-getcanonicallocales/-/intl-getcanonicallocales-1.4.5.tgz#948f0e7f5f30c3b86b0a922485c7fd467b6df06d"
+  integrity sha512-A+EmeFLR4X09viOhrFjVcWV4V2gjcJ6Yi1d38jTG/mWvhMFDQ7cQeR05H0sf82PmpAJUX9dyhNWOcDM/NUZs7A==
+  dependencies:
+    cldr-core "36.0.0"
+
+"@formatjs/intl-listformat@4.2.7":
+  version "4.2.7"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-listformat/-/intl-listformat-4.2.7.tgz#bcccfee92c69e661d4da51567540aa39fef9ceae"
+  integrity sha512-7sYy7pBGzClvSZI98FhVeNt6N/ELdvrj8pvLOfcR0+FQyhv0ixanog7bRo9kT8ECin9+RwEpTmX7jGCh8Bcgjw==
+  dependencies:
+    "@formatjs/ecma402-abstract" "^1.2.2"
+
+"@formatjs/intl-locale@2.3.7":
+  version "2.3.7"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-locale/-/intl-locale-2.3.7.tgz#8e2fdf5f92b0c121f42bc12422b3ff2bc12fe9a3"
+  integrity sha512-nLkB3jeaQZkFgoBgFBJW8SLTwQ1Iqt+x0GYXRx1DiNcLQElVAtWVqcljuGdb3JI/YJrEx8qxxgdPeNN4zn0jGA==
+  dependencies:
+    "@formatjs/ecma402-abstract" "^1.2.2"
+    "@formatjs/intl-getcanonicallocales" "^1.4.5"
+    cldr-core "^36.0.0"
+
+"@formatjs/intl-numberformat@5.6.2":
+  version "5.6.2"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-numberformat/-/intl-numberformat-5.6.2.tgz#2e96c0bf944f3b70fa30d3c21c2b76f57a101899"
+  integrity sha512-+0dXoe8D/7Ci+8/NI4VF0JxDz4GaK5bCNYMEBOYFM+VFAGGWrwyOuEycR+b1so3MNqePou4cb7lLVr+vQfAOcg==
+  dependencies:
+    "@formatjs/ecma402-abstract" "^1.2.2"
+
+"@formatjs/intl-pluralrules@3.4.7":
+  version "3.4.7"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-pluralrules/-/intl-pluralrules-3.4.7.tgz#5e46383c585f77d96c0e8c845c5579a67c0c1faa"
+  integrity sha512-CSftdNs8afT1VfB5vQFlSzhEZ+ckbkxzYxNXCeLYt66mXnuCukr7KCsZJHUTMyjlEAnFbfqXnKCtWDs5JMBrog==
+  dependencies:
+    "@formatjs/ecma402-abstract" "^1.2.2"
+
+"@formatjs/intl-relativetimeformat@7.2.7":
+  version "7.2.7"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-relativetimeformat/-/intl-relativetimeformat-7.2.7.tgz#dce72ebafb1ca0bf14673fab3b1aad145e1abac6"
+  integrity sha512-R6rxX4PfPQ/EuDRALLSIEDCDW/FAmmu6xpRXIPdZ33bEP7SXEksJB039Bw//I0VIm2fBeIlxe9oqvRGfuqpwVg==
+  dependencies:
+    "@formatjs/ecma402-abstract" "^1.2.2"
+
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"
@@ -1431,13 +1494,6 @@
     strip-ansi "^5.2.0"
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
-
-"@react-native-community/datetimepicker@3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-3.0.2.tgz#6e52cda7fa46ecebfb216f5520cfbf2754348299"
-  integrity sha512-NLcV3HLrjtvyYM4CU4O+nWJ+LsjB4XnkUiXjK52PgnlRrg5i3hJQHcp/GsrHQbB62UC+Zn96+Hy+jiw4K5Rw/w==
-  dependencies:
-    invariant "^2.2.4"
 
 "@react-native-community/masked-view@0.1.10":
   version "0.1.10"
@@ -2754,6 +2810,11 @@ class-utils@^0.3.5:
     define-property "^0.2.5"
     isobject "^3.0.0"
     static-extend "^0.1.1"
+
+cldr-core@36.0.0, cldr-core@^36.0.0:
+  version "36.0.0"
+  resolved "https://registry.yarnpkg.com/cldr-core/-/cldr-core-36.0.0.tgz#1d2148ed6802411845baeeb21432d7bbfde7d4f7"
+  integrity sha512-QLnAjt20rZe38c8h8OJ9jPND+O4o5O8Nw0TK/P3KpNn1cmOhMu0rk6Kc3ap96c5OStQ9gAngs9+Be2sum26NOw==
 
 clean-stack@^2.0.0:
   version "2.2.0"
@@ -7125,6 +7186,11 @@ react-native-iphone-x-helper@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
   integrity sha512-/VbpIEp8tSNNHIvstuA3Swx610whci1Zpc9mqNkqn14DkMbw+ORviln2u0XyHG1kPvvwTNGZY6QpeFwxYaSdbQ==
+
+react-native-localize@1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-localize/-/react-native-localize-1.4.1.tgz#031bd2089f09cc16ee7daee03019684dda60c275"
+  integrity sha512-g1L1au6GtCd0Ci6lQ8JVPYgl7uvEtKY2jeVghJcV6qQEN9+qACyqjOIR8pskUyI+qcSj1z4/nZh3IFxDVu1drw==
 
 react-native-maps@0.27.1:
   version "0.27.1"
