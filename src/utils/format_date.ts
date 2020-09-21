@@ -3,12 +3,16 @@ type Month = string | number
 type Hours = string | number
 type Minutes = string | number
 
+interface Options {
+  showHours: boolean
+}
+
 /**
  * Formats a date.
  * @param date - The `date` to be formatted
- * @returns A string formatted as `DD:MM:YYYY HH:mm`
+ * @returns A string formatted as `DD:MM:YYYY HH:mm` or `DD:MM:YYYY`
  */
-const formatDate = (date: Date): string => {
+const formatDate = (date: Date, options?: Options): string => {
   let day: Day = date.getDate()
   let month: Month = date.getMonth() + 1
   const year = date.getFullYear()
@@ -23,7 +27,11 @@ const formatDate = (date: Date): string => {
 
   minutes = minutes < 10 ? `0${minutes}` : minutes
 
-  return `${day}/${month}/${year} ${hours}:${minutes}`
+  if (options?.showHours) {
+    return `${day}/${month}/${year} ${hours}:${minutes}`
+  }
+
+  return `${day}/${month}/${year}`
 }
 
 export default formatDate

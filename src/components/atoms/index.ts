@@ -18,6 +18,8 @@ export { default as Divider } from './divider'
 export { default as StatusBar } from './status_bar'
 export { default as HelperText } from './helper_text'
 export { default as TouchableRipple } from './touchable_ripple'
+export { default as FAB } from './fab'
+export { default as Provider } from './provider'
 
 export { default as TextInput } from './text_input'
 export * from './text_input'

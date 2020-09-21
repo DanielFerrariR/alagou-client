@@ -1,12 +1,26 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import MapView, { Circle, Marker, Callout } from 'react-native-maps'
-import { Box, ActivityIndicator, Typography, Image } from 'src/components/atoms'
+import {
+  Box,
+  ActivityIndicator,
+  Typography,
+  Image,
+  Dialog,
+  Portal,
+  FAB,
+  Provider,
+  Button,
+  TextInput
+} from 'src/components/atoms'
 import { MessageModal } from 'src/components/molecules'
 import { useLocation } from 'src/hooks'
-import { FAB, Portal, Provider, useTheme } from 'react-native-paper'
+import { useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'src/store'
 import { FloodingsState } from 'src/store/floodings'
+import { formatDate } from 'src/utils'
+import DateTimePicker from '@react-native-community/datetimepicker'
+import { Platform } from 'react-native'
 import ChooseMapTypeModal from './choose_map_type_modal'
 
 interface Props {
@@ -35,13 +49,18 @@ type MapType =
 const Map: React.FC<Props> = ({ route }) => {
   const theme = useTheme()
   const navigation = useNavigation()
+  const [openChooseMapTypeModal, setOpenChooseMapTypeModal] = useState(false)
+  const [openChooseDateModal, setOpenChooseDateModal] = useState(false)
   const [location, errorMessage, setErrorMessage] = useLocation()
   const [openFab, setOpenFab] = React.useState(false)
   const floodings = useSelector((state) => state.floodings)
   const [region, setRegion] = useState<Region>()
   const [onlyOnce, setOnlyOnce] = useState(false)
   const [mapType, setMapType] = useState<MapType>('standard')
-  const [openChooseMapTypeModal, setOpenChooseMapTypeModal] = useState(false)
+  const [beginDate, setBeginDate] = useState(new Date())
+  const [endDate, setEndDate] = useState(new Date())
+  const [showEndPicker, setShowEndPicker] = useState(false)
+  const [showBeginPicker, setShowBeginPicker] = useState(false)
 
   useEffect(() => {
     if (onlyOnce) {
@@ -79,7 +98,7 @@ const Map: React.FC<Props> = ({ route }) => {
             alignItems="center"
             height={1}
           >
-            <ActivityIndicator animating size="large" />
+            <ActivityIndicator animating size="large" color="accent" />
           </Box>
         ) : (
           <MapView
@@ -176,7 +195,7 @@ const Map: React.FC<Props> = ({ route }) => {
               {
                 icon: 'calendar-range',
                 label: 'Data',
-                onPress: () => console.log('Abrir calendario')
+                onPress: () => setOpenChooseDateModal(true)
               },
               {
                 icon: 'buffer',
@@ -204,6 +223,51 @@ const Map: React.FC<Props> = ({ route }) => {
         mapType={mapType}
         setMapType={setMapType}
       />
+      <Portal>
+        <Dialog
+          visible={openChooseDateModal}
+          onDismiss={() => setOpenChooseDateModal(false)}
+        >
+          <Box p={2}>
+            <Box>
+              <TextInput />
+              <Button onPress={() => setShowBeginPicker(true)}>
+                Selecione a data de início:
+              </Button>
+              <Typography>{formatDate(beginDate)}</Typography>
+              {showBeginPicker && (
+                <DateTimePicker
+                  mode="date"
+                  value={beginDate}
+                  onChange={(_event, selectedDate) => {
+                    const currentDate = selectedDate || beginDate
+
+                    setShowBeginPicker(Platform.OS === 'ios')
+                    setBeginDate(currentDate)
+                  }}
+                />
+              )}
+              <Button onPress={() => setShowEndPicker(true)}>
+                Selecione a data de fim:
+              </Button>
+              <Typography>{formatDate(endDate)}</Typography>
+              {showEndPicker && (
+                <DateTimePicker
+                  mode="date"
+                  value={endDate}
+                  onChange={(_event, selectedDate) => {
+                    const currentDate = selectedDate || endDate
+
+                    setShowEndPicker(Platform.OS === 'ios')
+                    setEndDate(currentDate)
+                  }}
+                />
+              )}
+              <Button onPress={() => setShowEndPicker(true)}>Buscar</Button>
+            </Box>
+          </Box>
+        </Dialog>
+      </Portal>
     </>
   )
 }
