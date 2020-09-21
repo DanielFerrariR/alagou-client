@@ -13,12 +13,13 @@ import {
   Box,
   ActivityIndicator
 } from 'src/components/atoms'
-import { Dimensions, PermissionsAndroid } from 'react-native'
+import { PermissionsAndroid } from 'react-native'
 import Geolocation from 'react-native-geolocation-service'
 import GeocoderLibrary from 'react-native-geocoding'
 import { GOOGLE_MAPS_API_KEY } from '@env'
 import { useTheme, TextInput as OldTextInput } from 'react-native-paper'
 import { GoogleMapsAPI } from 'src/services'
+import { useWindowDimensions } from 'src/hooks'
 import MessageModal from './message_modal'
 
 type Props = {
@@ -46,6 +47,7 @@ const AddressSearchInput: React.FC<Props> = ({
   const skipRef = useRef<boolean>(false)
   const Geocoder = GeocoderLibrary as any
   const [errorMessage, setErrorMessage] = useState('')
+  const dimensions = useWindowDimensions()
 
   Geocoder.init(GOOGLE_MAPS_API_KEY)
 
@@ -172,7 +174,7 @@ const AddressSearchInput: React.FC<Props> = ({
         visible={openSearchBox && !!results && results.length > 0}
         onDismiss={() => setOpenSearchBox(false)}
         style={{
-          width: Dimensions.get('window').width - 32,
+          width: dimensions.width - 32,
           marginTop: 64
         }}
         anchor={

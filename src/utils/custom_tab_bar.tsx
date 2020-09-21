@@ -2,11 +2,14 @@ import React from 'react'
 import { Box, Typography, TouchableRipple } from 'src/components/atoms'
 import { useTheme, Colors } from 'react-native-paper'
 import color from 'color'
-import { Dimensions, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 import {
   BottomTabBarProps,
   BottomTabBarOptions
 } from '@react-navigation/bottom-tabs'
+import { useWindowDimensions, useIsKeyboardShown } from 'src/hooks'
+
+const DEFAULT_TABBAR_HEIGHT = 49
 
 const CustomTabBar: React.FC<BottomTabBarProps<BottomTabBarOptions>> = ({
   state,
@@ -15,6 +18,8 @@ const CustomTabBar: React.FC<BottomTabBarProps<BottomTabBarOptions>> = ({
 }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options
   const theme = useTheme()
+  const isKeyboardShown = useIsKeyboardShown()
+  const dimensions = useWindowDimensions()
 
   if (focusedOptions.tabBarVisible === false) {
     return null
@@ -25,12 +30,13 @@ const CustomTabBar: React.FC<BottomTabBarProps<BottomTabBarOptions>> = ({
       flexDirection="row"
       alignItems="center"
       justifyContent="center"
-      height={56}
+      height={DEFAULT_TABBAR_HEIGHT}
       overflow="hidden"
       borderTopWidth={StyleSheet.hairlineWidth}
       bgColor="custom.white"
+      display={isKeyboardShown ? 'none' : undefined}
     >
-      {state.routes.map((route: any, index: any) => {
+      {state.routes.map((route, index) => {
         const { options } = descriptors[route.key]
 
         const isFocused = state.index === index
@@ -56,19 +62,16 @@ const CustomTabBar: React.FC<BottomTabBarProps<BottomTabBarOptions>> = ({
 
         return (
           <Box
+            key={index}
             flexDirection="row"
             alignItems="center"
             justifyContent="center"
             overflow="hidden"
-            width={Dimensions.get('window').width / state.routes.length + 16}
-            height={Dimensions.get('window').width / state.routes.length + 16}
-            borderRadius={
-              Dimensions.get('window').width / state.routes.length / 2 + 16
-            }
+            width={dimensions.width / state.routes.length + 16}
+            height={dimensions.width / state.routes.length + 16}
+            borderRadius={dimensions.width / state.routes.length / 2 + 16}
             position="absolute"
-            left={`${
-              (index * Dimensions.get('window').width) / state.routes.length - 8
-            }px`}
+            left={`${(index * dimensions.width) / state.routes.length - 8}px`}
           >
             <TouchableRipple
               accessibilityRole="button"
@@ -83,16 +86,18 @@ const CustomTabBar: React.FC<BottomTabBarProps<BottomTabBarOptions>> = ({
                 .string()}
             >
               <Box
-                height={
-                  Dimensions.get('window').width / state.routes.length + 16
-                }
-                width={
-                  Dimensions.get('window').width / state.routes.length + 16
-                }
+                height={dimensions.width / state.routes.length + 16}
+                width={dimensions.width / state.routes.length + 16}
                 flexDirection="column"
                 alignItems="center"
                 justifyContent="center"
               >
+                {options.tabBarIcon &&
+                  options.tabBarIcon({
+                    focused: isFocused,
+                    size: 24,
+                    color: isFocused ? theme.colors.accent : Colors.grey600
+                  })}
                 <Typography
                   variant="h4"
                   style={{
@@ -101,12 +106,6 @@ const CustomTabBar: React.FC<BottomTabBarProps<BottomTabBarOptions>> = ({
                 >
                   {options.tabBarLabel}
                 </Typography>
-                {options.tabBarIcon &&
-                  options.tabBarIcon({
-                    focused: isFocused,
-                    size: 24,
-                    color: isFocused ? theme.colors.accent : Colors.grey600
-                  })}
               </Box>
             </TouchableRipple>
           </Box>

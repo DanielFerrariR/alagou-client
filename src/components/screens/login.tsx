@@ -15,8 +15,8 @@ import AsyncStorage from '@react-native-community/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import { useTheme, TextInput as OldTextInput } from 'react-native-paper'
 import { Logo, Wave } from 'src/images'
-import { Keyboard, Dimensions } from 'react-native'
-import { useKeyboard } from 'src/hooks'
+import { Keyboard } from 'react-native'
+import { useIsKeyboardShown, useWindowDimensions } from 'src/hooks'
 
 const Login: React.FC = () => {
   const userSession = useSelector((state) => state.user)
@@ -30,7 +30,8 @@ const Login: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const navigation = useNavigation()
   const [loading, setLoading] = useState(false)
-  const isKeyboardVisible = useKeyboard()
+  const isKeyboardShown = useIsKeyboardShown()
+  const dimensions = useWindowDimensions()
 
   useEffect(() => {
     if (userSession) {
@@ -86,13 +87,13 @@ const Login: React.FC = () => {
     <>
       <StatusBar
         backgroundColor={
-          isKeyboardVisible ? theme.colors.primary : theme.colors.custom.white
+          isKeyboardShown ? theme.colors.primary : theme.colors.custom.white
         }
         barStyle="dark-content"
       />
       <Container bgColor="custom.white">
         <Box
-          height={isKeyboardVisible ? 0 : 0.4}
+          height={isKeyboardShown ? 0 : 0.4}
           alignItems="center"
           justifyContent="center"
         >
@@ -101,7 +102,7 @@ const Login: React.FC = () => {
         <Box flex={1} p={2} bgColor="primary">
           <Box
             position="absolute"
-            width={Dimensions.get('window').width + 16}
+            width={dimensions.width + 16}
             left="-16px"
             height={100}
             top="-80px"

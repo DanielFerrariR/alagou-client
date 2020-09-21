@@ -10,11 +10,12 @@ import { useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { Logo, Wave } from 'src/images'
 import packageJson from 'src/../package.json'
-import { Dimensions } from 'react-native'
+import { useWindowDimensions } from 'src/hooks'
 
 const Welcome: React.FC = () => {
   const theme = useTheme()
   const navigation = useNavigation()
+  const dimensions = useWindowDimensions()
 
   return (
     <>
@@ -37,7 +38,7 @@ const Welcome: React.FC = () => {
         >
           <Box
             position="absolute"
-            width={Dimensions.get('window').width + 16}
+            width={dimensions.width + 16}
             left="-16px"
             height={100}
             top="-80px"

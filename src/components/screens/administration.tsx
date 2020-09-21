@@ -1,10 +1,12 @@
 import React from 'react'
 import { Container, MenuItem, Divider } from 'src/components/atoms'
-import { Dimensions } from 'react-native'
 import { Water, Alert } from 'src/images'
 import { BackHeader } from 'src/components/molecules'
+import { useWindowDimensions } from 'src/hooks'
 
 const Administration: React.FC = () => {
+  const dimensions = useWindowDimensions()
+
   return (
     <>
       <BackHeader title="Administração" />
@@ -16,7 +18,7 @@ const Administration: React.FC = () => {
           style={{ maxWidth: '100%' }}
           contentStyle={{ maxWidth: '100%' }}
           contentStyleWithIcon={{
-            maxWidth: Dimensions.get('window').width - 88
+            maxWidth: dimensions.width - 88
           }}
         />
         <Divider />
@@ -27,7 +29,7 @@ const Administration: React.FC = () => {
           style={{ maxWidth: '100%' }}
           contentStyle={{ maxWidth: '100%' }}
           contentStyleWithIcon={{
-            maxWidth: Dimensions.get('window').width - 88
+            maxWidth: dimensions.width - 88
           }}
         />
         <Divider />

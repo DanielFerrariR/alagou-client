@@ -8,10 +8,10 @@ import {
 } from 'src/components/atoms'
 import { useNavigation } from '@react-navigation/native'
 import { formatDate } from 'src/utils'
-import { Dimensions } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useTheme, TouchableRipple } from 'react-native-paper'
 import { BackHeader } from 'src/components/molecules'
+import { useWindowDimensions } from 'src/hooks'
 
 const Alerts: React.FC = () => {
   const navigation = useNavigation()
@@ -44,6 +44,7 @@ const Alerts: React.FC = () => {
       date: new Date()
     }
   ]
+  const dimensions = useWindowDimensions()
 
   return (
     <>
@@ -66,7 +67,7 @@ const Alerts: React.FC = () => {
                   rippleColor="rgba(0, 0, 0, .32)"
                 >
                   <Box p={2} width={1} flexDirection="row" alignItems="center">
-                    <Box width={Dimensions.get('window').width - 96}>
+                    <Box width={dimensions.width - 96}>
                       <Typography mb={1} variant="h4">
                         {formatDate(item.date).split(' ')[0]}
                       </Typography>

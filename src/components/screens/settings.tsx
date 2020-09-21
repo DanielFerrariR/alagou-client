@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { Container, MenuItem, Divider } from 'src/components/atoms'
 import { DeleteUserModal } from 'src/components/organisms'
-import { Dimensions } from 'react-native'
 import { Information, Delete, Email } from 'src/images'
 import { BackHeader } from 'src/components/molecules'
+import { useWindowDimensions } from 'src/hooks'
 
 const Settings: React.FC = () => {
   const [open, setOpen] = useState(false)
   const navigation = useNavigation()
+  const dimensions = useWindowDimensions()
 
   return (
     <>
@@ -21,7 +22,7 @@ const Settings: React.FC = () => {
           style={{ maxWidth: '100%' }}
           contentStyle={{ maxWidth: '100%' }}
           contentStyleWithIcon={{
-            maxWidth: Dimensions.get('window').width - 88
+            maxWidth: dimensions.width - 88
           }}
         />
         <Divider />
@@ -32,7 +33,7 @@ const Settings: React.FC = () => {
           style={{ maxWidth: '100%' }}
           contentStyle={{ maxWidth: '100%' }}
           contentStyleWithIcon={{
-            maxWidth: Dimensions.get('window').width - 88
+            maxWidth: dimensions.width - 88
           }}
         />
         <Divider />
@@ -43,7 +44,7 @@ const Settings: React.FC = () => {
           style={{ maxWidth: '100%' }}
           contentStyle={{ maxWidth: '100%' }}
           contentStyleWithIcon={{
-            maxWidth: Dimensions.get('window').width - 88
+            maxWidth: dimensions.width - 88
           }}
         />
         <Divider />

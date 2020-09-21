@@ -21,10 +21,10 @@ import {
   removeFavorite
 } from 'src/store/floodings'
 import { useSelector, useDispatch } from 'src/store'
-import { Dimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import Share from 'react-native-share'
 import RNFetchBlob from 'rn-fetch-blob'
+import { useWindowDimensions } from 'src/hooks'
 import ChatModal from './chat_modal'
 
 interface Props {
@@ -49,6 +49,7 @@ const FloadingList: React.FC<Props> = ({ data }) => {
   const navigation = useNavigation()
   const [openChatModal, setOpenChatModal] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const dimensions = useWindowDimensions()
 
   const editCard = () => {
     setOpen(false)
@@ -169,7 +170,7 @@ const FloadingList: React.FC<Props> = ({ data }) => {
                   borderRadius={48 / 2}
                 />
               </TouchableOpacity>
-              <Box width={Dimensions.get('window').width - 148}>
+              <Box width={dimensions.width - 148}>
                 <Typography variant="h4" ellipsizeMode="tail" numberOfLines={1}>
                   {data.userName}
                 </Typography>
@@ -233,7 +234,7 @@ const FloadingList: React.FC<Props> = ({ data }) => {
             <Box
               flexDirection="row"
               justifyContent="space-between"
-              width={Dimensions.get('window').width - 40}
+              width={dimensions.width - 40}
               ml={-1}
               alignItems="center"
             >

@@ -49,7 +49,6 @@ const MainFlow = () => {
   return (
     <Tab.Navigator
       screenOptions={{ unmountOnBlur: true }}
-      tabBarOptions={{ keyboardHidesTabBar: true }}
       tabBar={(props) => <CustomTabBar {...props} />}
     >
       <Tab.Screen

@@ -15,8 +15,7 @@ import { useTheme } from 'react-native-paper'
 import { formatDate } from 'src/utils'
 import ImageView from 'react-native-image-viewing'
 import { useSelector, useDispatch } from 'src/store'
-import { Dimensions } from 'react-native'
-import { useKeyboard } from 'src/hooks'
+import { useIsKeyboardShown, useWindowDimensions } from 'src/hooks'
 import { FloodingsState, addComment } from 'src/store/floodings'
 
 interface Props {
@@ -28,11 +27,12 @@ interface Props {
 const ChatModal: React.FC<Props> = ({ open, setOpen, data }) => {
   const userSession = useSelector((state) => state.user)
   const [openPicture, setOpenPicture] = useState(false)
-  const isKeyboardVisible = useKeyboard()
+  const useKeyboardShown = useIsKeyboardShown()
   const theme = useTheme()
   const [message, setMessage] = useState('')
   const dispatch = useDispatch()
   const invertedMessages = [...data.messages].reverse()
+  const dimensions = useWindowDimensions()
 
   const addMessage = async () => {
     if (!message) {
@@ -51,7 +51,7 @@ const ChatModal: React.FC<Props> = ({ open, setOpen, data }) => {
           <Dialog
             visible={open}
             onDismiss={() => setOpen(false)}
-            style={{ marginBottom: isKeyboardVisible ? 200 : undefined }}
+            style={{ marginBottom: useKeyboardShown ? 200 : undefined }}
           >
             <Box p={2}>
               <Typography
@@ -159,7 +159,7 @@ const ChatModal: React.FC<Props> = ({ open, setOpen, data }) => {
                           <Typography
                             variant="h3"
                             color="custom.white"
-                            width={Dimensions.get('window').width - 170}
+                            width={dimensions.width - 170}
                             ellipsizeMode="tail"
                             numberOfLines={1}
                             mb={1}
@@ -171,7 +171,7 @@ const ChatModal: React.FC<Props> = ({ open, setOpen, data }) => {
                             fontWeight="bold"
                             color="custom.white"
                             mb={1}
-                            width={Dimensions.get('window').width - 170}
+                            width={dimensions.width - 170}
                           >
                             {item.message}
                           </Typography>
@@ -190,7 +190,7 @@ const ChatModal: React.FC<Props> = ({ open, setOpen, data }) => {
               </Box>
               <Box flexDirection="row" alignItems="center">
                 <TextInput
-                  width={Dimensions.get('window').width - 148}
+                  width={dimensions.width - 148}
                   placeholder="Escreva um comentário"
                   mt={-0.75}
                   mr={0.5}
