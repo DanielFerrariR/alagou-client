@@ -1,6 +1,6 @@
 export { default as ensure } from './ensure'
 export { default as DrawerNavigator } from './drawer_navigator'
-export { default as formatDate } from './format_date'
+export { formatDate, isDateInRange } from './date_functions'
 export { default as Socket } from './socket'
 export { default as FetchReduxStore } from './fetch_redux_store'
 export { startEventEmitter, eventEmitterInstance } from './event_emitter'

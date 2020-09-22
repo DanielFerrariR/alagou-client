@@ -15,7 +15,7 @@ import { useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'src/store'
 import { FloodingsState } from 'src/store/floodings'
-import { formatDate } from 'src/utils'
+import { isDateInRange } from 'src/utils'
 import { DatePickerModal } from 'react-native-paper-dates'
 import ChooseMapTypeModal from './choose_map_type_modal'
 
@@ -49,6 +49,10 @@ const Map: React.FC<Props> = ({ route }) => {
   const [location, errorMessage, setErrorMessage] = useLocation()
   const [openFab, setOpenFab] = useState(false)
   const floodings = useSelector((state) => state.floodings)
+  const [
+    filteredFloodings,
+    setFilteredFloodings
+  ] = useState<FloodingsState | null>(null)
   const [region, setRegion] = useState<Region>()
   const [onlyOnce, setOnlyOnce] = useState(false)
   const [mapType, setMapType] = useState<MapType>('standard')
@@ -57,6 +61,7 @@ const Map: React.FC<Props> = ({ route }) => {
     startDate: new Date(),
     endDate: new Date()
   })
+
   const onDismiss = useCallback(() => {
     setOpenDatePickerModal(false)
   }, [setOpenDatePickerModal])
@@ -65,6 +70,16 @@ const Map: React.FC<Props> = ({ route }) => {
     setOpenDatePickerModal(false)
     setDateRange({ startDate, endDate })
   }, [])
+
+  useEffect(() => {
+    if (floodings) {
+      const newFloodings = floodings.filter((each) =>
+        isDateInRange(each.date, dateRange.startDate, dateRange.endDate)
+      )
+
+      setFilteredFloodings(newFloodings)
+    }
+  }, [floodings, dateRange])
 
   useEffect(() => {
     if (onlyOnce) {
@@ -91,8 +106,6 @@ const Map: React.FC<Props> = ({ route }) => {
       }
     }
   }, [])
-
-  console.log(dateRange)
 
   return (
     <>
@@ -125,9 +138,9 @@ const Map: React.FC<Props> = ({ route }) => {
                 fillColor={theme.colors.custom.userLocationStroke}
               />
             ) : null}
-            {floodings
-              ? floodings.map((each) => {
-                  const sameLocationFloodings = floodings.filter(
+            {filteredFloodings
+              ? filteredFloodings.map((each) => {
+                  const sameLocationFloodings = filteredFloodings.filter(
                     (insideEach) => insideEach.address === each.address
                   )
 
