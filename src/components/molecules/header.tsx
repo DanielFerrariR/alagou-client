@@ -18,7 +18,7 @@ const Header: React.FC = () => {
       <StatusBar backgroundColor={theme.colors.primary} />
       <Appbar.Header>
         <IconButton
-          icon="menu"
+          icon="waves"
           color="custom.white"
           size={24}
           onPress={toggleDrawer}

@@ -27,11 +27,11 @@ const formatDate = (date: Date, options?: Options): string => {
 
   minutes = minutes < 10 ? `0${minutes}` : minutes
 
-  if (!options?.omitHours) {
-    return `${day}/${month}/${year} ${hours}:${minutes}`
+  if (options?.omitHours) {
+    return `${day}/${month}/${year}`
   }
 
-  return `${day}/${month}/${year}`
+  return `${day}/${month}/${year} ${hours}:${minutes}`
 }
 
 const getDateForRange = (date: Date): number => {

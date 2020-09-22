@@ -11,13 +11,14 @@ import { useDispatch } from 'src/store'
 import { uploadFloodingsCSV } from 'src/store/floodings'
 import GeocoderLibrary from 'react-native-geocoding'
 import { GOOGLE_MAPS_API_KEY } from '@env'
+import { toLatLon } from 'utm'
 
 type CSVData = string[][]
 
 type DataStructure = {
   id: string
-  latitude: string
-  longitude: string
+  coordinateX: string
+  coordinateY: string
   date: string
   title: string
 }[]
@@ -43,8 +44,8 @@ const Administration: React.FC = () => {
 
           const dataStructure = {
             id: '',
-            latitude: '',
-            longitude: '',
+            coordinateX: '',
+            coordinateY: '',
             date: '',
             title: ''
           }
@@ -61,13 +62,22 @@ const Administration: React.FC = () => {
 
           newFloodings = newFloodings.map(async (each) => {
             const dateArray = each.date.split('/')
-            // const address = await Geocoder.from(each.latitude, each.longitude)
+            const { latitude, longitude } = toLatLon(
+              Number(each.coordinateX.replace(',', '.')),
+              Number(each.coordinateY.replace(',', '.')),
+              23,
+              'L'
+            )
+
+            const addressResponse = await Geocoder.from(latitude, longitude)
+
+            const address = addressResponse.results[0].formatted_address
 
             return {
               title: each.title,
-              longitude: each.longitude,
-              latitude: each.latitude,
-              // address,
+              longitude,
+              latitude,
+              address,
               severity: 0,
               date: new Date(
                 `${dateArray[1]}/${dateArray[0]}/${dateArray[2]}`
@@ -80,8 +90,7 @@ const Administration: React.FC = () => {
 
           newFloodings = await Promise.all(newFloodings)
 
-          console.log(newFloodings)
-          // dispatch(await uploadFloodingsCSV(newFloodings))
+          dispatch(await uploadFloodingsCSV(newFloodings))
         }
       })
     } catch (err) {

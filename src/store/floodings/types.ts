@@ -72,8 +72,8 @@ export type EditFloodingData = {
 
 export type UploadFloodingsCSVData = {
   title: string
-  longitude: string
-  latitude: string
+  longitude: number
+  latitude: number
   severity: number
   date: number
   picture: string
