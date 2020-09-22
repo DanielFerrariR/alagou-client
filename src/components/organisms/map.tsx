@@ -96,6 +96,10 @@ const Map: React.FC<Props> = ({ route }) => {
 
     if (location) {
       if (route?.params) {
+        setDateRange({
+          startDate: new Date(route.params.data.date),
+          endDate: new Date(route.params.data.date)
+        })
         setRegion({
           latitude: route.params.data.latitude,
           longitude: route.params.data.longitude
@@ -298,7 +302,11 @@ const Map: React.FC<Props> = ({ route }) => {
                 }}
               />
             )}
-            <Button onPress={() => setOpenDatePickerModal(false)}>
+            <Button
+              onPress={() => setOpenDatePickerModal(false)}
+              color="accent"
+              labelStyle={{ color: theme.colors.custom.white }}
+            >
               Fechar
             </Button>
           </Box>
