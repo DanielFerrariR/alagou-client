@@ -273,11 +273,13 @@ const FloadingList: React.FC<Props> = ({ data }) => {
                 />
               </Box>
               <Box flexDirection="row" alignItems="center">
-                <MaterialCommunityIcons
-                  name="checkbox-blank-circle"
-                  color={severity[data.severity - 1]}
-                  size={24}
-                />
+                {data.severity !== 0 ? (
+                  <MaterialCommunityIcons
+                    name="checkbox-blank-circle"
+                    color={severity[data.severity - 1]}
+                    size={24}
+                  />
+                ) : null}
                 <IconButton
                   icon="star"
                   color={isFavorite ? 'custom.star' : 'custom.starOff'}
@@ -293,7 +295,7 @@ const FloadingList: React.FC<Props> = ({ data }) => {
               alignItems="center"
             >
               <Typography variant="h4">
-                {formatDate(new Date(data.date))}
+                {formatDate(new Date(data.date), { omitHours: data.omitHours })}
               </Typography>
             </Box>
           </Paper>

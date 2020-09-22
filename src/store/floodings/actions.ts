@@ -8,6 +8,7 @@ import {
   ADD_FAVORITE,
   REMOVE_FAVORITE,
   ADD_COMMENT,
+  UPLOAD_FLOODINGS_CSV,
   AddFavoriteAction,
   RemoveFavoriteAction,
   FetchFloodingsAction,
@@ -18,7 +19,9 @@ import {
   AddCommentAction,
   CreateFloodingData,
   EditFloodingData,
-  FloodingsState
+  FloodingsState,
+  UploadFloodingsCSVData,
+  UploadFloodingsCSVAction
 } from './types'
 
 const addFavorite = async (_id: string): Promise<AddFavoriteAction> => {
@@ -119,7 +122,7 @@ const editFlooding = async (
 }
 
 const removeFlooding = async (_id: string): Promise<RemoveFloodingAction> => {
-  const response = await serverAPI.delete<FloodingsState>(`/flooding`, {
+  const response = await serverAPI.delete<FloodingsState>('/flooding', {
     data: { _id }
   })
 
@@ -133,13 +136,27 @@ const addComment = async (
   _id: string,
   message: string
 ): Promise<AddCommentAction> => {
-  const response = await serverAPI.post<FloodingsState>(`/add-comment`, {
+  const response = await serverAPI.post<FloodingsState>('/add-comment', {
     _id,
     message
   })
 
   return {
     type: ADD_COMMENT,
+    payload: response.data
+  }
+}
+
+const uploadFloodingsCSV = async (
+  data: UploadFloodingsCSVData
+): Promise<UploadFloodingsCSVAction> => {
+  const response = await serverAPI.post<FloodingsState>(
+    '/upload-floodings-csv',
+    data
+  )
+
+  return {
+    type: UPLOAD_FLOODINGS_CSV,
     payload: response.data
   }
 }
@@ -152,5 +169,6 @@ export {
   removeFlooding,
   addFavorite,
   removeFavorite,
-  addComment
+  addComment,
+  uploadFloodingsCSV
 }

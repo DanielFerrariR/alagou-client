@@ -6,7 +6,8 @@ export {
   updateFloodings,
   addFavorite,
   removeFavorite,
-  addComment
+  addComment,
+  uploadFloodingsCSV
 } from './actions'
 export { default as floodingsReducer } from './reducer'
 export * from './types'

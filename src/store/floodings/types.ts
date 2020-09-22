@@ -14,6 +14,7 @@ export type FloodingsState = {
   date: Date
   favorites: string[]
   isVerified: boolean
+  omitHours: boolean
   messages: {
     _id: string
     message: string
@@ -69,6 +70,17 @@ export type EditFloodingData = {
   severity: number
 }
 
+export type UploadFloodingsCSVData = {
+  title: string
+  longitude: string
+  latitude: string
+  severity: number
+  date: number
+  picture: string
+  omitHours: boolean
+  isVerified: boolean
+}[]
+
 export const FETCH_FLOODINGS = 'FETCH_FLOODINGS'
 
 export const CREATE_FLOODING = 'CREATE_FLOODING'
@@ -84,6 +96,8 @@ export const ADD_FAVORITE = 'ADD_FAVORITE'
 export const REMOVE_FAVORITE = 'REMOVE_FAVORITE'
 
 export const ADD_COMMENT = 'ADD_COMMENT'
+
+export const UPLOAD_FLOODINGS_CSV = 'UPLOAD_FLOODINGS_CSV'
 
 export interface FetchFloodingsAction {
   type: typeof FETCH_FLOODINGS
@@ -125,6 +139,11 @@ export interface AddCommentAction {
   payload: FloodingsState
 }
 
+export interface UploadFloodingsCSVAction {
+  type: typeof UPLOAD_FLOODINGS_CSV
+  payload: FloodingsState
+}
+
 export type FloodingActionsTypes =
   | CreateFloodingAction
   | EditFloodingAction
@@ -134,4 +153,5 @@ export type FloodingActionsTypes =
   | AddFavoriteAction
   | RemoveFavoriteAction
   | AddCommentAction
+  | UploadFloodingsCSVAction
   | DestroySessionActionTypes

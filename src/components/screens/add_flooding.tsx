@@ -54,10 +54,10 @@ const AddFlodding: React.FC = () => {
   const navigation = useNavigation()
   const [searchAddress, setSearchAddress] = useState('')
   const theme = useTheme()
-  const Geocoder = GeocoderLibrary as any
   const [loading, setLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const dispatch = useDispatch()
+  const Geocoder = GeocoderLibrary as any
 
   Geocoder.init(GOOGLE_MAPS_API_KEY)
 
