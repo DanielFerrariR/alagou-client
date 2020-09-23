@@ -127,6 +127,7 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
           title: !form.title && 'O título precisa ser preenchido.',
           searchAddress: !searchAddress && 'O endereço precisa ser preenchido.'
         })
+
         return
       }
 
@@ -156,6 +157,7 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
 
       if (error?.response?.data?.error) {
         setErrorMessage(error.response.data.error)
+        
         return
       }
 

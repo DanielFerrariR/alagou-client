@@ -156,6 +156,17 @@ const EditProfile: React.FC = () => {
           name: !form.name && 'O nome precisa ser preenchido.',
           email: !form.email && 'O e-mail precisa ser preenchido.'
         })
+
+        return
+      }
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+        setErrorMessage('E-mail inválido.')
+        setErrors({
+          ...errors,
+          email: 'E-mail inválido.'
+        })
+
         return
       }
 
@@ -182,6 +193,7 @@ const EditProfile: React.FC = () => {
             !form.confirmNewPassword &&
             'A confirmação da nova senha precisa ser preenchida.'
         })
+
         return
       }
 
@@ -193,6 +205,7 @@ const EditProfile: React.FC = () => {
           oldPassword:
             !form.oldPassword && 'A senha atual precisa ser preenchida.'
         })
+
         return
       }
 
@@ -205,6 +218,7 @@ const EditProfile: React.FC = () => {
           ...errors,
           confirmNewPassword: 'A confirmação de senha não é igual a senha.'
         })
+
         return
       }
 
@@ -248,6 +262,7 @@ const EditProfile: React.FC = () => {
             email: 'E-mail já cadastrado.'
           })
         }
+
         return
       }
 

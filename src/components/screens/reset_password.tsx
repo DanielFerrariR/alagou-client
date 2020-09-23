@@ -106,6 +106,7 @@ const ResetPassword: React.FC<Props> = ({ route }) => {
             !form.confirmNewPassword &&
             'A confirmaçao da nova senha precisa ser preenchida.'
         })
+
         return
       }
 
@@ -115,6 +116,7 @@ const ResetPassword: React.FC<Props> = ({ route }) => {
           ...errors,
           confirmNewPassword: 'A confirmação de senha não é igual a senha.'
         })
+
         return
       }
 
@@ -136,6 +138,7 @@ const ResetPassword: React.FC<Props> = ({ route }) => {
 
       if (error?.response?.data?.error) {
         setErrorMessage(error.response.data.error)
+        
         return
       }
 

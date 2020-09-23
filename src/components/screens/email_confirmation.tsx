@@ -61,6 +61,7 @@ const EmailConfirmation: React.FC<Props> = ({ route }) => {
 
         if (error?.response?.data?.error) {
           setMessage(error.response.data.error)
+          
           return
         }
 

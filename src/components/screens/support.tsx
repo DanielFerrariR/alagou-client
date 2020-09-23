@@ -57,6 +57,7 @@ const Support: React.FC = () => {
           ...errors,
           message: !form.message && 'A mensagem deve ser preenchida.'
         })
+
         return
       }
 
@@ -74,6 +75,7 @@ const Support: React.FC = () => {
 
       if (error?.response?.data?.error) {
         setErrorMessage(error.response.data.error)
+        
         return
       }
 

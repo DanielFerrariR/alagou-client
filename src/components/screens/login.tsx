@@ -79,6 +79,7 @@ const Login: React.FC = () => {
           email: !form.email && 'O e-mail precisa ser preenchido.',
           password: !form.password && 'A senha precisa ser preenchida.'
         })
+
         return
       }
 
@@ -102,6 +103,7 @@ const Login: React.FC = () => {
 
       if (error?.response?.data?.error) {
         setErrorMessage(error.response.data.error)
+        
         return
       }
 

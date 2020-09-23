@@ -117,6 +117,7 @@ const AddFlodding: React.FC = () => {
           title: !form.title && 'O título precisa ser preenchido.',
           searchAddress: !searchAddress && 'O endereço precisa ser preenchido.'
         })
+
         return
       }
 
@@ -145,6 +146,7 @@ const AddFlodding: React.FC = () => {
 
       if (error?.response?.data?.error) {
         setErrorMessage(error.response.data.error)
+        
         return
       }
 

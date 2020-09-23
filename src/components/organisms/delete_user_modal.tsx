@@ -41,6 +41,7 @@ const DeleteUserModal: React.FC<Props> = ({ open, setOpen }) => {
       if (!form.password) {
         setOpen(false)
         setErrorMessage('É necessário informar a senha para excluir a conta.')
+
         return
       }
 
@@ -58,6 +59,7 @@ const DeleteUserModal: React.FC<Props> = ({ open, setOpen }) => {
 
       if (error?.response?.data?.error) {
         setErrorMessage(error.response.data.error)
+        
         return
       }
 

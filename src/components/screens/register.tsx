@@ -131,6 +131,17 @@ const Register: React.FC = () => {
             !form.confirmPassword &&
             'A confirmação de senha precisa ser preenchida.'
         })
+
+        return
+      }
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+        setErrorMessage('E-mail inválido.')
+        setErrors({
+          ...errors,
+          email: 'E-mail inválido.'
+        })
+
         return
       }
 
@@ -140,6 +151,7 @@ const Register: React.FC = () => {
           ...errors,
           confirmPassword: 'A confirmação de senha não é igual a senha.'
         })
+
         return
       }
 
@@ -172,6 +184,7 @@ const Register: React.FC = () => {
             email: 'E-mail já cadastrado.'
           })
         }
+        
         return
       }
 
