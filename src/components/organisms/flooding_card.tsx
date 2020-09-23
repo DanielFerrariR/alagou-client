@@ -256,15 +256,13 @@ const FloadingList: React.FC<Props> = ({ data }) => {
                   icon={
                     data.isVerified
                       ? () => (
-                          <Image
-                            source={require('src/images/flooding_place_verified_small.png')}
+                          <MaterialCommunityIcons
+                            name="water"
+                            size={24}
+                            color={theme.colors.custom.verified}
                           />
                         )
-                      : () => (
-                          <Image
-                            source={require('src/images/flooding_place_small.png')}
-                          />
-                        )
+                      : 'water'
                   }
                   color="accent"
                   size={24}

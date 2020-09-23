@@ -4,7 +4,6 @@ import {
   Box,
   ActivityIndicator,
   Typography,
-  Image,
   Portal,
   FAB,
   Provider,
@@ -24,6 +23,8 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 import { Platform } from 'react-native'
 import Geolocation from 'react-native-geolocation-service'
 import GeocoderLibrary from 'react-native-geocoding'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { Navigation } from 'src/images'
 import ChooseMapTypeModal from './choose_map_type_modal'
 
 interface Props {
@@ -148,6 +149,8 @@ const Map: React.FC<Props> = ({ route }) => {
     }
   }, [])
 
+  console.log(location)
+
   return (
     <>
       <Box height={1}>
@@ -172,12 +175,16 @@ const Map: React.FC<Props> = ({ route }) => {
             }}
           >
             {location ? (
-              <Circle
-                center={{ ...location.coords }}
-                radius={30}
-                strokeColor={theme.colors.custom.userLocationStroke}
-                fillColor={theme.colors.custom.userLocationStroke}
-              />
+              <Marker
+                coordinate={{
+                  latitude: location.coords.latitude,
+                  longitude: location.coords.longitude
+                }}
+                pointerEvents="none"
+                rotation={location.coords.heading ? location.coords.heading : 0}
+              >
+                <Navigation />
+              </Marker>
             ) : null}
             {filteredFloodings
               ? filteredFloodings.map((each) => {
@@ -192,12 +199,15 @@ const Map: React.FC<Props> = ({ route }) => {
                         latitude: each.latitude,
                         longitude: each.longitude
                       }}
+                      zIndex={each.isVerified === true ? -1 : -2}
                     >
-                      <Image
-                        source={
+                      <MaterialCommunityIcons
+                        name="water"
+                        size={32}
+                        color={
                           each.isVerified
-                            ? require('src/images/flooding_place_verified_larger.png')
-                            : require('src/images/flooding_place_larger.png')
+                            ? theme.colors.custom.verified
+                            : theme.colors.accent
                         }
                       />
                       <Callout

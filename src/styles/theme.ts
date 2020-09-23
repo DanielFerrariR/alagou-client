@@ -6,8 +6,6 @@ declare global {
   namespace ReactNativePaper {
     interface ThemeColors {
       custom: {
-        userLocationStroke: string
-        userLocationFill: string
         black: string
         white: string
         star: string
@@ -17,7 +15,7 @@ declare global {
         danger: string
         moderate: string
         light: string
-        seal: string
+        verified: string
         shimmer: string
         information: string
         trash: string
@@ -33,8 +31,6 @@ declare global {
 const fontConfig = {}
 
 const custom = {
-  userLocationStroke: 'rgba(158, 158, 255, 1.0)',
-  userLocationFill: 'rgba(158,158, 255, 0.3)',
   black: '#000000',
   white: '#ffffff',
   star: '#D7CD38',
@@ -44,7 +40,7 @@ const custom = {
   danger: '#ff0000',
   moderate: '#eaf300',
   light: '#00c239',
-  seal: '#d6cc11',
+  verified: '#d6cc11',
   shimmer: 'rgba(0, 0, 0, 0.11)',
   information: '#349aef',
   trash: '#e8641b',
