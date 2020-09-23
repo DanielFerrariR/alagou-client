@@ -9,7 +9,8 @@ import {
   Button,
   Container,
   RadioButton,
-  IconButton
+  IconButton,
+  HelperText
 } from 'src/components/atoms'
 import ImagePicker from 'react-native-image-picker'
 import ImageView from 'react-native-image-viewing'
@@ -54,6 +55,11 @@ interface Props {
   }
 }
 
+interface Errors {
+  title: string | false
+  searchAddress: string | false
+}
+
 const EditFlooding: React.FC<Props> = ({ route }) => {
   const floodings = useSelector((state) => state.floodings)
   const flooding = floodings?.find((each) => each._id === route.params._id)
@@ -63,6 +69,10 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
     picture: (flooding && flooding.picture) || '',
     severity: String(flooding && flooding.severity) as Form['severity']
   })
+  const [errors, setErrors] = useState<Errors>({
+    title: false,
+    searchAddress: false
+  })
   const navigation = useNavigation()
   const [searchAddress, setSearchAddress] = useState(
     (flooding && flooding.address) || ''
@@ -70,7 +80,7 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
   const theme = useTheme()
   const Geocoder = GeocoderLibrary as any
   const [loading, setLoading] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState<string | string[]>('')
   const dispatch = useDispatch()
   const [results, setResults] = useState<string[] | null>(null)
 
@@ -78,6 +88,7 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
 
   const onChange = (name: keyof typeof form, text: string) => {
     setForm({ ...form, [name]: text })
+    setErrors({ ...errors, [name]: false })
   }
 
   const handleChoosePhoto = () => {
@@ -99,8 +110,23 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
         return
       }
 
-      if (!form.title || !searchAddress || !form.severity) {
-        setErrorMessage('Todos campos obrigatórios devem ser preenchidos.')
+      if (!form.title || !searchAddress) {
+        const errorsMessage = []
+
+        if (!form.title) {
+          errorsMessage.push('O título precisa ser preenchido.')
+        }
+
+        if (!searchAddress) {
+          errorsMessage.push('O endereço precisa ser prenchido.')
+        }
+
+        setErrorMessage(errorsMessage)
+        setErrors({
+          ...errors,
+          title: !form.title && 'O título precisa ser preenchido.',
+          searchAddress: !searchAddress && 'O endereço precisa ser preenchido.'
+        })
         return
       }
 
@@ -144,19 +170,33 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
         <TextInput
           label="Título *"
           placeholder="Digite o título"
-          mb={3}
+          mb={errors.title ? 0 : 3}
           onChangeText={(text) => onChange('title', text)}
           value={form.title}
         />
+        {errors.title ? (
+          <Box mb={2}>
+            <HelperText type="error" visible>
+              {errors.title}
+            </HelperText>
+          </Box>
+        ) : null}
         <AddressSearchInput
           searchAddress={searchAddress}
           setSearchAddress={setSearchAddress}
           results={results}
           setResults={setResults}
-          mb={3}
+          mb={errors.searchAddress ? 0 : 3}
           label="Endereço *"
           placeholder="Digite o endereço"
         />
+        {errors.searchAddress ? (
+          <Box mb={2}>
+            <HelperText type="error" visible>
+              {errors.searchAddress}
+            </HelperText>
+          </Box>
+        ) : null}
         <Box flexDirection="row" alignItems="center">
           <Typography fontWeight="bold">Classificação:</Typography>
           <IconButton

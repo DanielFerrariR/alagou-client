@@ -59,7 +59,7 @@ const theme = {
     accent: '#3DBABA',
     background: '#f5f5f5',
     surface: Colors.white,
-    error: '#b00020',
+    error: '#f44336',
     text: Colors.black,
     onBackground: '#000000',
     onSurface: '#000000',

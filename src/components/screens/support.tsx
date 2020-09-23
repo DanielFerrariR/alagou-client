@@ -1,18 +1,41 @@
 import React, { useState } from 'react'
-import { Container, Typography, TextInput, Button } from 'src/components/atoms'
+import {
+  Container,
+  Typography,
+  TextInput,
+  Button,
+  Box,
+  HelperText
+} from 'src/components/atoms'
 import { MessageModal, BackHeader } from 'src/components/molecules'
 import { serverAPI } from 'src/services'
 import { Keyboard } from 'react-native'
+import { useTheme } from 'react-native-paper'
 
 interface SupportAxiosResponse {
   message: string
 }
 
+interface Errors {
+  message: string | false
+}
+
 const Support: React.FC = () => {
-  const [errorMessage, setErrorMessage] = useState('')
-  const [successMessage, setSuccessMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState<string | string[]>('')
+  const [successMessage, setSuccessMessage] = useState<string | string[]>('')
   const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState('')
+  const [form, setForm] = useState({
+    message: ''
+  })
+  const [errors, setErrors] = useState<Errors>({
+    message: false
+  })
+  const theme = useTheme()
+
+  const onChange = (name: keyof typeof form, text: string) => {
+    setForm({ ...form, [name]: text })
+    setErrors({ ...errors, [name]: false })
+  }
 
   const onSubmit = async () => {
     try {
@@ -22,10 +45,25 @@ const Support: React.FC = () => {
         return
       }
 
+      if (!form.message) {
+        const errorsMessage = []
+
+        if (!form.message) {
+          errorsMessage.push('A mensagem deve ser preenchida.')
+        }
+
+        setErrorMessage(errorsMessage)
+        setErrors({
+          ...errors,
+          message: !form.message && 'A mensagem deve ser preenchida.'
+        })
+        return
+      }
+
       setLoading(true)
 
       const response = await serverAPI.post<SupportAxiosResponse>('/support', {
-        message
+        message: form.message
       })
 
       setSuccessMessage(response.data.message)
@@ -57,11 +95,23 @@ const Support: React.FC = () => {
           multiline
           maxLength={5000}
           numberOfLines={5}
-          mb={3}
-          value={message}
-          onChangeText={(text) => setMessage(text)}
+          mb={errors.message ? 0 : 3}
+          value={form.message}
+          onChangeText={(text) => onChange('message', text)}
         />
-        <Button onPress={onSubmit} loading={loading}>
+        {errors.message ? (
+          <Box mb={2}>
+            <HelperText type="error" visible>
+              {errors.message}
+            </HelperText>
+          </Box>
+        ) : null}
+        <Button
+          onPress={onSubmit}
+          loading={loading}
+          color="accent"
+          labelStyle={{ color: theme.colors.custom.white }}
+        >
           Enviar
         </Button>
       </Container>

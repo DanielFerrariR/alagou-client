@@ -51,6 +51,7 @@ type MapType =
   | 'mutedStandard'
 
 const Map: React.FC<Props> = ({ route }) => {
+  const userSession = useSelector((state) => state.user)
   const theme = useTheme()
   const navigation = useNavigation()
   const [openChooseMapTypeModal, setOpenChooseMapTypeModal] = useState(false)
@@ -149,6 +150,42 @@ const Map: React.FC<Props> = ({ route }) => {
     }
   }, [])
 
+  const getActions = () => {
+    let actions = []
+
+    if (userSession) {
+      actions.push({
+        icon: 'plus',
+        label: 'Adicionar alagamento',
+        onPress: () => navigation.navigate('AddFlooding')
+      })
+    }
+
+    actions = actions.concat([
+      {
+        icon: 'calendar-range',
+        label: 'Data',
+        onPress: () => setOpenDatePickerModal(true)
+      },
+      {
+        icon: 'buffer',
+        label: 'Tipo de mapa',
+        onPress: () => setOpenChooseMapTypeModal(true)
+      },
+      {
+        icon: 'crosshairs',
+        label: 'Minha Localização',
+        onPress: () => {
+          if (location) {
+            setRegion({ ...location.coords })
+          }
+        }
+      }
+    ])
+
+    return actions
+  }
+
   return (
     <>
       <Box height={1}>
@@ -172,14 +209,14 @@ const Map: React.FC<Props> = ({ route }) => {
               ...region
             }}
           >
-            {location ? (
+            {location && location.coords.heading ? (
               <Marker
                 coordinate={{
                   latitude: location.coords.latitude,
                   longitude: location.coords.longitude
                 }}
                 pointerEvents="none"
-                rotation={location.coords.heading ? location.coords.heading : 0}
+                rotation={location.coords.heading}
               >
                 <Navigation />
               </Marker>
@@ -268,32 +305,7 @@ const Map: React.FC<Props> = ({ route }) => {
             open={openFab}
             icon={openFab ? 'close' : 'plus'}
             color={theme.colors.custom.white}
-            actions={[
-              {
-                icon: 'plus',
-                label: 'Adicionar alagamento',
-                onPress: () => navigation.navigate('AddFlooding')
-              },
-              {
-                icon: 'calendar-range',
-                label: 'Data',
-                onPress: () => setOpenDatePickerModal(true)
-              },
-              {
-                icon: 'buffer',
-                label: 'Tipo de mapa',
-                onPress: () => setOpenChooseMapTypeModal(true)
-              },
-              {
-                icon: 'crosshairs',
-                label: 'Minha Localização',
-                onPress: () => {
-                  if (location) {
-                    setRegion({ ...location.coords })
-                  }
-                }
-              }
-            ]}
+            actions={getActions()}
             onStateChange={({ open }) => setOpenFab(open)}
           />
         </Portal>

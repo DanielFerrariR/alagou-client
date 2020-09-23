@@ -4,7 +4,9 @@ import {
   StatusBar,
   Appbar,
   TextInput,
-  Button
+  Button,
+  Box,
+  HelperText
 } from 'src/components/atoms'
 import { MessageModal } from 'src/components/molecules'
 import { useTheme, TextInput as OldTextInput } from 'react-native-paper'
@@ -36,12 +38,18 @@ interface ConfirmResetPasswordAxiosResponse {
   message: string
 }
 
+interface Errors {
+  oldPassword: string | false
+  newPassword: string | false
+  confirmNewPassword: string | false
+}
+
 const ResetPassword: React.FC<Props> = ({ route }) => {
   const userSession = useSelector((state) => state.user)
   const navigation = useNavigation()
   const theme = useTheme()
-  const [errorMessage, setErrorMessage] = useState('')
-  const [successMessage, setSuccessMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState<string | string[]>('')
+  const [successMessage, setSuccessMessage] = useState<string | string[]>('')
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState<Form>({
     oldPassword: '',
@@ -51,9 +59,15 @@ const ResetPassword: React.FC<Props> = ({ route }) => {
     showNewPassword: false,
     showConfirmNewPassword: false
   })
+  const [errors, setErrors] = useState<Errors>({
+    oldPassword: false,
+    newPassword: false,
+    confirmNewPassword: false
+  })
 
   const onChange = (name: keyof typeof form, text: string) => {
     setForm({ ...form, [name]: text })
+    setErrors({ ...errors, [name]: false })
   }
 
   const onSubmit = async () => {
@@ -65,12 +79,42 @@ const ResetPassword: React.FC<Props> = ({ route }) => {
       }
 
       if (!form.oldPassword || !form.newPassword || !form.confirmNewPassword) {
-        setErrorMessage('Todos campos obrigatórios devem ser preenchidos.')
+        const errorsMessage = []
+
+        if (!form.oldPassword) {
+          errorsMessage.push('A senha atual precisa ser preenchida.')
+        }
+
+        if (!form.newPassword) {
+          errorsMessage.push('A nova senha precisa ser preenchida.')
+        }
+
+        if (!form.confirmNewPassword) {
+          errorsMessage.push(
+            'A confirmaçao da nova senha precisa ser preenchida.'
+          )
+        }
+
+        setErrorMessage(errorsMessage)
+        setErrors({
+          ...errors,
+          oldPassword:
+            !form.oldPassword && 'A senha atual precisa ser preenchida.',
+          newPassword:
+            !form.newPassword && 'A nova senha precisa ser preenchida.',
+          confirmNewPassword:
+            !form.confirmNewPassword &&
+            'A confirmaçao da nova senha precisa ser preenchida.'
+        })
         return
       }
 
       if (form.newPassword !== form.confirmNewPassword) {
         setErrorMessage('A confirmação de senha não é igual a senha.')
+        setErrors({
+          ...errors,
+          confirmNewPassword: 'A confirmação de senha não é igual a senha.'
+        })
         return
       }
 
@@ -117,7 +161,7 @@ const ResetPassword: React.FC<Props> = ({ route }) => {
         <TextInput
           label="Senha Atual"
           placeholder="Digite sua senha atual"
-          mb={3}
+          mb={errors.oldPassword ? 0 : 3}
           onChangeText={(text) => onChange('oldPassword', text)}
           value={form.oldPassword}
           secureTextEntry={!form.showOldPassword}
@@ -131,10 +175,17 @@ const ResetPassword: React.FC<Props> = ({ route }) => {
             />
           }
         />
+        {errors.oldPassword ? (
+          <Box mb={2}>
+            <HelperText type="error" visible>
+              {errors.oldPassword}
+            </HelperText>
+          </Box>
+        ) : null}
         <TextInput
           label="Nova senha"
           placeholder="Digite sua nova senha"
-          mb={3}
+          mb={errors.newPassword ? 0 : 3}
           onChangeText={(text) => onChange('newPassword', text)}
           value={form.newPassword}
           secureTextEntry={!form.showNewPassword}
@@ -148,10 +199,17 @@ const ResetPassword: React.FC<Props> = ({ route }) => {
             />
           }
         />
+        {errors.newPassword ? (
+          <Box mb={2}>
+            <HelperText type="error" visible>
+              {errors.newPassword}
+            </HelperText>
+          </Box>
+        ) : null}
         <TextInput
           label="Confirmação da nova senha"
           placeholder="Digite a confirmação da nova senha"
-          mb={3}
+          mb={errors.confirmNewPassword ? 0 : 3}
           onChangeText={(text) => onChange('confirmNewPassword', text)}
           value={form.confirmNewPassword}
           secureTextEntry={!form.showConfirmNewPassword}
@@ -168,6 +226,13 @@ const ResetPassword: React.FC<Props> = ({ route }) => {
             />
           }
         />
+        {errors.confirmNewPassword ? (
+          <Box mb={2}>
+            <HelperText type="error" visible>
+              {errors.confirmNewPassword}
+            </HelperText>
+          </Box>
+        ) : null}
         <Button
           onPress={onSubmit}
           loading={loading}

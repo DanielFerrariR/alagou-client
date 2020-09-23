@@ -172,4 +172,4 @@ SchemeName is defined in AndroidManifest.xml
 Route is defined in routes
 Param is defined in routes
 
-Example: npx uri-scheme open alagou://ForgotPassword/123 --android
+Example: npx uri-scheme open alagou://ResetPassword/123 --android

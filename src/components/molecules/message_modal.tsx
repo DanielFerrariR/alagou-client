@@ -4,8 +4,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { useTheme } from 'react-native-paper'
 
 interface Props {
-  message: string
-  setMessage: Dispatch<SetStateAction<string>>
+  message: string | string[]
+  setMessage: Dispatch<SetStateAction<string | string[]>>
   error?: boolean
   success?: boolean
   warning?: boolean
@@ -51,10 +51,28 @@ const MessageModal: React.FC<Props> = ({
               />
             </Box>
           )}
-          <Typography textAlign="center" mb={3}>
-            {message}
-          </Typography>
-          <Button onPress={() => setMessage('')} width={1}>
+          {Array.isArray(message) ? (
+            message.map((each, index) => (
+              <Typography
+                mb={3}
+                textAlign="center"
+                key={index}
+                data-testid={`message-${index}`}
+              >
+                {each}
+              </Typography>
+            ))
+          ) : (
+            <Typography mb={3} textAlign="center">
+              {message}
+            </Typography>
+          )}
+          <Button
+            onPress={() => setMessage('')}
+            width={1}
+            color="accent"
+            labelStyle={{ color: theme.colors.custom.white }}
+          >
             Ok
           </Button>
         </Box>

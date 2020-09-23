@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   Container,
   TextInput,
-  StatusBar
+  StatusBar,
+  HelperText
 } from 'src/components/atoms'
 import { MessageModal } from 'src/components/molecules'
 import { useDispatch, useSelector } from 'src/store'
@@ -18,6 +19,11 @@ import { Logo, Wave } from 'src/images'
 import { Keyboard } from 'react-native'
 import { useIsKeyboardShown, useWindowDimensions } from 'src/hooks'
 
+interface Errors {
+  email: string | false
+  password: string | false
+}
+
 const Login: React.FC = () => {
   const userSession = useSelector((state) => state.user)
   const theme = useTheme()
@@ -26,8 +32,12 @@ const Login: React.FC = () => {
     password: '',
     showPassword: false
   })
+  const [errors, setErrors] = useState<Errors>({
+    email: false,
+    password: false
+  })
   const dispatch = useDispatch()
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState<string | string[]>('')
   const navigation = useNavigation()
   const [loading, setLoading] = useState(false)
   const isKeyboardShown = useIsKeyboardShown()
@@ -41,6 +51,7 @@ const Login: React.FC = () => {
 
   const onChange = (name: keyof typeof form, text: string) => {
     setForm({ ...form, [name]: text })
+    setErrors({ ...errors, [name]: false })
   }
 
   const onSubmit = async () => {
@@ -52,7 +63,22 @@ const Login: React.FC = () => {
       }
 
       if (!form.email || !form.password) {
-        setErrorMessage('Todos campos obrigatórios devem ser preenchidos.')
+        const errorsMessage = []
+
+        if (!form.email) {
+          errorsMessage.push('O e-mail precisa ser prenchido.')
+        }
+
+        if (!form.password) {
+          errorsMessage.push('A senha precisa ser preenchida.')
+        }
+
+        setErrorMessage(errorsMessage)
+        setErrors({
+          ...errors,
+          email: !form.email && 'O e-mail precisa ser preenchido.',
+          password: !form.password && 'A senha precisa ser preenchida.'
+        })
         return
       }
 
@@ -93,7 +119,7 @@ const Login: React.FC = () => {
       />
       <Container bgColor="custom.white">
         <Box
-          height={isKeyboardShown ? 0 : 0.4}
+          height={isKeyboardShown ? 0 : 0.35}
           alignItems="center"
           justifyContent="center"
         >
@@ -113,10 +139,17 @@ const Login: React.FC = () => {
             mode="flat"
             label="Email *"
             placeholder="Digite seu e-mail"
-            mb={3}
+            mb={errors.email ? 0 : 3}
             onChangeText={(text) => onChange('email', text)}
             value={form.email}
           />
+          {errors.email ? (
+            <Box mb={2}>
+              <HelperText type="error" visible>
+                {errors.email}
+              </HelperText>
+            </Box>
+          ) : null}
           <TextInput
             mode="flat"
             label="Password *"
@@ -124,7 +157,7 @@ const Login: React.FC = () => {
             onChangeText={(text) => onChange('password', text)}
             value={form.password}
             secureTextEntry={!form.showPassword}
-            mb={3}
+            mb={errors.password ? 0 : 3}
             right={
               <OldTextInput.Icon
                 color={theme.colors.placeholder}
@@ -135,6 +168,13 @@ const Login: React.FC = () => {
               />
             }
           />
+          {errors.password ? (
+            <Box mb={2}>
+              <HelperText type="error" visible>
+                {errors.password}
+              </HelperText>
+            </Box>
+          ) : null}
           <Button
             onPress={onSubmit}
             color="custom.white"

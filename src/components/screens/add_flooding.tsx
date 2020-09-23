@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import {
   Typography,
@@ -9,7 +9,8 @@ import {
   Button,
   Container,
   RadioButton,
-  IconButton
+  IconButton,
+  HelperText
 } from 'src/components/atoms'
 import ImagePicker from 'react-native-image-picker'
 import ImageView from 'react-native-image-viewing'
@@ -44,6 +45,11 @@ interface Form {
   severity: '1' | '2' | '3'
 }
 
+interface Errors {
+  title: string | false
+  searchAddress: string | false
+}
+
 const AddFlodding: React.FC = () => {
   const [openImage, setOpenImage] = useState(false)
   const [form, setForm] = useState<Form>({
@@ -51,19 +57,28 @@ const AddFlodding: React.FC = () => {
     picture: '',
     severity: '1'
   })
+  const [errors, setErrors] = useState<Errors>({
+    title: false,
+    searchAddress: false
+  })
   const navigation = useNavigation()
   const [searchAddress, setSearchAddress] = useState('')
   const [results, setResults] = useState<string[] | null>(null)
   const theme = useTheme()
   const [loading, setLoading] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState<string | string[]>('')
   const dispatch = useDispatch()
   const Geocoder = GeocoderLibrary as any
 
   Geocoder.init(GOOGLE_MAPS_API_KEY)
 
+  useEffect(() => {
+    setErrors({ ...errors, searchAddress: false })
+  }, [searchAddress])
+
   const onChange = (name: keyof typeof form, text: string) => {
     setForm({ ...form, [name]: text })
+    setErrors({ ...errors, [name]: false })
   }
 
   const handleChoosePhoto = () => {
@@ -85,8 +100,23 @@ const AddFlodding: React.FC = () => {
         return
       }
 
-      if (!form.title || !searchAddress || !form.severity) {
-        setErrorMessage('Todos campos obrigatórios devem ser preenchidos.')
+      if (!form.title || !searchAddress) {
+        const errorsMessage = []
+
+        if (!form.title) {
+          errorsMessage.push('O título precisa ser preenchido.')
+        }
+
+        if (!searchAddress) {
+          errorsMessage.push('O endereço precisa ser prenchido.')
+        }
+
+        setErrorMessage(errorsMessage)
+        setErrors({
+          ...errors,
+          title: !form.title && 'O título precisa ser preenchido.',
+          searchAddress: !searchAddress && 'O endereço precisa ser preenchido.'
+        })
         return
       }
 
@@ -129,19 +159,33 @@ const AddFlodding: React.FC = () => {
         <TextInput
           label="Título *"
           placeholder="Digite o título"
-          mb={3}
+          mb={errors.title ? 0 : 3}
           onChangeText={(text) => onChange('title', text)}
           value={form.title}
         />
+        {errors.title ? (
+          <Box mb={2}>
+            <HelperText type="error" visible>
+              {errors.title}
+            </HelperText>
+          </Box>
+        ) : null}
         <AddressSearchInput
           searchAddress={searchAddress}
           setSearchAddress={setSearchAddress}
           results={results}
           setResults={setResults}
-          mb={3}
+          mb={errors.searchAddress ? 0 : 3}
           label="Endereço *"
           placeholder="Digite o endereço"
         />
+        {errors.searchAddress ? (
+          <Box mb={2}>
+            <HelperText type="error" visible>
+              {errors.searchAddress}
+            </HelperText>
+          </Box>
+        ) : null}
         <Box flexDirection="row" alignItems="center">
           <Typography fontWeight="bold">Classificação:</Typography>
           <IconButton

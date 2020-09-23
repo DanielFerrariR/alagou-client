@@ -4,7 +4,9 @@ import {
   Typography,
   StatusBar,
   TextInput,
-  Button
+  Button,
+  Box,
+  HelperText
 } from 'src/components/atoms'
 import { MessageModal, BackHeader } from 'src/components/molecules'
 import { useTheme } from 'react-native-paper'
@@ -15,12 +17,26 @@ interface ResetPasswordAxiosResponse {
   message: string
 }
 
+interface Errors {
+  email: string | false
+}
+
 const ForgotPassword: React.FC = () => {
   const theme = useTheme()
-  const [errorMessage, setErrorMessage] = useState('')
-  const [successMessage, setSuccessMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState<string | string[]>('')
+  const [successMessage, setSuccessMessage] = useState<string | string[]>('')
   const [loading, setLoading] = useState(false)
-  const [email, setEmail] = useState('')
+  const [form, setForm] = useState({
+    email: ''
+  })
+  const [errors, setErrors] = useState<Errors>({
+    email: false
+  })
+
+  const onChange = (name: keyof typeof form, text: string) => {
+    setForm({ ...form, [name]: text })
+    setErrors({ ...errors, [name]: false })
+  }
 
   const onSubmit = async () => {
     try {
@@ -30,12 +46,26 @@ const ForgotPassword: React.FC = () => {
         return
       }
 
+      if (!form.email) {
+        const errorsMessage = []
+
+        if (!form.email) {
+          errorsMessage.push('O e-mail precisa ser prenchido.')
+        }
+
+        setErrorMessage(errorsMessage)
+        setErrors({
+          email: !form.email && 'O e-mail precisa ser preenchido.'
+        })
+        return
+      }
+
       setLoading(true)
 
       const response = await serverAPI.post<ResetPasswordAxiosResponse>(
         '/reset-password',
         {
-          email
+          email: form.email
         }
       )
 
@@ -64,12 +94,19 @@ const ForgotPassword: React.FC = () => {
           redefinição de senha.
         </Typography>
         <TextInput
-          mb={3}
+          mb={errors.email ? 0 : 3}
           label="E-mail"
           placeholder="Digite o seu e-mail"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
+          value={form.email}
+          onChangeText={(text) => onChange('email', text)}
         />
+        {errors.email ? (
+          <Box mb={2}>
+            <HelperText type="error" visible>
+              {errors.email}
+            </HelperText>
+          </Box>
+        ) : null}
         <Button
           loading={loading}
           color="accent"

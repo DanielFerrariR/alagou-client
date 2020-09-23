@@ -51,6 +51,14 @@ interface ResentEmailAxiosResponse {
   message: string
 }
 
+interface Errors {
+  name: string | false
+  email: string | false
+  oldPassword: string | false
+  newPassword: string | false
+  confirmNewPassword: string | false
+}
+
 const EditProfile: React.FC = () => {
   const userSession = useSelector((state) => state.user)
   const [openpicture, setOpenpicture] = useState(false)
@@ -65,8 +73,15 @@ const EditProfile: React.FC = () => {
     showNewPassword: false,
     showConfirmNewPassword: false
   })
-  const [errorMessage, setErrorMessage] = useState('')
-  const [successMessage, setSuccessMessage] = useState('')
+  const [errors, setErrors] = useState<Errors>({
+    name: false,
+    email: false,
+    oldPassword: false,
+    newPassword: false,
+    confirmNewPassword: false
+  })
+  const [errorMessage, setErrorMessage] = useState<string | string[]>('')
+  const [successMessage, setSuccessMessage] = useState<string | string[]>('')
   const [loading, setLoading] = useState(false)
   const [loadingResentEmail, setLoadingResentEmail] = useState(false)
   const dispatch = useDispatch()
@@ -74,6 +89,7 @@ const EditProfile: React.FC = () => {
 
   const onChange = (name: keyof typeof form, text: string) => {
     setForm({ ...form, [name]: text })
+    setErrors({ ...errors, [name]: false })
   }
 
   const handleChoosePhoto = () => {
@@ -124,19 +140,71 @@ const EditProfile: React.FC = () => {
       }
 
       if (!form.name || !form.email) {
-        setErrorMessage('Todos campos obrigatórios devem ser preenchidos.')
+        const errorsMessage = []
+
+        if (!form.name) {
+          errorsMessage.push('O nome precisa ser preenchido.')
+        }
+
+        if (!form.email) {
+          errorsMessage.push('O e-mail precisa ser prenchido.')
+        }
+
+        setErrorMessage(errorsMessage)
+        setErrors({
+          ...errors,
+          name: !form.name && 'O nome precisa ser preenchido.',
+          email: !form.email && 'O e-mail precisa ser preenchido.'
+        })
         return
       }
 
-      if (form.oldPassword && !form.newPassword && !form.confirmNewPassword) {
-        setErrorMessage(
-          'A nova senha e sua confirmação são obrigatórias ao informar a senha atual.'
-        )
+      if (form.oldPassword && (!form.newPassword || !form.confirmNewPassword)) {
+        const errorsMessage = []
+
+        if (!form.newPassword) {
+          errorsMessage.push('A nova senha precisa ser preenchida.')
+        }
+
+        if (!form.confirmNewPassword) {
+          errorsMessage.push(
+            'A confirmação da nova senha precisa ser preenchida.'
+          )
+        }
+
+        setErrorMessage(errorsMessage)
+
+        setErrors({
+          ...errors,
+          newPassword:
+            !form.newPassword && 'A nova senha precisa ser preenchida.',
+          confirmNewPassword:
+            !form.confirmNewPassword &&
+            'A confirmação da nova senha precisa ser preenchida.'
+        })
         return
       }
 
-      if (form.newPassword && form.newPassword !== form.confirmNewPassword) {
+      if (!form.oldPassword && (form.newPassword || form.confirmNewPassword)) {
+        setErrorMessage('A senha atual precisa ser preenchida.')
+
+        setErrors({
+          ...errors,
+          oldPassword:
+            !form.oldPassword && 'A senha atual precisa ser preenchida.'
+        })
+        return
+      }
+
+      if (
+        (form.newPassword || form.showConfirmNewPassword) &&
+        form.newPassword !== form.confirmNewPassword
+      ) {
         setErrorMessage('A confirmação de senha não é igual a senha.')
+        setErrors({
+          ...errors,
+          confirmNewPassword: 'A confirmação de senha não é igual a senha.'
+        })
         return
       }
 
@@ -166,6 +234,20 @@ const EditProfile: React.FC = () => {
 
       if (error?.response?.data?.error) {
         setErrorMessage(error.response.data.error)
+
+        if (error.response.data.error === 'Senha atual inválida.') {
+          setErrors({
+            ...errors,
+            oldPassword: 'Senha atual inválida'
+          })
+        }
+
+        if (error.response.data.error === 'E-mail já cadastrado.') {
+          setErrors({
+            ...errors,
+            email: 'E-mail já cadastrado.'
+          })
+        }
         return
       }
 
@@ -218,7 +300,7 @@ const EditProfile: React.FC = () => {
                   />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleChoosePhoto}>
-                  <Typography variant="h3" color="primary" fontWeight="bold">
+                  <Typography variant="h3" color="accent" fontWeight="bold">
                     Adicionar Foto
                   </Typography>
                 </TouchableOpacity>
@@ -227,19 +309,33 @@ const EditProfile: React.FC = () => {
                 <TextInput
                   label="Nome *"
                   placeholder="Digite seu nome"
-                  mb={3}
+                  mb={errors.name ? 0 : 3}
                   onChangeText={(text) => onChange('name', text)}
                   value={form.name}
                 />
+                {errors.name ? (
+                  <Box mb={2}>
+                    <HelperText type="error" visible>
+                      {errors.name}
+                    </HelperText>
+                  </Box>
+                ) : null}
                 <TextInput
                   label="Email *"
                   placeholder="Digite seu e-mail"
-                  mb={!userSession.isEmailConfirmed ? 0 : 3}
+                  mb={!userSession.isEmailConfirmed || errors.name ? 0 : 3}
                   onChangeText={(text) => onChange('email', text)}
                   value={form.email}
                 />
+                {errors.email ? (
+                  <Box mb={!userSession.isEmailConfirmed ? 0 : 2}>
+                    <HelperText type="error" visible>
+                      {errors.email}
+                    </HelperText>
+                  </Box>
+                ) : null}
                 {!userSession.isEmailConfirmed ? (
-                  <TouchableOpacity onPress={sendEmail} mb={1}>
+                  <TouchableOpacity onPress={sendEmail} mb={2}>
                     <Box flexDirection="row" alignItems="center">
                       <HelperText type="info" visible>
                         Email não verificado. Pressione aqui para enviar
@@ -254,7 +350,7 @@ const EditProfile: React.FC = () => {
                 <TextInput
                   label="Senha Atual"
                   placeholder="Digite sua senha atual"
-                  mb={3}
+                  mb={errors.oldPassword ? 0 : 3}
                   onChangeText={(text) => onChange('oldPassword', text)}
                   value={form.oldPassword}
                   secureTextEntry={!form.showOldPassword}
@@ -271,10 +367,17 @@ const EditProfile: React.FC = () => {
                     />
                   }
                 />
+                {errors.oldPassword ? (
+                  <Box mb={2}>
+                    <HelperText type="error" visible>
+                      {errors.oldPassword}
+                    </HelperText>
+                  </Box>
+                ) : null}
                 <TextInput
                   label="Nova senha"
                   placeholder="Digite sua nova senha"
-                  mb={3}
+                  mb={errors.newPassword ? 0 : 3}
                   onChangeText={(text) => onChange('newPassword', text)}
                   value={form.newPassword}
                   secureTextEntry={!form.showNewPassword}
@@ -291,10 +394,17 @@ const EditProfile: React.FC = () => {
                     />
                   }
                 />
+                {errors.newPassword ? (
+                  <Box mb={2}>
+                    <HelperText type="error" visible>
+                      {errors.newPassword}
+                    </HelperText>
+                  </Box>
+                ) : null}
                 <TextInput
                   label="Confirmação da nova senha"
                   placeholder="Digite a confirmação da nova senha"
-                  mb={3}
+                  mb={errors.confirmNewPassword ? 0 : 3}
                   onChangeText={(text) => onChange('confirmNewPassword', text)}
                   value={form.confirmNewPassword}
                   secureTextEntry={!form.showConfirmNewPassword}
@@ -311,6 +421,13 @@ const EditProfile: React.FC = () => {
                     />
                   }
                 />
+                {errors.confirmNewPassword ? (
+                  <Box mb={2}>
+                    <HelperText type="error" visible>
+                      {errors.confirmNewPassword}
+                    </HelperText>
+                  </Box>
+                ) : null}
                 <Button
                   onPress={onSubmit}
                   loading={loading}

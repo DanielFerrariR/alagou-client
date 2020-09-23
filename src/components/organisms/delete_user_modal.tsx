@@ -24,9 +24,13 @@ const DeleteUserModal: React.FC<Props> = ({ open, setOpen }) => {
     password: ''
   })
   const theme = useTheme()
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState<string | string[]>('')
   const [loading, setLoading] = useState(false)
   const useKeyboardShown = useIsKeyboardShown()
+
+  const onChange = (name: keyof typeof form, text: string) => {
+    setForm({ ...form, [name]: text })
+  }
 
   const submit = async () => {
     try {
@@ -36,7 +40,7 @@ const DeleteUserModal: React.FC<Props> = ({ open, setOpen }) => {
 
       if (!form.password) {
         setOpen(false)
-        setErrorMessage('A senha é obrigatória.')
+        setErrorMessage('É necessário informar a senha para excluir a conta.')
         return
       }
 
@@ -59,10 +63,6 @@ const DeleteUserModal: React.FC<Props> = ({ open, setOpen }) => {
 
       setErrorMessage('Falha em conectar.')
     }
-  }
-
-  const onChange = (name: keyof typeof form, text: string) => {
-    setForm({ ...form, [name]: text })
   }
 
   return (
@@ -101,12 +101,24 @@ const DeleteUserModal: React.FC<Props> = ({ open, setOpen }) => {
               <Button
                 mode="outlined"
                 onPress={() => setOpen(false)}
-                style={{ borderWidth: 1, flex: 1 }}
+                style={{
+                  borderWidth: 1,
+                  borderColor: theme.colors.accent,
+                  flex: 1
+                }}
                 mr={2}
+                color="accent"
+                labelStyle={{ color: theme.colors.accent }}
               >
                 Cancelar
               </Button>
-              <Button onPress={submit} loading={loading} style={{ flex: 1 }}>
+              <Button
+                onPress={submit}
+                loading={loading}
+                style={{ flex: 1 }}
+                color="accent"
+                labelStyle={{ color: theme.colors.custom.white }}
+              >
                 Excluir
               </Button>
             </Box>
