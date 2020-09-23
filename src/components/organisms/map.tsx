@@ -149,8 +149,6 @@ const Map: React.FC<Props> = ({ route }) => {
     }
   }, [])
 
-  console.log(location)
-
   return (
     <>
       <Box height={1}>

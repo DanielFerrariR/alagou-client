@@ -100,7 +100,7 @@ const setUserConfirmedEmail = (
 ): SetUserConfirmedEmailAction => {
   return {
     type: SET_USER_CONFIRMED_EMAIL,
-    payload: { userSession, isEmailConfirmed: true }
+    payload: { ...userSession, isEmailConfirmed: true }
   }
 }
 

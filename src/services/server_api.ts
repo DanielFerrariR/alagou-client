@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosError } from 'axios'
+import axios, { AxiosResponse, AxiosRequestConfig, AxiosError } from 'axios'
 import { API_ADDRESS } from '@env'
 import AsyncStorage from '@react-native-community/async-storage'
 import { eventEmitterInstance } from 'src/utils'
@@ -15,6 +15,7 @@ const errorHandler = (error: AxiosError) => {
       eventEmitterInstance.emit('logout', { detail: 'Não autorizado.' })
     }
   }
+
   return Promise.reject(error)
 }
 
@@ -30,9 +31,14 @@ const successHandler = async (config: AxiosRequestConfig) => {
   return config
 }
 
+serverAPI.interceptors.response.use(
+  (response: AxiosResponse) => response,
+  (error) => errorHandler(error)
+)
+
 serverAPI.interceptors.request.use(
   (response) => successHandler(response),
-  (error) => errorHandler(error)
+  (error: AxiosError) => Promise.reject(error)
 )
 
 export default serverAPI

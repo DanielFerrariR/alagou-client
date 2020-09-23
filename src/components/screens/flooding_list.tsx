@@ -87,6 +87,8 @@ const FloadingList: React.FC<Props> = ({ route }) => {
     setIsRouteFiltered(false)
   }
 
+  console.log(floodings)
+
   return (
     <>
       <Header />
