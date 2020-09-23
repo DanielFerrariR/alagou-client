@@ -6,6 +6,7 @@ import * as React from 'react'
 import { View, StyleSheet, TextStyle, ViewStyle, StyleProp } from 'react-native'
 import { Text, TouchableRipple, withTheme } from 'react-native-paper'
 import Icon, { IconSource } from 'react-native-paper/src/components/Icon'
+import ActivityIndicator from './activity_indicator'
 
 type Props = {
   /**
@@ -36,6 +37,7 @@ type Props = {
    * TestID used for testing purposes
    */
   testID?: string
+  loading?: boolean
 }
 
 /**
@@ -92,6 +94,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 8
   },
   content: {
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
     minWidth: minWidth - 16,
     maxWidth: maxWidth - 16
@@ -115,7 +119,8 @@ class MenuItem extends React.Component<Props> {
       testID,
       titleStyle,
       contentStyle,
-      contentStyleWithIcon
+      contentStyleWithIcon,
+      loading
     } = this.props
 
     const disabledColor = color(
@@ -162,6 +167,9 @@ class MenuItem extends React.Component<Props> {
             >
               {title}
             </Text>
+            {loading ? (
+              <ActivityIndicator animating size={24} color="accent" ml={1} />
+            ) : null}
           </View>
         </View>
       </TouchableRipple>

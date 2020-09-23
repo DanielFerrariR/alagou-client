@@ -1,7 +1,13 @@
-import React from 'react'
-import { Container, MenuItem, Divider } from 'src/components/atoms'
+import React, { useState } from 'react'
+import {
+  Container,
+  MenuItem,
+  Divider,
+  ActivityIndicator,
+  Box
+} from 'src/components/atoms'
 import { Water, Alert } from 'src/images'
-import { BackHeader } from 'src/components/molecules'
+import { BackHeader, MessageModal } from 'src/components/molecules'
 import { useWindowDimensions } from 'src/hooks'
 import DocumentPicker from 'react-native-document-picker'
 import Papa from 'papaparse'
@@ -27,11 +33,19 @@ const Administration: React.FC = () => {
   const dimensions = useWindowDimensions()
   const dispatch = useDispatch()
   const Geocoder = GeocoderLibrary as any
+  const [loading, setLoading] = useState(false)
+  const [successMessage, setSuccessMessage] = useState('')
 
   Geocoder.init(GOOGLE_MAPS_API_KEY)
 
   const pickCSV = async () => {
     try {
+      if (loading) {
+        return
+      }
+
+      setLoading(true)
+
       const response = await DocumentPicker.pick({
         type: [DocumentPicker.types.csv]
       })
@@ -91,13 +105,17 @@ const Administration: React.FC = () => {
           newFloodings = await Promise.all(newFloodings)
 
           dispatch(await uploadFloodingsCSV(newFloodings))
+
+          setLoading(false)
+          setSuccessMessage('Alagamentos importados com sucesso!')
         }
       })
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        console.log(err)
+    } catch (error) {
+      setLoading(false)
+      if (DocumentPicker.isCancel(error)) {
+        console.log(error)
       } else {
-        throw err
+        throw error
       }
     }
   }
@@ -106,16 +124,19 @@ const Administration: React.FC = () => {
     <>
       <BackHeader title="Administração" />
       <Container>
-        <MenuItem
-          icon={() => <Water />}
-          onPress={() => pickCSV()}
-          title="Importar CSV com alagamentos"
-          style={{ maxWidth: '100%' }}
-          contentStyle={{ maxWidth: '100%' }}
-          contentStyleWithIcon={{
-            maxWidth: dimensions.width - 88
-          }}
-        />
+        <Box>
+          <MenuItem
+            icon={() => <Water />}
+            onPress={() => pickCSV()}
+            title="Importar CSV com alagamentos"
+            style={{ maxWidth: '100%' }}
+            contentStyle={{ maxWidth: '100%' }}
+            contentStyleWithIcon={{
+              maxWidth: dimensions.width - 88
+            }}
+            loading={loading}
+          />
+        </Box>
         <Divider />
         <MenuItem
           icon={() => <Alert />}
@@ -129,6 +150,11 @@ const Administration: React.FC = () => {
         />
         <Divider />
       </Container>
+      <MessageModal
+        message={successMessage}
+        setMessage={setSuccessMessage}
+        success
+      />
     </>
   )
 }
