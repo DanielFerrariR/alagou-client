@@ -72,6 +72,7 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
   const [loading, setLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const dispatch = useDispatch()
+  const [results, setResults] = useState<string[] | null>(null)
 
   Geocoder.init(GOOGLE_MAPS_API_KEY)
 
@@ -150,6 +151,8 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
         <AddressSearchInput
           searchAddress={searchAddress}
           setSearchAddress={setSearchAddress}
+          results={results}
+          setResults={setResults}
           mb={3}
           label="Endereço *"
           placeholder="Digite o endereço"

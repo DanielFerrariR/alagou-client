@@ -1,11 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Container,
-  MenuItem,
-  Divider,
-  ActivityIndicator,
-  Box
-} from 'src/components/atoms'
+import { Container, MenuItem, Divider, Box } from 'src/components/atoms'
 import { Water, Alert } from 'src/images'
 import { BackHeader, MessageModal } from 'src/components/molecules'
 import { useWindowDimensions } from 'src/hooks'

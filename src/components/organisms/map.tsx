@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import MapView, { Circle, Marker, Callout } from 'react-native-maps'
+import MapView, { Marker, Callout } from 'react-native-maps'
 import {
   Box,
   ActivityIndicator,
