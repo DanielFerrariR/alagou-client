@@ -25,6 +25,8 @@ import MessageModal from './message_modal'
 type Props = {
   searchAddress: string
   setSearchAddress: Dispatch<SetStateAction<string>>
+  results: string[] | null
+  setResults: Dispatch<SetStateAction<string[] | null>>
 } & TextInputProps
 
 interface GetLocationsAxiosResponse {
@@ -36,10 +38,11 @@ interface GetLocationsAxiosResponse {
 const AddressSearchInput: React.FC<Props> = ({
   searchAddress,
   setSearchAddress,
+  results,
+  setResults,
   ...rest
 }) => {
   const [openSearchBox, setOpenSearchBox] = useState(false)
-  const [results, setResults] = useState<string[] | null>(null)
   const [loadingLocation, setLoadingLocation] = useState(false)
   const [initialRender, setInitialRender] = useState(false)
   const theme = useTheme()
@@ -150,11 +153,9 @@ const AddressSearchInput: React.FC<Props> = ({
       return
     }
 
-    if (results && !results.find((element) => element === searchAddress)) {
+    if (!results?.find((element) => element === searchAddress)) {
       setSearchAddress('')
     }
-
-    setOpenSearchBox(false)
   }
 
   const onClickMenuitem = (item: string) => {

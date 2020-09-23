@@ -53,6 +53,7 @@ const AddFlodding: React.FC = () => {
   })
   const navigation = useNavigation()
   const [searchAddress, setSearchAddress] = useState('')
+  const [results, setResults] = useState<string[] | null>(null)
   const theme = useTheme()
   const [loading, setLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
@@ -135,6 +136,8 @@ const AddFlodding: React.FC = () => {
         <AddressSearchInput
           searchAddress={searchAddress}
           setSearchAddress={setSearchAddress}
+          results={results}
+          setResults={setResults}
           mb={3}
           label="Endereço *"
           placeholder="Digite o endereço"

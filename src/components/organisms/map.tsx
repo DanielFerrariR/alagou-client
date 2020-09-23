@@ -13,8 +13,8 @@ import {
   TextInput,
   TouchableOpacity
 } from 'src/components/atoms'
-import { MessageModal } from 'src/components/molecules'
-import { useLocation } from 'src/hooks'
+import { AddressSearchInput, MessageModal } from 'src/components/molecules'
+import { useLocation, useWindowDimensions } from 'src/hooks'
 import { useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'src/store'
@@ -23,6 +23,7 @@ import { isDateInRange, formatDate } from 'src/utils'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { Platform } from 'react-native'
 import Geolocation from 'react-native-geolocation-service'
+import GeocoderLibrary from 'react-native-geocoding'
 import ChooseMapTypeModal from './choose_map_type_modal'
 
 interface Props {
@@ -78,6 +79,34 @@ const Map: React.FC<Props> = ({ route }) => {
     startDate: new Date(),
     endDate: new Date()
   })
+  const [searchAddress, setSearchAddress] = useState('')
+  const [results, setResults] = useState<string[] | null>(null)
+  const dimensions = useWindowDimensions()
+  const Geocoder = GeocoderLibrary as any
+
+  useEffect(() => {
+    const asyncEffect = async () => {
+      try {
+        if (!results?.find((element) => element === searchAddress)) {
+          return
+        }
+
+        const newLocation = await Geocoder.from(searchAddress)
+
+        const latitude = newLocation.results[0].geometry.location.lat
+        const longitude = newLocation.results[0].geometry.location.lng
+
+        setRegion({
+          latitude,
+          longitude
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    asyncEffect()
+  }, [searchAddress, results])
 
   useEffect(() => {
     if (floodings) {
@@ -209,6 +238,20 @@ const Map: React.FC<Props> = ({ route }) => {
               : null}
           </MapView>
         )}
+      </Box>
+      <Box
+        position="absolute"
+        top="72px"
+        left="16px"
+        width={dimensions.width - 32}
+      >
+        <AddressSearchInput
+          searchAddress={searchAddress}
+          setSearchAddress={setSearchAddress}
+          results={results}
+          setResults={setResults}
+          placeholder="Digite o endereço"
+        />
       </Box>
       <Provider>
         <Portal>
