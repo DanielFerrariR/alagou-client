@@ -209,14 +209,14 @@ const Map: React.FC<Props> = ({ route }) => {
               ...region
             }}
           >
-            {location && location.coords.heading ? (
+            {location ? (
               <Marker
                 coordinate={{
                   latitude: location.coords.latitude,
                   longitude: location.coords.longitude
                 }}
                 pointerEvents="none"
-                rotation={location.coords.heading}
+                rotation={location.coords.heading ? location.coords.heading : 0}
               >
                 <Navigation />
               </Marker>

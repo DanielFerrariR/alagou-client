@@ -239,7 +239,7 @@ const Register: React.FC = () => {
               </Typography>
             </TouchableOpacity>
           </Box>
-          <Box mt={3} p={2} mb={4}>
+          <Box mt={3} px={2} mb={4}>
             <TextInput
               label="Nome *"
               placeholder="Digite seu nome"

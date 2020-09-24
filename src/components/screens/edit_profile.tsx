@@ -327,7 +327,7 @@ const EditProfile: React.FC = () => {
                   </Typography>
                 </TouchableOpacity>
               </Box>
-              <Box mt={3} p={2} mb={4}>
+              <Box mt={3} px={2} mb={4}>
                 <TextInput
                   label="Nome *"
                   placeholder="Digite seu nome"
@@ -356,8 +356,7 @@ const EditProfile: React.FC = () => {
                   <TouchableOpacity onPress={sendEmail} mb={2}>
                     <Box flexDirection="row" alignItems="center">
                       <HelperText type="info" visible>
-                        Email não verificado. Pressione aqui para enviar
-                        novamente.
+                        Email não verificado. Enviar novamente?
                       </HelperText>
                       {loadingResentEmail ? (
                         <ActivityIndicator animating size={16} color="accent" />
