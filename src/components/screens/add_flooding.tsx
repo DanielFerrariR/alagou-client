@@ -92,7 +92,7 @@ const AddFlodding: React.FC = () => {
     })
   }
 
-  const submit = async () => {
+  const onSubmit = async () => {
     try {
       Keyboard.dismiss()
 
@@ -146,7 +146,7 @@ const AddFlodding: React.FC = () => {
 
       if (error?.response?.data?.error) {
         setErrorMessage(error.response.data.error)
-        
+
         return
       }
 
@@ -167,9 +167,7 @@ const AddFlodding: React.FC = () => {
         />
         {errors.title ? (
           <Box mb={2}>
-            <HelperText type="error" visible>
-              {errors.title}
-            </HelperText>
+            <HelperText type="error">{errors.title}</HelperText>
           </Box>
         ) : null}
         <AddressSearchInput
@@ -183,9 +181,7 @@ const AddFlodding: React.FC = () => {
         />
         {errors.searchAddress ? (
           <Box mb={2}>
-            <HelperText type="error" visible>
-              {errors.searchAddress}
-            </HelperText>
+            <HelperText type="error">{errors.searchAddress}</HelperText>
           </Box>
         ) : null}
         <Box flexDirection="row" alignItems="center">
@@ -243,7 +239,7 @@ const AddFlodding: React.FC = () => {
         <Button
           color="accent"
           labelStyle={{ color: theme.colors.custom.white }}
-          onPress={submit}
+          onPress={onSubmit}
           loading={loading}
         >
           Adicionar

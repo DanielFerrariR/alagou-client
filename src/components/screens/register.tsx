@@ -184,7 +184,7 @@ const Register: React.FC = () => {
             email: 'E-mail já cadastrado.'
           })
         }
-        
+
         return
       }
 
@@ -244,9 +244,7 @@ const Register: React.FC = () => {
             />
             {errors.name ? (
               <Box mb={2}>
-                <HelperText type="error" visible>
-                  {errors.name}
-                </HelperText>
+                <HelperText type="error">{errors.name}</HelperText>
               </Box>
             ) : null}
             <TextInput
@@ -258,9 +256,7 @@ const Register: React.FC = () => {
             />
             {errors.email ? (
               <Box mb={2}>
-                <HelperText type="error" visible>
-                  {errors.email}
-                </HelperText>
+                <HelperText type="error">{errors.email}</HelperText>
               </Box>
             ) : null}
             <TextInput
@@ -282,9 +278,7 @@ const Register: React.FC = () => {
             />
             {errors.password ? (
               <Box mb={2}>
-                <HelperText type="error" visible>
-                  {errors.password}
-                </HelperText>
+                <HelperText type="error">{errors.password}</HelperText>
               </Box>
             ) : null}
             <TextInput
@@ -309,9 +303,7 @@ const Register: React.FC = () => {
             />
             {errors.confirmPassword ? (
               <Box mb={2}>
-                <HelperText type="error" visible>
-                  {errors.confirmPassword}
-                </HelperText>
+                <HelperText type="error">{errors.confirmPassword}</HelperText>
               </Box>
             ) : null}
             <Button

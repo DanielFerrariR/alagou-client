@@ -103,7 +103,7 @@ const Login: React.FC = () => {
 
       if (error?.response?.data?.error) {
         setErrorMessage(error.response.data.error)
-        
+
         return
       }
 
@@ -147,9 +147,7 @@ const Login: React.FC = () => {
           />
           {errors.email ? (
             <Box mb={2}>
-              <HelperText type="error" visible>
-                {errors.email}
-              </HelperText>
+              <HelperText type="error">{errors.email}</HelperText>
             </Box>
           ) : null}
           <TextInput
@@ -172,9 +170,7 @@ const Login: React.FC = () => {
           />
           {errors.password ? (
             <Box mb={2}>
-              <HelperText type="error" visible>
-                {errors.password}
-              </HelperText>
+              <HelperText type="error">{errors.password}</HelperText>
             </Box>
           ) : null}
           <Button

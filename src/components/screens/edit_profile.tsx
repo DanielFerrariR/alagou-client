@@ -330,9 +330,7 @@ const EditProfile: React.FC = () => {
                 />
                 {errors.name ? (
                   <Box mb={2}>
-                    <HelperText type="error" visible>
-                      {errors.name}
-                    </HelperText>
+                    <HelperText type="error">{errors.name}</HelperText>
                   </Box>
                 ) : null}
                 <TextInput
@@ -344,9 +342,7 @@ const EditProfile: React.FC = () => {
                 />
                 {errors.email ? (
                   <Box mb={!userSession.isEmailConfirmed ? 0 : 2}>
-                    <HelperText type="error" visible>
-                      {errors.email}
-                    </HelperText>
+                    <HelperText type="error">{errors.email}</HelperText>
                   </Box>
                 ) : null}
                 {!userSession.isEmailConfirmed ? (
@@ -384,9 +380,7 @@ const EditProfile: React.FC = () => {
                 />
                 {errors.oldPassword ? (
                   <Box mb={2}>
-                    <HelperText type="error" visible>
-                      {errors.oldPassword}
-                    </HelperText>
+                    <HelperText type="error">{errors.oldPassword}</HelperText>
                   </Box>
                 ) : null}
                 <TextInput
@@ -411,9 +405,7 @@ const EditProfile: React.FC = () => {
                 />
                 {errors.newPassword ? (
                   <Box mb={2}>
-                    <HelperText type="error" visible>
-                      {errors.newPassword}
-                    </HelperText>
+                    <HelperText type="error">{errors.newPassword}</HelperText>
                   </Box>
                 ) : null}
                 <TextInput
@@ -438,7 +430,7 @@ const EditProfile: React.FC = () => {
                 />
                 {errors.confirmNewPassword ? (
                   <Box mb={2}>
-                    <HelperText type="error" visible>
+                    <HelperText type="error">
                       {errors.confirmNewPassword}
                     </HelperText>
                   </Box>

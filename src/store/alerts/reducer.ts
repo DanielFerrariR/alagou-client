@@ -4,7 +4,8 @@ import {
   FETCH_ALERTS,
   CREATE_ALERT,
   EDIT_ALERT,
-  DELETE_ALERT
+  DELETE_ALERT,
+  UPDATE_ALERTS
 } from './types'
 
 const initialState = null
@@ -21,6 +22,8 @@ const alertsReducer = (
     case EDIT_ALERT:
       return action.payload
     case DELETE_ALERT:
+      return action.payload
+    case UPDATE_ALERTS:
       return action.payload
     default:
       return state

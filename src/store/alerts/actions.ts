@@ -10,7 +10,9 @@ import {
   DeleteAlertAction,
   DELETE_ALERT,
   CreateAlertData,
-  EditAlertData
+  EditAlertData,
+  UpdateAlertsAction,
+  UPDATE_ALERTS
 } from './types'
 
 const fetchAlerts = async (): Promise<FetchAlertsAction> => {
@@ -25,7 +27,7 @@ const fetchAlerts = async (): Promise<FetchAlertsAction> => {
 const createAlert = async (
   data: CreateAlertData
 ): Promise<CreateAlertAction> => {
-  const response = await serverAPI.post<AlertsState>('/alert', { data })
+  const response = await serverAPI.post<AlertsState>('/alert', data)
 
   return {
     type: CREATE_ALERT,
@@ -34,7 +36,7 @@ const createAlert = async (
 }
 
 const editAlert = async (data: EditAlertData): Promise<EditAlertAction> => {
-  const response = await serverAPI.put<AlertsState>('/alert', { data })
+  const response = await serverAPI.put<AlertsState>('/alert', data)
 
   return {
     type: EDIT_ALERT,
@@ -53,4 +55,11 @@ const deleteAlert = async (_id: string): Promise<DeleteAlertAction> => {
   }
 }
 
-export { fetchAlerts, createAlert, editAlert, deleteAlert }
+const updateAlerts = (data: AlertsState): UpdateAlertsAction => {
+  return {
+    type: UPDATE_ALERTS,
+    payload: data
+  }
+}
+
+export { fetchAlerts, createAlert, editAlert, deleteAlert, updateAlerts }

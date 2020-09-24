@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Container, MenuItem, Divider, Box } from 'src/components/atoms'
-import { Water, Alert } from 'src/images'
+import { Water } from 'src/images'
 import { BackHeader, MessageModal } from 'src/components/molecules'
 import { useWindowDimensions } from 'src/hooks'
 import DocumentPicker from 'react-native-document-picker'
@@ -131,17 +131,6 @@ const Administration: React.FC = () => {
             loading={loading}
           />
         </Box>
-        <Divider />
-        <MenuItem
-          icon={() => <Alert />}
-          onPress={() => {}}
-          title="Gerenciar alertas"
-          style={{ maxWidth: '100%' }}
-          contentStyle={{ maxWidth: '100%' }}
-          contentStyleWithIcon={{
-            maxWidth: dimensions.width - 88
-          }}
-        />
         <Divider />
       </Container>
       <MessageModal

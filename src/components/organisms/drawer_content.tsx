@@ -116,7 +116,7 @@ const DrawerContent: React.FC = () => {
           </TouchableOpacity>
           <TouchableOpacity
             mb={8}
-            onPress={() => navigation.navigate('Alerts')}
+            onPress={() => navigation.navigate('AlertList')}
           >
             <Box flexDirection="row" alignItems="center">
               <Box width={24} height={24} p={0.125}>

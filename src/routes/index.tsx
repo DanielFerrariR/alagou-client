@@ -11,7 +11,7 @@ import {
   Home,
   FloodingList,
   Faq,
-  Alerts,
+  AlertList,
   Contributions,
   Favorites,
   EditProfile,
@@ -21,10 +21,12 @@ import {
   Support,
   About,
   Administration,
-  AlertsDescription,
+  AlertDescription,
   Loading,
   EmailConfirmation,
-  ResetPassword
+  ResetPassword,
+  EditAlert,
+  AddAlert
 } from 'src/components/screens'
 import store from 'src/utils/redux'
 import { useSelector } from 'src/store'
@@ -139,15 +141,17 @@ const Routes: React.FC = () => {
               <Stack.Screen name="Settings" component={Settings} />
               <Stack.Screen name="AddFlooding" component={AddFlooding} />
               <Stack.Screen name="EditFlooding" component={EditFlooding} />
-              <Stack.Screen name="Alerts" component={Alerts} />
+              <Stack.Screen name="AlertList" component={AlertList} />
               <Stack.Screen name="Contributions" component={Contributions} />
               <Stack.Screen name="Favorites" component={Favorites} />
               <Stack.Screen name="EditProfile" component={EditProfile} />
               <Stack.Screen name="Support" component={Support} />
               <Stack.Screen name="About" component={About} />
+              <Stack.Screen name="AddAlert" component={AddAlert} />
+              <Stack.Screen name="EditAlert" component={EditAlert} />
               <Stack.Screen
                 name="AlertsDescription"
-                component={AlertsDescription}
+                component={AlertDescription}
               />
               <Stack.Screen name="Administration" component={Administration} />
             </>

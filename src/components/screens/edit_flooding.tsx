@@ -22,8 +22,8 @@ import {
 import { useTheme } from 'react-native-paper'
 import GeocoderLibrary from 'react-native-geocoding'
 import { GOOGLE_MAPS_API_KEY } from '@env'
-import { editFlooding } from 'src/store/floodings'
-import { useSelector, useDispatch } from 'src/store'
+import { editFlooding, FloodingsState } from 'src/store/floodings'
+import { useDispatch } from 'src/store'
 import { Keyboard } from 'react-native'
 
 interface Form {
@@ -50,7 +50,7 @@ interface Props {
     key: string
     name: string
     params: {
-      _id: string
+      data: FloodingsState[0]
     }
   }
 }
@@ -61,8 +61,7 @@ interface Errors {
 }
 
 const EditFlooding: React.FC<Props> = ({ route }) => {
-  const floodings = useSelector((state) => state.floodings)
-  const flooding = floodings?.find((each) => each._id === route.params._id)
+  const flooding = route.params.data
   const [openImage, setOpenImage] = useState(false)
   const [form, setForm] = useState<Form>({
     title: (flooding && flooding.title) || '',
@@ -102,7 +101,7 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
     })
   }
 
-  const submit = async () => {
+  const onSubmit = async () => {
     try {
       Keyboard.dismiss()
 
@@ -139,7 +138,7 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
       const longitude = location.results[0].geometry.location.lng
 
       const editedFlooding = {
-        _id: route.params._id,
+        _id: flooding._id,
         title: form.title,
         address: searchAddress,
         latitude,
@@ -157,7 +156,7 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
 
       if (error?.response?.data?.error) {
         setErrorMessage(error.response.data.error)
-        
+
         return
       }
 
@@ -178,9 +177,7 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
         />
         {errors.title ? (
           <Box mb={2}>
-            <HelperText type="error" visible>
-              {errors.title}
-            </HelperText>
+            <HelperText type="error">{errors.title}</HelperText>
           </Box>
         ) : null}
         <AddressSearchInput
@@ -194,9 +191,7 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
         />
         {errors.searchAddress ? (
           <Box mb={2}>
-            <HelperText type="error" visible>
-              {errors.searchAddress}
-            </HelperText>
+            <HelperText type="error">{errors.searchAddress}</HelperText>
           </Box>
         ) : null}
         <Box flexDirection="row" alignItems="center">
@@ -254,7 +249,7 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
         <Button
           color="accent"
           labelStyle={{ color: theme.colors.custom.white }}
-          onPress={submit}
+          onPress={onSubmit}
           loading={loading}
         >
           Editar

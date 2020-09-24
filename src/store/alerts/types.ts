@@ -6,7 +6,7 @@ export type AlertsState = {
   content: string
   severity: number
   date: Date
-}
+}[]
 
 export interface CreateAlertData {
   title: string
@@ -29,6 +29,8 @@ export const EDIT_ALERT = 'EDIT_ALERT'
 
 export const DELETE_ALERT = 'DELETE_ALERT'
 
+export const UPDATE_ALERTS = 'UPDATE_ALERTS'
+
 export interface FetchAlertsAction {
   type: typeof FETCH_ALERTS
   payload: AlertsState
@@ -49,9 +51,15 @@ export interface DeleteAlertAction {
   payload: AlertsState
 }
 
+export interface UpdateAlertsAction {
+  type: typeof UPDATE_ALERTS
+  payload: AlertsState
+}
+
 export type AlertsActionsTypes =
   | FetchAlertsAction
   | CreateAlertAction
   | EditAlertAction
   | DeleteAlertAction
+  | UpdateAlertsAction
   | DestroySessionActionTypes

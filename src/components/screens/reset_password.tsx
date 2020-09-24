@@ -138,7 +138,7 @@ const ResetPassword: React.FC<Props> = ({ route }) => {
 
       if (error?.response?.data?.error) {
         setErrorMessage(error.response.data.error)
-        
+
         return
       }
 
@@ -180,9 +180,7 @@ const ResetPassword: React.FC<Props> = ({ route }) => {
         />
         {errors.oldPassword ? (
           <Box mb={2}>
-            <HelperText type="error" visible>
-              {errors.oldPassword}
-            </HelperText>
+            <HelperText type="error">{errors.oldPassword}</HelperText>
           </Box>
         ) : null}
         <TextInput
@@ -204,9 +202,7 @@ const ResetPassword: React.FC<Props> = ({ route }) => {
         />
         {errors.newPassword ? (
           <Box mb={2}>
-            <HelperText type="error" visible>
-              {errors.newPassword}
-            </HelperText>
+            <HelperText type="error">{errors.newPassword}</HelperText>
           </Box>
         ) : null}
         <TextInput
@@ -231,9 +227,7 @@ const ResetPassword: React.FC<Props> = ({ route }) => {
         />
         {errors.confirmNewPassword ? (
           <Box mb={2}>
-            <HelperText type="error" visible>
-              {errors.confirmNewPassword}
-            </HelperText>
+            <HelperText type="error">{errors.confirmNewPassword}</HelperText>
           </Box>
         ) : null}
         <Button

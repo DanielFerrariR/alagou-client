@@ -48,13 +48,13 @@ const FloadingList: React.FC<Props> = ({ data }) => {
   const [loadingExcludeCard, setLoadingExcludeCard] = useState(false)
   const navigation = useNavigation()
   const [openChatModal, setOpenChatModal] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState<string | string[]>('')
   const dimensions = useWindowDimensions()
 
   const editCard = () => {
     setOpen(false)
 
-    navigation.navigate('EditFlooding', { _id: data._id })
+    navigation.navigate('EditFlooding', { data })
   }
 
   const excludeCard = async () => {

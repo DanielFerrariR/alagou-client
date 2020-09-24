@@ -75,7 +75,7 @@ const Support: React.FC = () => {
 
       if (error?.response?.data?.error) {
         setErrorMessage(error.response.data.error)
-        
+
         return
       }
 
@@ -103,9 +103,7 @@ const Support: React.FC = () => {
         />
         {errors.message ? (
           <Box mb={2}>
-            <HelperText type="error" visible>
-              {errors.message}
-            </HelperText>
+            <HelperText type="error">{errors.message}</HelperText>
           </Box>
         ) : null}
         <Button

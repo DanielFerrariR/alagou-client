@@ -57,7 +57,7 @@ const ForgotPassword: React.FC = () => {
         setErrors({
           email: !form.email && 'O e-mail precisa ser preenchido.'
         })
-        
+
         return
       }
 
@@ -104,9 +104,7 @@ const ForgotPassword: React.FC = () => {
         />
         {errors.email ? (
           <Box mb={2}>
-            <HelperText type="error" visible>
-              {errors.email}
-            </HelperText>
+            <HelperText type="error">{errors.email}</HelperText>
           </Box>
         ) : null}
         <Button
