@@ -1,5 +1,11 @@
 import React, { useState } from 'react'
-import { Box, Typography, TouchableOpacity, Image } from 'src/components/atoms'
+import {
+  Box,
+  Typography,
+  TouchableOpacity,
+  Image,
+  Badge
+} from 'src/components/atoms'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useSelector } from 'src/store'
 import { useTheme } from 'react-native-paper'
@@ -10,6 +16,7 @@ import { Alert } from 'src/images'
 
 const DrawerContent: React.FC = () => {
   const [openPicture, setOpenPicture] = useState(false)
+  const notification = useSelector((state) => state.notification)
   const userSession = useSelector((state) => state.user)
   const theme = useTheme()
   const navigation = useNavigation()
@@ -122,9 +129,15 @@ const DrawerContent: React.FC = () => {
               <Box width={24} height={24} p={0.125}>
                 <Alert width={20} height={20} />
               </Box>
-              <Typography color="custom.white" ml={4} variant="h3">
+              <Typography
+                color="custom.white"
+                ml={4}
+                variant="h3"
+                mr={notification > 0 ? 1 : 0}
+              >
                 Alertas
               </Typography>
+              {notification > 0 ? <Badge visible>{notification}</Badge> : null}
             </Box>
           </TouchableOpacity>
           {userSession.isAdmin && (

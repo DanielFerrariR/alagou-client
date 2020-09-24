@@ -2,10 +2,25 @@ import { useEffect } from 'react'
 import AsyncStorage from '@react-native-community/async-storage'
 import { setLoggedUser, setNotLoggedUser } from 'src/store/user'
 import { useSelector, useDispatch } from 'src/store'
+import { fetchAlerts } from 'src/store/alerts'
 
 const FetchReduxStore: React.FC = () => {
   const userSession = useSelector((state) => state.user)
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    const asyncEffect = async () => {
+      try {
+        dispatch(await fetchAlerts())
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    if (userSession) {
+      asyncEffect()
+    }
+  }, [userSession])
 
   useEffect(() => {
     const asyncEffect = async () => {

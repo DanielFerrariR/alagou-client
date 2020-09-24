@@ -15,7 +15,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { useTheme, TouchableRipple } from 'react-native-paper'
 import { useSelector, useDispatch } from 'src/store'
 import Shimmer from 'react-native-shimmer'
-import { fetchAlerts, deleteAlert } from 'src/store/alerts'
+import { deleteAlert } from 'src/store/alerts'
+import { resetNotification } from 'src/store/notification'
 
 const AlertList: React.FC = () => {
   const userSession = useSelector((state) => state.user)
@@ -32,15 +33,7 @@ const AlertList: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | string[]>('')
 
   useEffect(() => {
-    const asyncEffect = async () => {
-      try {
-        dispatch(await fetchAlerts())
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
-    asyncEffect()
+    dispatch(resetNotification())
   }, [])
 
   const deleteItem = async (_id: string) => {

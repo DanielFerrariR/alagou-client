@@ -7,12 +7,14 @@ import {
 import { userReducer } from './user'
 import { floodingsReducer } from './floodings'
 import { alertsReducer } from './alerts'
+import { notificationReducer } from './notification'
 import { DestroySessionActionTypes } from './destroy_session'
 
 const appReducer = combineReducers({
   user: userReducer,
   floodings: floodingsReducer,
-  alerts: alertsReducer
+  alerts: alertsReducer,
+  notification: notificationReducer
 })
 
 export const rootReducer: typeof appReducer = (state, action) => {
