@@ -135,7 +135,13 @@ $ yarn commit
 
 ## Building for production
 
-1. **For android**
+1. Updated the API_ADDRESS with the production server address on .env file:
+
+```bash
+API_ADDRESS=https://alagou-server.herokuapp.com
+```
+
+2. **For android**
 
 - Generate a private signing key
 
@@ -160,7 +166,7 @@ MYAPP_UPLOAD_KEY_PASSWORD=123456
 yarn android:build:apk
 ```
 
-2. **For ios**
+3. **For ios**
 
 Currently not supported, because I'm missing a mac. It will need some fixes.
 
