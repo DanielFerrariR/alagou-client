@@ -167,7 +167,7 @@ class MenuItem extends React.Component<Props> {
               {title}
             </Text>
             {loading ? (
-              <ActivityIndicator animating size={24} color="accent" ml={1} />
+              <ActivityIndicator animating size={24} color="accent" ml={2} />
             ) : null}
           </View>
         </View>
