@@ -72,16 +72,18 @@ const AlertList: React.FC = () => {
     <>
       <BackHeader title="Alertas" />
       <Container>
-        <Button
-          mt={2}
-          mx={2}
-          mb={1}
-          color="accent"
-          labelStyle={{ color: theme.colors.custom.white }}
-          onPress={() => navigation.navigate('AddAlert')}
-        >
-          Criar alerta
-        </Button>
+        {userSession && userSession.isAdmin ? (
+          <Button
+            mt={2}
+            mx={2}
+            mb={1}
+            color="accent"
+            labelStyle={{ color: theme.colors.custom.white }}
+            onPress={() => navigation.navigate('AddAlert')}
+          >
+            Criar alerta
+          </Button>
+        ) : null}
         {alerts ? (
           <FlatList
             data={alerts}

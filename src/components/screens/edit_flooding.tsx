@@ -240,9 +240,14 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
               mb={1}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleChoosePhoto}>
+          <TouchableOpacity onPress={handleChoosePhoto} mb={1}>
             <Typography variant="h3" color="accent" fontWeight="bold">
               Adicionar Foto
+            </Typography>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setForm({ ...form, picture: '' })}>
+            <Typography variant="h3" color="accent" fontWeight="bold">
+              Remover Foto
             </Typography>
           </TouchableOpacity>
         </Box>
