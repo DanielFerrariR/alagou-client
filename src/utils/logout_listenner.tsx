@@ -5,7 +5,7 @@ import { eventEmitterInstance } from 'src/utils'
 import { MessageModal } from 'src/components/molecules'
 
 const LogoutListenners: React.FC = () => {
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState<string | string[]>('')
   const dispatch = useDispatch()
 
   const logout = async (args: { detail: string }) => {

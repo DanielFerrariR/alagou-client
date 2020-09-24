@@ -3,12 +3,15 @@ import { PermissionsAndroid } from 'react-native'
 import Geolocation from 'react-native-geolocation-service'
 import { useFocusEffect } from '@react-navigation/native'
 
-type UseLocation = [string, Dispatch<SetStateAction<string>>]
+type UseLocation = [
+  string | string[],
+  Dispatch<SetStateAction<string | string[]>>
+]
 
 const useLocation = (
   callback: (location: Geolocation.GeoPosition) => void
 ): UseLocation => {
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState<string | string[]>('')
   const watchId = useRef<number>()
 
   const verifyLocationPermission = async () => {

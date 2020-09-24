@@ -49,7 +49,7 @@ const AddressSearchInput: React.FC<Props> = ({
   const inputRef = useRef<any>()
   const skipRef = useRef<boolean>(false)
   const Geocoder = GeocoderLibrary as any
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState<string | string[]>('')
   const dimensions = useWindowDimensions()
 
   Geocoder.init(GOOGLE_MAPS_API_KEY)
