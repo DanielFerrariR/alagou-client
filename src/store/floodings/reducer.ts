@@ -4,7 +4,7 @@ import {
   FETCH_FLOODINGS,
   CREATE_FLOODING,
   EDIT_FLOODING,
-  REMOVE_FLOODING,
+  DELETE_FLOODING,
   UPDATE_FLOODINGS,
   ADD_FAVORITE,
   REMOVE_FAVORITE,
@@ -25,7 +25,7 @@ const FloodingReducer = (
       return action.payload
     case EDIT_FLOODING:
       return action.payload
-    case REMOVE_FLOODING:
+    case DELETE_FLOODING:
       return action.payload
     case UPDATE_FLOODINGS:
       return action.payload

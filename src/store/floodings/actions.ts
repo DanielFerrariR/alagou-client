@@ -3,7 +3,7 @@ import {
   FETCH_FLOODINGS,
   CREATE_FLOODING,
   EDIT_FLOODING,
-  REMOVE_FLOODING,
+  DELETE_FLOODING,
   UPDATE_FLOODINGS,
   ADD_FAVORITE,
   REMOVE_FAVORITE,
@@ -14,7 +14,7 @@ import {
   FetchFloodingsAction,
   CreateFloodingAction,
   EditFloodingAction,
-  RemoveFloodingAction,
+  DeleteFloodingAction,
   UpdateFloodingsAction,
   AddCommentAction,
   CreateFloodingData,
@@ -121,13 +121,13 @@ const editFlooding = async (
   }
 }
 
-const removeFlooding = async (_id: string): Promise<RemoveFloodingAction> => {
+const deleteFlooding = async (_id: string): Promise<DeleteFloodingAction> => {
   const response = await serverAPI.delete<FloodingsState>('/flooding', {
     data: { _id }
   })
 
   return {
-    type: REMOVE_FLOODING,
+    type: DELETE_FLOODING,
     payload: response.data
   }
 }
@@ -166,7 +166,7 @@ export {
   fetchFloodings,
   createFlooding,
   editFlooding,
-  removeFlooding,
+  deleteFlooding,
   addFavorite,
   removeFavorite,
   addComment,

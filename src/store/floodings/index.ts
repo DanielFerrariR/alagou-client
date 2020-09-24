@@ -2,7 +2,7 @@ export {
   fetchFloodings,
   createFlooding,
   editFlooding,
-  removeFlooding,
+  deleteFlooding,
   updateFloodings,
   addFavorite,
   removeFavorite,

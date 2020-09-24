@@ -16,7 +16,7 @@ import { formatDate } from 'src/utils'
 import ImageView from 'react-native-image-viewing'
 import {
   FloodingsState,
-  removeFlooding,
+  deleteFlooding,
   addFavorite,
   removeFavorite
 } from 'src/store/floodings'
@@ -66,7 +66,7 @@ const FloadingList: React.FC<Props> = ({ data }) => {
       setOpen(false)
       setLoadingExcludeCard(true)
 
-      dispatch(await removeFlooding(data._id))
+      dispatch(await deleteFlooding(data._id))
     } catch (error) {
       console.log(error)
       setLoadingExcludeCard(false)

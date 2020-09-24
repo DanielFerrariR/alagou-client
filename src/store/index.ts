@@ -6,11 +6,13 @@ import {
 } from 'react-redux'
 import { userReducer } from './user'
 import { floodingsReducer } from './floodings'
+import { alertsReducer } from './alerts'
 import { DestroySessionActionTypes } from './destroy_session'
 
 const appReducer = combineReducers({
   user: userReducer,
-  floodings: floodingsReducer
+  floodings: floodingsReducer,
+  alerts: alertsReducer
 })
 
 export const rootReducer: typeof appReducer = (state, action) => {

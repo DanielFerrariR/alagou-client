@@ -87,7 +87,7 @@ export const CREATE_FLOODING = 'CREATE_FLOODING'
 
 export const EDIT_FLOODING = 'EDIT_FLOODING'
 
-export const REMOVE_FLOODING = 'REMOVE_FLOODING'
+export const DELETE_FLOODING = 'DELETE_FLOODING'
 
 export const UPDATE_FLOODINGS = 'UPDATE_FLOODINGS'
 
@@ -114,8 +114,8 @@ export interface EditFloodingAction {
   payload: FloodingsState
 }
 
-export interface RemoveFloodingAction {
-  type: typeof REMOVE_FLOODING
+export interface DeleteFloodingAction {
+  type: typeof DELETE_FLOODING
   payload: FloodingsState
 }
 
@@ -147,7 +147,7 @@ export interface UploadFloodingsCSVAction {
 export type FloodingActionsTypes =
   | CreateFloodingAction
   | EditFloodingAction
-  | RemoveFloodingAction
+  | DeleteFloodingAction
   | FetchFloodingsAction
   | UpdateFloodingsAction
   | AddFavoriteAction
