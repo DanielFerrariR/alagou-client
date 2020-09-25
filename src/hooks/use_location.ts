@@ -43,8 +43,7 @@ const useLocation = (
         {
           enableHighAccuracy: true,
           interval: 1000,
-          fastestInterval: 1000,
-          distanceFilter: 0
+          distanceFilter: 10
         }
       )
     } else {

@@ -235,6 +235,7 @@ const Map: React.FC<Props> = ({ route }) => {
                         longitude: each.longitude
                       }}
                       zIndex={each.isVerified === true ? -1 : -2}
+                      tracksViewChanges={false}
                     >
                       <MaterialCommunityIcons
                         name="water"
