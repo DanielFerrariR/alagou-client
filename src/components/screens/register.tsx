@@ -8,7 +8,6 @@ import {
   Image,
   ScrollView,
   Container,
-  StatusBar,
   HelperText
 } from 'src/components/atoms'
 import { MessageModal, BackHeader } from 'src/components/molecules'
@@ -194,10 +193,6 @@ const Register: React.FC = () => {
 
   return (
     <>
-      <StatusBar
-        backgroundColor={theme.colors.primary}
-        barStyle="dark-content"
-      />
       <BackHeader title="Faça seu cadastro" />
       <ScrollView keyboardShouldPersistTaps="handled">
         <Container>

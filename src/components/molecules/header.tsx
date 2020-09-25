@@ -15,7 +15,10 @@ const Header: React.FC = () => {
   }
   return (
     <>
-      <StatusBar backgroundColor={theme.colors.primary} />
+      <StatusBar
+        backgroundColor={theme.colors.primary}
+        barStyle="light-content"
+      />
       <Appbar.Header>
         <IconButton
           icon="menu"

@@ -26,7 +26,8 @@ import {
   EmailConfirmation,
   ResetPassword,
   EditAlert,
-  AddAlert
+  AddAlert,
+  TermsAndConditionsOfUse
 } from 'src/components/screens'
 import store from 'src/utils/redux'
 import { useSelector } from 'src/store'
@@ -163,6 +164,10 @@ const Routes: React.FC = () => {
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Register" component={Register} />
               <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+              <Stack.Screen
+                name="TermsAndConditionsOfUse"
+                component={TermsAndConditionsOfUse}
+              />
             </>
           ) : null}
           <Stack.Screen

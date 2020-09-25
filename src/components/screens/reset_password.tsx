@@ -156,7 +156,10 @@ const ResetPassword: React.FC<Props> = ({ route }) => {
 
   return (
     <>
-      <StatusBar backgroundColor={theme.colors.primary} />
+      <StatusBar
+        backgroundColor={theme.colors.primary}
+        barStyle="light-content"
+      />
       <Appbar.Header>
         <Appbar.Content title="Alterar senha" />
       </Appbar.Header>

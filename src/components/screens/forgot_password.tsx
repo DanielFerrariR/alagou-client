@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import {
   Container,
   Typography,
-  StatusBar,
   TextInput,
   Button,
   Box,
@@ -88,7 +87,6 @@ const ForgotPassword: React.FC = () => {
 
   return (
     <>
-      <StatusBar backgroundColor={theme.colors.primary} />
       <BackHeader title="Esqueci minha senha" />
       <Container p={2}>
         <Typography mb={3}>

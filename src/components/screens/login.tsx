@@ -116,12 +116,14 @@ const Login: React.FC = () => {
       <StatusBar
         backgroundColor={
           isKeyboardShown ? theme.colors.primary : theme.colors.custom.white
+        } 
+        barStyle={
+          isKeyboardShown ? 'light-content' : 'dark-content'
         }
-        barStyle="dark-content"
       />
       <Container bgColor="custom.white">
         <Box
-          height={isKeyboardShown ? 0 : 0.35}
+          height={isKeyboardShown ? 0 : 220}
           alignItems="center"
           justifyContent="center"
         >
@@ -204,9 +206,17 @@ const Login: React.FC = () => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate('ForgotPassword')}
+            mb={1}
           >
             <Typography variant="h3" color="custom.white" textAlign="center">
               Esqueceu sua senha?
+            </Typography>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('TermsAndConditionsOfUse')}
+          >
+            <Typography variant="h3" color="custom.white" textAlign="center">
+              Termos e Condições de Uso
             </Typography>
           </TouchableOpacity>
         </Box>

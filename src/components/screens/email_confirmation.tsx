@@ -96,7 +96,10 @@ const EmailConfirmation: React.FC<Props> = ({ route }) => {
         <Loading />
       ) : (
         <>
-          <StatusBar backgroundColor={theme.colors.primary} />
+          <StatusBar
+            backgroundColor={theme.colors.primary}
+            barStyle="light-content"
+          />
           <Appbar.Header>
             <Appbar.Content title="Confirmação de Email" />
           </Appbar.Header>

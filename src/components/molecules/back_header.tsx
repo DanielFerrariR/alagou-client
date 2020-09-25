@@ -13,7 +13,10 @@ const BackHeader: React.FC<Props> = ({ title }) => {
 
   return (
     <>
-      <StatusBar backgroundColor={theme.colors.primary} />
+      <StatusBar
+        backgroundColor={theme.colors.primary}
+        barStyle="light-content"
+      />
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title={title} />
