@@ -120,10 +120,15 @@ const Login: React.FC = () => {
         barStyle={isKeyboardShown ? 'light-content' : 'dark-content'}
       />
       <Container bgColor="custom.white">
-        <Box flex={1} alignItems="center" justifyContent="center">
+        <Box
+          flex={isKeyboardShown ? 0 : 1}
+          height={isKeyboardShown ? 0 : 1}
+          alignItems="center"
+          justifyContent="center"
+        >
           <Logo />
         </Box>
-        <Box p={2} bgColor="primary">
+        <Box flex={isKeyboardShown ? 1 : 0} p={2} bgColor="primary">
           <Box
             position="absolute"
             width={dimensions.width + 16}
