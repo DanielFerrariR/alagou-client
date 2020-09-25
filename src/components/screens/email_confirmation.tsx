@@ -35,6 +35,7 @@ const EmailConfirmation: React.FC<Props> = ({ route }) => {
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState('')
   const navigation = useNavigation()
+  const [confirmed, setConfirmed] = useState(false)
 
   useEffect(() => {
     const asyncEffect = async () => {
@@ -49,6 +50,7 @@ const EmailConfirmation: React.FC<Props> = ({ route }) => {
         )
 
         setMessage(response.data.message)
+        setConfirmed(true)
 
         if (userSession) {
           dispatch(setUserConfirmedEmail(userSession))
@@ -61,7 +63,7 @@ const EmailConfirmation: React.FC<Props> = ({ route }) => {
 
         if (error?.response?.data?.error) {
           setMessage(error.response.data.error)
-          
+
           return
         }
 
@@ -69,13 +71,11 @@ const EmailConfirmation: React.FC<Props> = ({ route }) => {
       }
     }
 
-    if (userSession === null) {
+    if (confirmed) {
       return
     }
 
-    if (userSession && userSession.isEmailConfirmed) {
-      setMessage('E-mail já confirmado.')
-
+    if (userSession === null) {
       return
     }
 
@@ -118,7 +118,13 @@ const EmailConfirmation: React.FC<Props> = ({ route }) => {
                 <Typography mb={3} variant="h2" textAlign="center">
                   {message}
                 </Typography>
-                <Button onPress={goBack}>Voltar</Button>
+                <Button
+                  onPress={goBack}
+                  color="accent"
+                  labelStyle={{ color: theme.colors.custom.white }}
+                >
+                  Voltar
+                </Button>
               </>
             )}
           </Container>
