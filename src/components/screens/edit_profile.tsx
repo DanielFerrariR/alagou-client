@@ -274,7 +274,7 @@ const EditProfile: React.FC = () => {
     <>
       {userSession ? (
         <>
-          <BackHeader title="Editar Perfil" />
+          <BackHeader title="Editar perfil" />
           <ScrollView keyboardShouldPersistTaps="handled">
             <Container>
               <Box justifyContent="center" alignItems="center" mt={4}>

@@ -116,20 +116,14 @@ const Login: React.FC = () => {
       <StatusBar
         backgroundColor={
           isKeyboardShown ? theme.colors.primary : theme.colors.custom.white
-        } 
-        barStyle={
-          isKeyboardShown ? 'light-content' : 'dark-content'
         }
+        barStyle={isKeyboardShown ? 'light-content' : 'dark-content'}
       />
       <Container bgColor="custom.white">
-        <Box
-          height={isKeyboardShown ? 0 : 220}
-          alignItems="center"
-          justifyContent="center"
-        >
+        <Box flex={1} alignItems="center" justifyContent="center">
           <Logo />
         </Box>
-        <Box flex={1} p={2} bgColor="primary">
+        <Box p={2} bgColor="primary">
           <Box
             position="absolute"
             width={dimensions.width + 16}

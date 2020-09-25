@@ -5,7 +5,7 @@ import { BackHeader } from 'src/components/molecules'
 const TermsAndConditionsOfUse: React.FC = () => {
   return (
     <>
-      <BackHeader title="Termos e Condições de Uso" />
+      <BackHeader title="Termos e condições de uso" />
       <ScrollView>
         <Box p={2}>
           <Typography mb={1}>
@@ -21,7 +21,7 @@ const TermsAndConditionsOfUse: React.FC = () => {
           <Typography mb={1}>
             Se você optar por usar o nosso serviço, você concorda com a coleta e
             uso de informações em relação a esta política. As informações
-            pessoais que nós coleto são usados ​​para fornecer e melhorar o
+            pessoais que nós coleto são usados para fornecer e melhorar o
             serviço. Nós não vamos usar ou compartilhar suas informações com
             qualquer pessoa, exceto conforme descrito nestes Termos e Condições
             de Uso.
@@ -44,18 +44,18 @@ const TermsAndConditionsOfUse: React.FC = () => {
             de erro no aplicativo nós coleto dados e informações (por meio de
             produtos de terceiros) no snós telefone chamado logs. Estes dados de
             registro podem incluir informações como como o endereço de protocolo
-            da Internet ("IP") de snóss dispositivos, nome do dispositivo,
-            operação versão do sistema, configuração do aplicativo ao utilizar
-            nosso serviço, o hora e data de uso do Serviço e outras
+            da Internet (&quot;IP&quot;) de snóss dispositivos, nome do
+            dispositivo, operação versão do sistema, configuração do aplicativo
+            ao utilizar nosso serviço, o hora e data de uso do Serviço e outras
             estatísticas.
           </Typography>
           <Typography fontWeight="bold" mb={1}>
             Segurança
           </Typography>
           <Typography mb={1}>
-            Nós valorizamos ​​sua confiança em nos fornecer suas informações
+            Nós valorizamos sua confiança em nos fornecer suas informações
             pessoais, portanto, estamos nos esforçando para usar meios
-            comercialmente aceitáveis ​​de protegê-las. Mas lembre-se de que
+            comercialmente aceitáveis de protegê-las. Mas lembre-se de que
             nenhum método de transmissão pela internet, ou método de o
             armazenamento eletrônico é 100% seguro e confiável, e não podemos
             garantir sua segurança absoluta.
@@ -65,7 +65,7 @@ const TermsAndConditionsOfUse: React.FC = () => {
           </Typography>
           <Typography mb={1}>
             Estes Serviços não se dirigem a menores de 13 anos. Não
-            intencionalmente coletamos informações pessoais identificáveis ​​de
+            intencionalmente coletamos informações pessoais identificáveis de
             crianças menores de 13 anos. Caso nós descubramos que uma criança
             menor de 13 anos me fornecnós suas informações, nós imediatamente
             excluirei isso do nosso servidor. Se você é um pai ou responsável e

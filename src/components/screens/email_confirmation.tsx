@@ -101,7 +101,7 @@ const EmailConfirmation: React.FC<Props> = ({ route }) => {
             barStyle="light-content"
           />
           <Appbar.Header>
-            <Appbar.Content title="Confirmação de Email" />
+            <Appbar.Content title="Confirmação de email" />
           </Appbar.Header>
           <Container
             p={2}
