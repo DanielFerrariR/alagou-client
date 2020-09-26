@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import MapView, { Marker, Callout } from 'react-native-maps'
 import {
   Box,
@@ -55,16 +55,11 @@ const Map: React.FC<Props> = ({ route }) => {
   const theme = useTheme()
   const navigation = useNavigation()
   const [openChooseMapTypeModal, setOpenChooseMapTypeModal] = useState(false)
-  const [location, setLocation] = useState<Geolocation.GeoPosition | null>(null)
   const [openDatePickerModal, setOpenDatePickerModal] = useState(false)
-  const callback = useCallback(
-    (currentLocation) => {
-      if (!openDatePickerModal) {
-        setLocation(currentLocation)
-      }
-    },
-    [openDatePickerModal]
-  )
+  const [location, setLocation] = useState<Geolocation.GeoPosition | null>(null)
+  const callback = useCallback((currentLocation) => {
+    setLocation(currentLocation)
+  }, [])
   const [errorMessage, setErrorMessage] = useLocation(callback)
   const [openFab, setOpenFab] = useState(false)
   const floodings = useSelector((state) => state.floodings)
@@ -336,17 +331,23 @@ const Map: React.FC<Props> = ({ route }) => {
                 />
               </Box>
             </TouchableOpacity>
-            {openStartDateModal && (
-              <DateTimePicker
-                value={dateRange.startDate}
-                onChange={(_event, selectedDate) => {
-                  const currentDate = selectedDate || dateRange.startDate
+            {useMemo(() => {
+              return (
+                <>
+                  {openStartDateModal ? (
+                    <DateTimePicker
+                      value={dateRange.startDate}
+                      onChange={(_event, selectedDate) => {
+                        const currentDate = selectedDate || dateRange.startDate
 
-                  setOpenStartDateModal(Platform.OS === 'ios')
-                  setDateRange({ ...dateRange, startDate: currentDate })
-                }}
-              />
-            )}
+                        setOpenStartDateModal(Platform.OS === 'ios')
+                        setDateRange({ ...dateRange, startDate: currentDate })
+                      }}
+                    />
+                  ) : null}
+                </>
+              )
+            }, [openStartDateModal])}
             <TouchableOpacity onPress={() => setOpenEndDateModal(true)} mb={3}>
               <Box pointerEvents="none">
                 <TextInput
@@ -355,17 +356,23 @@ const Map: React.FC<Props> = ({ route }) => {
                 />
               </Box>
             </TouchableOpacity>
-            {openEndDateModal && (
-              <DateTimePicker
-                value={dateRange.endDate}
-                onChange={(_event, selectedDate) => {
-                  const currentDate = selectedDate || dateRange.endDate
+            {useMemo(() => {
+              return (
+                <>
+                  {openEndDateModal ? (
+                    <DateTimePicker
+                      value={dateRange.endDate}
+                      onChange={(_event, selectedDate) => {
+                        const currentDate = selectedDate || dateRange.endDate
 
-                  setOpenEndDateModal(Platform.OS === 'ios')
-                  setDateRange({ ...dateRange, endDate: currentDate })
-                }}
-              />
-            )}
+                        setOpenEndDateModal(Platform.OS === 'ios')
+                        setDateRange({ ...dateRange, endDate: currentDate })
+                      }}
+                    />
+                  ) : null}
+                </>
+              )
+            }, [openEndDateModal])}
             <Button
               onPress={() => setOpenDatePickerModal(false)}
               color="accent"

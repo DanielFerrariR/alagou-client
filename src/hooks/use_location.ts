@@ -1,7 +1,6 @@
-import { useState, useRef, useCallback, Dispatch, SetStateAction } from 'react'
+import { useState, useRef, useEffect, Dispatch, SetStateAction } from 'react'
 import { PermissionsAndroid } from 'react-native'
 import Geolocation from 'react-native-geolocation-service'
-import { useFocusEffect } from '@react-navigation/native'
 
 type UseLocation = [
   string | string[],
@@ -43,6 +42,7 @@ const useLocation = (
         {
           enableHighAccuracy: true,
           interval: 1000,
+          fastestInterval: 1000,
           distanceFilter: 10
         }
       )
@@ -51,25 +51,23 @@ const useLocation = (
     }
   }
 
-  useFocusEffect(
-    useCallback(() => {
-      const asyncCallback = async () => {
-        if (watchId.current !== undefined) {
-          Geolocation.clearWatch(watchId.current)
-        }
-
-        await startWatch()
+  useEffect(() => {
+    const asyncEffect = async () => {
+      if (watchId.current !== undefined) {
+        Geolocation.clearWatch(watchId.current)
       }
 
-      asyncCallback()
+      await startWatch()
+    }
 
-      return () => {
-        if (watchId.current !== undefined) {
-          Geolocation.clearWatch(watchId.current)
-        }
+    asyncEffect()
+
+    return () => {
+      if (watchId.current !== undefined) {
+        Geolocation.clearWatch(watchId.current)
       }
-    }, [callback])
-  )
+    }
+  }, [callback])
 
   return [errorMessage, setErrorMessage]
 }
