@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import MapView, { Marker, Callout } from 'react-native-maps'
 import {
   Box,
@@ -6,11 +6,7 @@ import {
   Typography,
   Portal,
   FAB,
-  Provider,
-  Dialog,
-  Button,
-  TextInput,
-  TouchableOpacity
+  Provider
 } from 'src/components/atoms'
 import { AddressSearchInput, MessageModal } from 'src/components/molecules'
 import { useLocation, useWindowDimensions } from 'src/hooks'
@@ -18,14 +14,13 @@ import { useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'src/store'
 import { FloodingsState } from 'src/store/floodings'
-import { isDateInRange, formatDate } from 'src/utils'
-import DateTimePicker from '@react-native-community/datetimepicker'
-import { Platform } from 'react-native'
+import { isDateInRange } from 'src/utils'
 import Geolocation from 'react-native-geolocation-service'
 import GeocoderLibrary from 'react-native-geocoding'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Navigation } from 'src/images'
 import ChooseMapTypeModal from './choose_map_type_modal'
+import DateRangePickerModal from './date_range_picker_modal'
 
 interface Props {
   route?: {
@@ -70,8 +65,6 @@ const Map: React.FC<Props> = ({ route }) => {
   const [region, setRegion] = useState<Region>()
   const [onlyOnce, setOnlyOnce] = useState(false)
   const [mapType, setMapType] = useState<MapType>('standard')
-  const [openStartDateModal, setOpenStartDateModal] = useState(false)
-  const [openEndDateModal, setOpenEndDateModal] = useState(false)
   const [dateRange, setDateRange] = useState({
     startDate: new Date(),
     endDate: new Date()
@@ -313,76 +306,12 @@ const Map: React.FC<Props> = ({ route }) => {
         mapType={mapType}
         setMapType={setMapType}
       />
-      <Portal>
-        <Dialog
-          visible={openDatePickerModal}
-          onDismiss={() => setOpenDatePickerModal(false)}
-        >
-          <Box p={2}>
-            <Typography mb={3}>Selecione o período desejado:</Typography>
-            <TouchableOpacity
-              onPress={() => setOpenStartDateModal(true)}
-              mb={3}
-            >
-              <Box pointerEvents="none">
-                <TextInput
-                  label="De"
-                  value={formatDate(dateRange.startDate, { omitHours: true })}
-                />
-              </Box>
-            </TouchableOpacity>
-            {useMemo(() => {
-              return (
-                <>
-                  {openStartDateModal ? (
-                    <DateTimePicker
-                      value={dateRange.startDate}
-                      onChange={(_event, selectedDate) => {
-                        const currentDate = selectedDate || dateRange.startDate
-
-                        setOpenStartDateModal(Platform.OS === 'ios')
-                        setDateRange({ ...dateRange, startDate: currentDate })
-                      }}
-                    />
-                  ) : null}
-                </>
-              )
-            }, [openStartDateModal])}
-            <TouchableOpacity onPress={() => setOpenEndDateModal(true)} mb={3}>
-              <Box pointerEvents="none">
-                <TextInput
-                  label="Até"
-                  value={formatDate(dateRange.endDate, { omitHours: true })}
-                />
-              </Box>
-            </TouchableOpacity>
-            {useMemo(() => {
-              return (
-                <>
-                  {openEndDateModal ? (
-                    <DateTimePicker
-                      value={dateRange.endDate}
-                      onChange={(_event, selectedDate) => {
-                        const currentDate = selectedDate || dateRange.endDate
-
-                        setOpenEndDateModal(Platform.OS === 'ios')
-                        setDateRange({ ...dateRange, endDate: currentDate })
-                      }}
-                    />
-                  ) : null}
-                </>
-              )
-            }, [openEndDateModal])}
-            <Button
-              onPress={() => setOpenDatePickerModal(false)}
-              color="accent"
-              labelStyle={{ color: theme.colors.custom.white }}
-            >
-              Fechar
-            </Button>
-          </Box>
-        </Dialog>
-      </Portal>
+      <DateRangePickerModal
+        openDatePickerModal={openDatePickerModal}
+        setOpenDatePickerModal={setOpenDatePickerModal}
+        dateRange={dateRange}
+        setDateRange={setDateRange}
+      />
     </>
   )
 }
