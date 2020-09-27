@@ -70,6 +70,11 @@ const FloadingList: React.FC<Props> = ({ route }) => {
       return
     }
 
+    if(searchText === '') {
+      setFilteredFloodings(floodings)
+      return
+    }
+
     const newFilteredFloodings = matchSorter(floodings, searchText, {
       keys: [
         'userName',

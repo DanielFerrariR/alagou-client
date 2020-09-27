@@ -22,6 +22,7 @@ export type FloodingsState = {
     userName: string
     userPicture: string
     date: Date
+    loading: boolean
   }[]
 }[]
 

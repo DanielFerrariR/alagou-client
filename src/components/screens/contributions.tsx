@@ -41,6 +41,11 @@ const Contributions: React.FC = () => {
       return
     }
 
+    if (searchText === '') {
+      setFilteredFloodings(floodings)
+      return
+    }
+
     const newFilteredFloodings = matchSorter(floodings, searchText, {
       keys: [
         'userName',

@@ -8,7 +8,8 @@ import {
   Dialog,
   TextInput,
   FlatList,
-  IconButton
+  IconButton,
+  ActivityIndicator
 } from 'src/components/atoms'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useTheme } from 'react-native-paper'
@@ -31,17 +32,26 @@ const ChatModal: React.FC<Props> = ({ open, setOpen, data }) => {
   const theme = useTheme()
   const [message, setMessage] = useState('')
   const dispatch = useDispatch()
-  const invertedMessages = [...data.messages].reverse()
   const dimensions = useWindowDimensions()
+  const [loading, setLoading] = useState(false)
 
   const addMessage = async () => {
-    if (!message) {
-      return
+    try {
+      if (!message) {
+        return
+      }
+
+      setLoading(true)
+
+      setMessage('')
+
+      dispatch(await addComment(data._id, message))
+
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+      console.log(error)
     }
-
-    setMessage('')
-
-    dispatch(await addComment(data._id, message))
   }
 
   return (
@@ -73,7 +83,7 @@ const ChatModal: React.FC<Props> = ({ open, setOpen, data }) => {
               <Box height={320} mb={3}>
                 <FlatList
                   inverted
-                  data={invertedMessages}
+                  data={data.messages}
                   keyExtractor={(item) => String(item._id)}
                   renderItem={({ item, index }) => (
                     <Box
@@ -192,18 +202,42 @@ const ChatModal: React.FC<Props> = ({ open, setOpen, data }) => {
                 <TextInput
                   width={dimensions.width - 148}
                   placeholder="Escreva um comentário"
-                  mt={-0.75}
-                  mr={0.5}
+                  mr={1}
                   onChangeText={(text) => setMessage(text)}
                   value={message}
                 />
-                <TouchableOpacity onPress={addMessage}>
-                  <MaterialCommunityIcons
-                    name="send-circle"
-                    color={theme.colors.primary}
-                    size={64}
-                  />
-                </TouchableOpacity>
+                <Box
+                  mt={1}
+                  height={56}
+                  width={56}
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  {loading ? (
+                    <Box
+                      bgColor="primary"
+                      width={54}
+                      height={54}
+                      borderRadius={54 / 2}
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <ActivityIndicator
+                        animating
+                        size={24}
+                        color="custom.white"
+                      />
+                    </Box>
+                  ) : (
+                    <TouchableOpacity onPress={addMessage} ml={-0.5}>
+                      <MaterialCommunityIcons
+                        name="send-circle"
+                        color={theme.colors.primary}
+                        size={64}
+                      />
+                    </TouchableOpacity>
+                  )}
+                </Box>
               </Box>
             </Box>
           </Dialog>

@@ -40,6 +40,11 @@ const Favorites: React.FC = () => {
       return
     }
 
+    if (searchText === '') {
+      setFilteredFloodings(floodings)
+      return
+    }
+
     const newFilteredFloodings = matchSorter(floodings, searchText, {
       keys: [
         'userName',
