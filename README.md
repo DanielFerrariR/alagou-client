@@ -65,14 +65,12 @@ For development:
 
 ```sh
 API_ADDRESS=http://localhost:3005
-GOOGLE_GEOCODING_API_KEY=AIzaSyDfKeuAG_e553vKXTFA9WGn6qHSDZBVPyY
 ```
 
 For production
 
 ```sh
 API_ADDRESS=https://alagou-server.herokuapp.com
-GOOGLE_GEOCODING_API_KEY=AIzaSyDfKeuAG_e553vKXTFA9WGn6qHSDZBVPyY
 ```
 
 Important notes:
@@ -111,6 +109,7 @@ RNGP_ANDROID_API_KEY=AIzaSyDXVgmoD0ZRnADZVEjjXI4ZSqj_imvyRrs
 Important notes:
 
 - You need to rebuild the app with 'yarn android:dev'.
+- You should restrict the api key usage on Google Cloud Console with this signing key and app name.
 
 5. **Start the app on android with**
 

@@ -20,11 +20,10 @@ import {
   MessageModal
 } from 'src/components/molecules'
 import { useTheme } from 'react-native-paper'
-import GeocoderLibrary from 'react-native-geocoding'
-import { GOOGLE_GEOCODING_API_KEY } from '@env'
 import { editFlooding, FloodingsState } from 'src/store/floodings'
 import { useDispatch } from 'src/store'
 import { Keyboard } from 'react-native'
+import Geocoder from '@timwangdev/react-native-geocoder'
 
 interface Form {
   title: string
@@ -77,13 +76,10 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
     (flooding && flooding.address) || ''
   )
   const theme = useTheme()
-  const Geocoder = GeocoderLibrary as any
   const [loading, setLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | string[]>('')
   const dispatch = useDispatch()
   const [results, setResults] = useState<string[] | null>(null)
-
-  Geocoder.init(GOOGLE_GEOCODING_API_KEY)
 
   const onChange = (name: keyof typeof form, text: string) => {
     setForm({ ...form, [name]: text })
@@ -132,10 +128,10 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
 
       setLoading(true)
 
-      const location = await Geocoder.from(searchAddress)
+      const location = await Geocoder.geocodeAddress(searchAddress)
 
-      const latitude = location.results[0].geometry.location.lat
-      const longitude = location.results[0].geometry.location.lng
+      const latitude = location[0].position.lat
+      const longitude = location[0].position.lng
 
       const editedFlooding = {
         _id: flooding._id,

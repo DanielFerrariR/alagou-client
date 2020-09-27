@@ -1674,6 +1674,11 @@
     merge-deep "^3.0.2"
     svgo "^1.2.2"
 
+"@timwangdev/react-native-geocoder@1.0.0-alpha.5":
+  version "1.0.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/@timwangdev/react-native-geocoder/-/react-native-geocoder-1.0.0-alpha.5.tgz#4fcba360b21d0f305f23cafe759a16566c858049"
+  integrity sha512-coHj3PRVxdw04RlsA2AWWpEV3/Tb1+y23qWxzhgLxU1IXOBlaesAUNoz289Ync/yVrpl5thtbetDEzgFefxgfQ==
+
 "@types/color-convert@*":
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/@types/color-convert/-/color-convert-1.9.0.tgz#bfa8203e41e7c65471e9841d7e306a7cd8b5172d"

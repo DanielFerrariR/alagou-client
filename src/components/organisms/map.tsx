@@ -16,9 +16,9 @@ import { useSelector } from 'src/store'
 import { FloodingsState } from 'src/store/floodings'
 import { isDateInRange } from 'src/utils'
 import Geolocation from 'react-native-geolocation-service'
-import GeocoderLibrary from 'react-native-geocoding'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Navigation } from 'src/images'
+import Geocoder from '@timwangdev/react-native-geocoder'
 import ChooseMapTypeModal from './choose_map_type_modal'
 import DateRangePickerModal from './date_range_picker_modal'
 
@@ -72,7 +72,6 @@ const Map: React.FC<Props> = ({ route }) => {
   const [searchAddress, setSearchAddress] = useState('')
   const [results, setResults] = useState<string[] | null>(null)
   const dimensions = useWindowDimensions()
-  const Geocoder = GeocoderLibrary as any
 
   useEffect(() => {
     const asyncEffect = async () => {
@@ -81,10 +80,10 @@ const Map: React.FC<Props> = ({ route }) => {
           return
         }
 
-        const newLocation = await Geocoder.from(searchAddress)
+        const newLocation = await Geocoder.geocodeAddress(searchAddress)
 
-        const latitude = newLocation.results[0].geometry.location.lat
-        const longitude = newLocation.results[0].geometry.location.lng
+        const latitude = newLocation[0].position.lat
+        const longitude = newLocation[0].position.lng
 
         setRegion({
           latitude,
