@@ -59,10 +59,20 @@
 yarn
 ```
 
-3. **Create a .env file with the required variables:**
+3. **Create a .env and a .env.production file with the respective required variables:**
+
+For development:
 
 ```sh
 API_ADDRESS=http://localhost:3005
+GOOGLE_MAPS_API=https://maps.googleapis.com
+GOOGLE_MAPS_API_KEY=AIzaSyDXVgmoD0ZRnADZVEjjXI4ZSqj_imvyRrs
+```
+
+For production
+
+```sh
+API_ADDRESS=https://alagou-server.herokuapp.com
 GOOGLE_MAPS_API=https://maps.googleapis.com
 GOOGLE_MAPS_API_KEY=AIzaSyDXVgmoD0ZRnADZVEjjXI4ZSqj_imvyRrs
 ```
@@ -135,13 +145,7 @@ $ yarn commit
 
 ## Building for production
 
-1. Updated the API_ADDRESS with the production server address on .env file:
-
-```bash
-API_ADDRESS=https://alagou-server.herokuapp.com
-```
-
-2. **For android**
+1. **For android**
 
 - Generate a private signing key
 
@@ -166,7 +170,7 @@ MYAPP_UPLOAD_KEY_PASSWORD=123456
 yarn android:build:apk
 ```
 
-3. **For ios**
+2. **For ios**
 
 Currently not supported, because I'm missing a mac. It will need some fixes.
 
