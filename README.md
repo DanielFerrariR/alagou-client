@@ -65,7 +65,6 @@ For development:
 
 ```sh
 API_ADDRESS=http://localhost:3005
-GOOGLE_MAPS_API=https://maps.googleapis.com
 GOOGLE_MAPS_API_KEY=AIzaSyDXVgmoD0ZRnADZVEjjXI4ZSqj_imvyRrs
 ```
 
@@ -73,7 +72,6 @@ For production
 
 ```sh
 API_ADDRESS=https://alagou-server.herokuapp.com
-GOOGLE_MAPS_API=https://maps.googleapis.com
 GOOGLE_MAPS_API_KEY=AIzaSyDXVgmoD0ZRnADZVEjjXI4ZSqj_imvyRrs
 ```
 

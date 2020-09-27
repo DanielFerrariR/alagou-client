@@ -18,8 +18,8 @@ import Geolocation from 'react-native-geolocation-service'
 import GeocoderLibrary from 'react-native-geocoding'
 import { GOOGLE_MAPS_API_KEY } from '@env'
 import { useTheme, TextInput as OldTextInput } from 'react-native-paper'
-import { GoogleMapsAPI } from 'src/services'
 import { useWindowDimensions } from 'src/hooks'
+import RNGooglePlaces from 'react-native-google-places'
 import MessageModal from './message_modal'
 
 type Props = {
@@ -28,12 +28,6 @@ type Props = {
   results: string[] | null
   setResults: Dispatch<SetStateAction<string[] | null>>
 } & TextInputProps
-
-interface GetLocationsAxiosResponse {
-  predictions: {
-    description: string
-  }[]
-}
 
 const AddressSearchInput: React.FC<Props> = ({
   searchAddress,
@@ -63,17 +57,16 @@ const AddressSearchInput: React.FC<Props> = ({
 
     const asyncEffect = async () => {
       try {
-        const response = await GoogleMapsAPI.get<GetLocationsAxiosResponse>(
-          `/maps/api/place/autocomplete/json?&input=${encodeURI(
-            searchAddress
-          )}&key=${GOOGLE_MAPS_API_KEY}&language=pt-BR&components=country%3Abr`
+        const response = await RNGooglePlaces.getAutocompletePredictions(
+          searchAddress,
+          { country: 'BR' }
         )
 
-        const newResults = response.data.predictions.map((each) => {
-          return each.description
+        const addresses = response.map((each) => {
+          return each.fullText
         })
 
-        setResults(newResults)
+        setResults(addresses)
 
         if (skipRef.current) {
           inputRef.current.blur()
@@ -81,7 +74,7 @@ const AddressSearchInput: React.FC<Props> = ({
           return
         }
 
-        if (newResults?.length) {
+        if (response?.length) {
           setOpenSearchBox(true)
         } else {
           setOpenSearchBox(false)
