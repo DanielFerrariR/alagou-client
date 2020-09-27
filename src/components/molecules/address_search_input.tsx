@@ -16,7 +16,7 @@ import {
 import { PermissionsAndroid } from 'react-native'
 import Geolocation from 'react-native-geolocation-service'
 import GeocoderLibrary from 'react-native-geocoding'
-import { GOOGLE_MAPS_API_KEY } from '@env'
+import { GOOGLE_GEOCODING_API_KEY } from '@env'
 import { useTheme, TextInput as OldTextInput } from 'react-native-paper'
 import { useWindowDimensions } from 'src/hooks'
 import RNGooglePlaces from 'react-native-google-places'
@@ -46,7 +46,7 @@ const AddressSearchInput: React.FC<Props> = ({
   const [errorMessage, setErrorMessage] = useState<string | string[]>('')
   const dimensions = useWindowDimensions()
 
-  Geocoder.init(GOOGLE_MAPS_API_KEY)
+  Geocoder.init(GOOGLE_GEOCODING_API_KEY)
 
   useEffect(() => {
     if (!initialRender) {

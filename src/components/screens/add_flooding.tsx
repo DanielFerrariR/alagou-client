@@ -21,7 +21,7 @@ import {
 } from 'src/components/molecules'
 import { useTheme } from 'react-native-paper'
 import GeocoderLibrary from 'react-native-geocoding'
-import { GOOGLE_MAPS_API_KEY } from '@env'
+import { GOOGLE_GEOCODING_API_KEY } from '@env'
 import { createFlooding } from 'src/store/floodings'
 import { useDispatch } from 'src/store'
 import { Keyboard } from 'react-native'
@@ -70,7 +70,7 @@ const AddFlodding: React.FC = () => {
   const dispatch = useDispatch()
   const Geocoder = GeocoderLibrary as any
 
-  Geocoder.init(GOOGLE_MAPS_API_KEY)
+  Geocoder.init(GOOGLE_GEOCODING_API_KEY)
 
   useEffect(() => {
     setErrors({ ...errors, searchAddress: false })

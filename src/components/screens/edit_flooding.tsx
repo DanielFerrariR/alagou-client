@@ -21,7 +21,7 @@ import {
 } from 'src/components/molecules'
 import { useTheme } from 'react-native-paper'
 import GeocoderLibrary from 'react-native-geocoding'
-import { GOOGLE_MAPS_API_KEY } from '@env'
+import { GOOGLE_GEOCODING_API_KEY } from '@env'
 import { editFlooding, FloodingsState } from 'src/store/floodings'
 import { useDispatch } from 'src/store'
 import { Keyboard } from 'react-native'
@@ -83,7 +83,7 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
   const dispatch = useDispatch()
   const [results, setResults] = useState<string[] | null>(null)
 
-  Geocoder.init(GOOGLE_MAPS_API_KEY)
+  Geocoder.init(GOOGLE_GEOCODING_API_KEY)
 
   const onChange = (name: keyof typeof form, text: string) => {
     setForm({ ...form, [name]: text })

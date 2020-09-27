@@ -65,14 +65,14 @@ For development:
 
 ```sh
 API_ADDRESS=http://localhost:3005
-GOOGLE_MAPS_API_KEY=AIzaSyDXVgmoD0ZRnADZVEjjXI4ZSqj_imvyRrs
+GOOGLE_GEOCODING_API_KEY=AIzaSyDfKeuAG_e553vKXTFA9WGn6qHSDZBVPyY
 ```
 
 For production
 
 ```sh
 API_ADDRESS=https://alagou-server.herokuapp.com
-GOOGLE_MAPS_API_KEY=AIzaSyDXVgmoD0ZRnADZVEjjXI4ZSqj_imvyRrs
+GOOGLE_GEOCODING_API_KEY=AIzaSyDfKeuAG_e553vKXTFA9WGn6qHSDZBVPyY
 ```
 
 Important notes:
@@ -88,17 +88,37 @@ android:name="com.google.android.geo.API_KEY"
 android:value="YOUR_API_KEY" />
 ```
 
+4. **Create a signing key and set it and the Google Places API Key on gradle.properties**
+
+- Generate a private signing key
+
+```bash
+yarn android:key
+```
+
+- move 'my-upload-key.keystore' to 'android/app'
+
+- Change the 'android/gradle.properties' with the key password
+
+```bash
+MYAPP_UPLOAD_STORE_FILE=my-upload-key.keystore
+MYAPP_UPLOAD_KEY_ALIAS=my-key-alias
+MYAPP_UPLOAD_STORE_PASSWORD=9vzEKb4h9u
+MYAPP_UPLOAD_KEY_PASSWORD=9vzEKb4h9u
+RNGP_ANDROID_API_KEY=AIzaSyDXVgmoD0ZRnADZVEjjXI4ZSqj_imvyRrs
+```
+
 Important notes:
 
 - You need to rebuild the app with 'yarn android:dev'.
 
-4. **Start the app on android with**
+5. **Start the app on android with**
 
 ```sh
 yarn android:dev
 ```
 
-5. **Commands**
+6. **Commands**
 
 ```bash
 # Installs all dependendies
@@ -144,23 +164,6 @@ $ yarn commit
 ## Building for production
 
 1. **For android**
-
-- Generate a private signing key
-
-```bash
-yarn android:key
-```
-
-- move 'my-upload-key.keystore' to 'android/app'
-
-- Change the 'android/gradle.properties' with the key password
-
-```bash
-MYAPP_UPLOAD_STORE_FILE=my-upload-key.keystore
-MYAPP_UPLOAD_KEY_ALIAS=my-key-alias
-MYAPP_UPLOAD_STORE_PASSWORD=9vzEKb4h9u
-MYAPP_UPLOAD_KEY_PASSWORD=9vzEKb4h9u
-```
 
 - Generate the build with:
 

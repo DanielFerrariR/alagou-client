@@ -10,7 +10,7 @@ import { structuredArray } from 'src/utils'
 import { useDispatch } from 'src/store'
 import { uploadFloodingsCSV } from 'src/store/floodings'
 import GeocoderLibrary from 'react-native-geocoding'
-import { GOOGLE_MAPS_API_KEY } from '@env'
+import { GOOGLE_GEOCODING_API_KEY } from '@env'
 import { toLatLon } from 'utm'
 
 type CSVData = string[][]
@@ -30,7 +30,7 @@ const Administration: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [successMessage, setSuccessMessage] = useState<string | string[]>('')
 
-  Geocoder.init(GOOGLE_MAPS_API_KEY)
+  Geocoder.init(GOOGLE_GEOCODING_API_KEY)
 
   const pickCSV = async () => {
     try {
