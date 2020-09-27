@@ -16,7 +16,8 @@
     "android:prod": "react-native run-android --variant=release",
     "android:build:apk": "cd android && ./gradlew assembleRelease",
     "android:build:aab": "cd android && ./gradlew bundleRelease",
-    "android:key": "keytool -genkeypair -v -keystore my-upload-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000"
+    "android:key": "keytool -genkeypair -v -keystore my-upload-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000",
+    "android:check-key": "keytool -list -v -keystore android/app/my-upload-key.keystore -alias my-key-alias"
   },
   "config": {
     "commitizen": {
