@@ -12,12 +12,12 @@ import {
   ActivityIndicator
 } from 'src/components/atoms'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { useTheme } from 'react-native-paper'
 import { formatDate } from 'src/utils'
 import ImageView from 'react-native-image-viewing'
 import { useSelector, useDispatch } from 'src/store'
 import { useIsKeyboardShown, useWindowDimensions } from 'src/hooks'
 import { FloodingsState, addComment } from 'src/store/floodings'
+import { useTheme, TextInput as OldTextInput } from 'react-native-paper'
 
 interface Props {
   open: boolean
@@ -198,46 +198,27 @@ const ChatModal: React.FC<Props> = ({ open, setOpen, data }) => {
                   )}
                 />
               </Box>
-              <Box flexDirection="row" alignItems="center">
+              <Box>
                 <TextInput
-                  width={dimensions.width - 148}
                   placeholder="Escreva um comentário"
-                  mr={1}
                   onChangeText={(text) => setMessage(text)}
                   value={message}
+                  right={
+                    <OldTextInput.Icon
+                      color={theme.colors.placeholder}
+                      onPress={addMessage}
+                      name="send"
+                      style={{
+                        display: loading ? 'none' : undefined
+                      }}
+                    />
+                  }
                 />
-                <Box
-                  mt={1}
-                  height={56}
-                  width={56}
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  {loading ? (
-                    <Box
-                      bgColor="primary"
-                      width={54}
-                      height={54}
-                      borderRadius={54 / 2}
-                      alignItems="center"
-                      justifyContent="center"
-                    >
-                      <ActivityIndicator
-                        animating
-                        size={24}
-                        color="custom.white"
-                      />
-                    </Box>
-                  ) : (
-                    <TouchableOpacity onPress={addMessage} ml={-0.5}>
-                      <MaterialCommunityIcons
-                        name="send-circle"
-                        color={theme.colors.primary}
-                        size={64}
-                      />
-                    </TouchableOpacity>
-                  )}
-                </Box>
+                {loading ? (
+                  <Box position="absolute" top="23px" right="15px">
+                    <ActivityIndicator animating size={24} color="accent" />
+                  </Box>
+                ) : null}
               </Box>
             </Box>
           </Dialog>

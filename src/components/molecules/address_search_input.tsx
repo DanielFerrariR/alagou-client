@@ -195,8 +195,8 @@ const AddressSearchInput: React.FC<Props> = ({
               {...rest}
             />
             {loadingLocation ? (
-              <Box position="absolute" top="26px" right="15px">
-                <ActivityIndicator animating size={18} color="accent" />
+              <Box position="absolute" top="23px" right="15px">
+                <ActivityIndicator animating size={24} color="accent" />
               </Box>
             ) : null}
           </Box>
