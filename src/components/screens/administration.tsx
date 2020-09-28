@@ -147,7 +147,7 @@ const Administration: React.FC = () => {
           description: 'File downloaded by download manager.',
           path: pathToWrite
         }
-      }).fetch('GET', `${API_ADDRESS}/download-csv`, headers)
+      }).fetch('GET', `${API_ADDRESS}/floodings-csv`, headers)
 
       setSuccessMessage('CSV exportado para a pasta Downloads com sucesso!')
 
