@@ -38,7 +38,6 @@
     "eventemitter3": "4.0.7",
     "match-sorter": "4.2.1",
     "metro-config": "0.63.0",
-    "nanoid": "3.1.12",
     "papaparse": "5.3.0",
     "react": "16.13.1",
     "react-native": "0.63.2",
