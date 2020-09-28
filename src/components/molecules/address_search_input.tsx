@@ -182,6 +182,7 @@ const AddressSearchInput: React.FC<Props> = ({
                     color={theme.colors.placeholder}
                     onPress={() => setSearchAddress('')}
                     name="close"
+                    style={{ display: loadingLocation ? 'none' : undefined }}
                   />
                 ) : (
                   <OldTextInput.Icon
