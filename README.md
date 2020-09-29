@@ -162,7 +162,7 @@ $ yarn commit
 
 ## Building for production
 
-1. **Change the version code in android/build.gradle.**
+1. **Change the version code in android/app/build.gradle.**
 
 2. **For android**
 
