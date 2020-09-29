@@ -162,7 +162,9 @@ $ yarn commit
 
 ## Building for production
 
-1. **For android**
+1. **Change the version code in android/build.gradle.**
+
+2. **For android**
 
 - Generate the build with:
 
@@ -170,7 +172,7 @@ $ yarn commit
 yarn android:build:apk
 ```
 
-2. **For ios**
+3. **For ios**
 
 Currently not supported, because I'm missing a mac. It will need some fixes.
 
