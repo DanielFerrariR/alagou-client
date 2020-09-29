@@ -94,8 +94,6 @@ android:value="YOUR_API_KEY" />
 yarn android:key
 ```
 
-- move 'my-upload-key.keystore' to 'android/app'
-
 - Change the 'android/gradle.properties' with the key password
 
 ```bash
