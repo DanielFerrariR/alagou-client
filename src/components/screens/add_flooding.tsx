@@ -24,7 +24,7 @@ import { createFlooding } from 'src/store/floodings'
 import { useDispatch } from 'src/store'
 import { Keyboard } from 'react-native'
 import GeocoderLibrary from 'react-native-geocoding'
-import { GOOGLE_API_KEY } from '@env'
+import { GOOGLE_MAPS_APIKEY } from '@env'
 
 interface Form {
   title: string
@@ -69,7 +69,7 @@ const AddFlodding: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | string[]>('')
   const dispatch = useDispatch()
   const Geocoder = GeocoderLibrary as any
-  Geocoder.init(GOOGLE_API_KEY)
+  Geocoder.init(GOOGLE_MAPS_APIKEY)
 
   useEffect(() => {
     setErrors({ ...errors, searchAddress: false })

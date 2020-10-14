@@ -65,14 +65,14 @@ For development:
 
 ```sh
 API_ADDRESS=http://localhost:3005
-GOOGLE_API_KEY=AIzaSyCe8ZxzuGikY1DgHTbIluJqmgKnjrShAOk
+GOOGLE_MAPS_APIKEY=AIzaSyCe8ZxzuGikY1DgHTbIluJqmgKnjrShAOk
 ```
 
 For production
 
 ```sh
 API_ADDRESS=https://alagou-server.herokuapp.com
-GOOGLE_API_KEY=AIzaSyCe8ZxzuGikY1DgHTbIluJqmgKnjrShAOk
+GOOGLE_MAPS_APIKEY=AIzaSyCe8ZxzuGikY1DgHTbIluJqmgKnjrShAOk
 ```
 
 Important notes:

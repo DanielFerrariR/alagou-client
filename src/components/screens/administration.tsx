@@ -10,7 +10,7 @@ import { structuredArray } from 'src/utils'
 import { useDispatch } from 'src/store'
 import { uploadFloodingsCSV } from 'src/store/floodings'
 import GeocoderLibrary from 'react-native-geocoding'
-import { API_ADDRESS, GOOGLE_API_KEY } from '@env'
+import { API_ADDRESS, GOOGLE_MAPS_APIKEY } from '@env'
 import { toLatLon } from 'utm'
 import RNFetchBlob from 'rn-fetch-blob'
 import AsyncStorage from '@react-native-community/async-storage'
@@ -33,7 +33,7 @@ const Administration: React.FC = () => {
   const [successMessage, setSuccessMessage] = useState<string | string[]>('')
   const [errorMessage, setErrorMessage] = useState<string | string[]>('')
   const Geocoder = GeocoderLibrary as any
-  Geocoder.init(GOOGLE_API_KEY)
+  Geocoder.init(GOOGLE_MAPS_APIKEY)
 
   const pickCSV = async () => {
     try {
