@@ -18,7 +18,8 @@ import { isDateInRange } from 'src/utils'
 import Geolocation from 'react-native-geolocation-service'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Navigation } from 'src/images'
-import Geocoder from '@timwangdev/react-native-geocoder'
+import GeocoderLibrary from 'react-native-geocoding'
+import { GOOGLE_API_KEY } from '@env'
 import ChooseMapTypeModal from './choose_map_type_modal'
 import DateRangePickerModal from './date_range_picker_modal'
 
@@ -72,6 +73,8 @@ const Map: React.FC<Props> = ({ route }) => {
   const [searchAddress, setSearchAddress] = useState('')
   const [results, setResults] = useState<string[] | null>(null)
   const dimensions = useWindowDimensions()
+  const Geocoder = GeocoderLibrary as any
+  Geocoder.init(GOOGLE_API_KEY)
 
   useEffect(() => {
     const asyncEffect = async () => {
@@ -80,10 +83,10 @@ const Map: React.FC<Props> = ({ route }) => {
           return
         }
 
-        const newLocation = await Geocoder.geocodeAddress(searchAddress)
+        const newLocation = await Geocoder.from(searchAddress)
 
-        const latitude = newLocation[0].position.lat
-        const longitude = newLocation[0].position.lng
+        const latitude = newLocation.results[0].geometry.location.lat
+        const longitude = newLocation.results[0].geometry.location.lng
 
         setRegion({
           latitude,

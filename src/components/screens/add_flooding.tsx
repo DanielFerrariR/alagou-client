@@ -23,7 +23,8 @@ import { useTheme } from 'react-native-paper'
 import { createFlooding } from 'src/store/floodings'
 import { useDispatch } from 'src/store'
 import { Keyboard } from 'react-native'
-import Geocoder from '@timwangdev/react-native-geocoder'
+import GeocoderLibrary from 'react-native-geocoding'
+import { GOOGLE_API_KEY } from '@env'
 
 interface Form {
   title: string
@@ -67,6 +68,8 @@ const AddFlodding: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | string[]>('')
   const dispatch = useDispatch()
+  const Geocoder = GeocoderLibrary as any
+  Geocoder.init(GOOGLE_API_KEY)
 
   useEffect(() => {
     setErrors({ ...errors, searchAddress: false })
@@ -119,10 +122,10 @@ const AddFlodding: React.FC = () => {
 
       setLoading(true)
 
-      const location = await Geocoder.geocodeAddress(searchAddress)
+      const location = await Geocoder.from(searchAddress)
 
-      const latitude = location[0].position.lat
-      const longitude = location[0].position.lng
+      const latitude = location.results[0].geometry.location.lat
+      const longitude = location.results[0].geometry.location.lng
 
       const newFlooding = {
         title: form.title,

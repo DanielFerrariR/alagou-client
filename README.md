@@ -65,12 +65,14 @@ For development:
 
 ```sh
 API_ADDRESS=http://localhost:3005
+GOOGLE_API_KEY=AIzaSyCe8ZxzuGikY1DgHTbIluJqmgKnjrShAOk
 ```
 
 For production
 
 ```sh
 API_ADDRESS=https://alagou-server.herokuapp.com
+GOOGLE_API_KEY=AIzaSyCe8ZxzuGikY1DgHTbIluJqmgKnjrShAOk
 ```
 
 Important notes:
@@ -97,11 +99,11 @@ yarn android:key
 - Change the 'android/gradle.properties' with the key password
 
 ```bash
-MYAPP_UPLOAD_STORE_FILE=my-upload-key.keystore
+MYAPP_UPLOAD_STORE_FILE=my-upload-key.keystoreAIzaSyDXVgmoD0ZRnADZVEjjXI4ZSqj_imvyRrs
 MYAPP_UPLOAD_KEY_ALIAS=my-key-alias
 MYAPP_UPLOAD_STORE_PASSWORD=9vzEKb4h9u
 MYAPP_UPLOAD_KEY_PASSWORD=9vzEKb4h9u
-RNGP_ANDROID_API_KEY=AIzaSyDXVgmoD0ZRnADZVEjjXI4ZSqj_imvyRrs
+RNGP_ANDROID_API_KEY=AIzaSyCe8ZxzuGikY1DgHTbIluJqmgKnjrShAOk
 ```
 
 Important notes:

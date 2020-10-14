@@ -9,10 +9,10 @@ import fs from 'react-native-fs'
 import { structuredArray } from 'src/utils'
 import { useDispatch } from 'src/store'
 import { uploadFloodingsCSV } from 'src/store/floodings'
-import Geocoder from '@timwangdev/react-native-geocoder'
+import GeocoderLibrary from 'react-native-geocoding'
+import { API_ADDRESS, GOOGLE_API_KEY } from '@env'
 import { toLatLon } from 'utm'
 import RNFetchBlob from 'rn-fetch-blob'
-import { API_ADDRESS } from '@env'
 import AsyncStorage from '@react-native-community/async-storage'
 
 type CSVData = string[][]
@@ -32,6 +32,8 @@ const Administration: React.FC = () => {
   const [loadingExport, setLoadingExport] = useState(false)
   const [successMessage, setSuccessMessage] = useState<string | string[]>('')
   const [errorMessage, setErrorMessage] = useState<string | string[]>('')
+  const Geocoder = GeocoderLibrary as any
+  Geocoder.init(GOOGLE_API_KEY)
 
   const pickCSV = async () => {
     try {
@@ -78,12 +80,9 @@ const Administration: React.FC = () => {
               'L'
             )
 
-            const addressResponse = await Geocoder.geocodePosition({
-              lat: latitude,
-              lng: longitude
-            })
+            const addressResponse = await Geocoder.from(latitude, longitude)
 
-            const address = addressResponse[0].formattedAddress
+            const address = addressResponse.results[0].formatted_address
 
             return {
               title: each.title,

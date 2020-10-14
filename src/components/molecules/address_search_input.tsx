@@ -18,7 +18,8 @@ import Geolocation from 'react-native-geolocation-service'
 import { useTheme, TextInput as OldTextInput } from 'react-native-paper'
 import { useWindowDimensions } from 'src/hooks'
 import RNGooglePlaces from 'react-native-google-places'
-import Geocoder from '@timwangdev/react-native-geocoder'
+import GeocoderLibrary from 'react-native-geocoding'
+import { GOOGLE_API_KEY } from '@env'
 import MessageModal from './message_modal'
 
 type Props = {
@@ -43,6 +44,8 @@ const AddressSearchInput: React.FC<Props> = ({
   const skipRef = useRef<boolean>(false)
   const [errorMessage, setErrorMessage] = useState<string | string[]>('')
   const dimensions = useWindowDimensions()
+  const Geocoder = GeocoderLibrary as any
+  Geocoder.init(GOOGLE_API_KEY)
 
   useEffect(() => {
     if (!initialRender) {
@@ -107,14 +110,12 @@ const AddressSearchInput: React.FC<Props> = ({
       Geolocation.getCurrentPosition(
         async (position) => {
           try {
-            const response = await Geocoder.geocodePosition({
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            })
+            const response = await Geocoder.from(
+              position.coords.latitude,
+              position.coords.longitude
+            )
 
-            const address = response[0].formattedAddress
-
-            console.log(address)
+            const address = response.results[0].formatted_address
 
             skipRef.current = true
             setSearchAddress(address)
