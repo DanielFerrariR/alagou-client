@@ -20,7 +20,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { Navigation } from 'src/images'
 import GeocoderLibrary from 'react-native-geocoding'
 import { GOOGLE_MAPS_APIKEY } from '@env'
-import MapViewDirections from 'react-native-maps-directions'
 import ChooseMapTypeModal from './choose_map_type_modal'
 import DateRangePickerModal from './date_range_picker_modal'
 
@@ -76,8 +75,6 @@ const Map: React.FC<Props> = ({ route }) => {
   const dimensions = useWindowDimensions()
   const Geocoder = GeocoderLibrary as any
   Geocoder.init(GOOGLE_MAPS_APIKEY)
-  const origin = { latitude: 37.3318456, longitude: -122.0296002 }
-  const destination = { latitude: 37.771707, longitude: -122.4053769 }
 
   useEffect(() => {
     const asyncEffect = async () => {
@@ -275,11 +272,6 @@ const Map: React.FC<Props> = ({ route }) => {
                   )
                 })
               : null}
-            <MapViewDirections
-              origin={origin}
-              destination={destination}
-              apikey={GOOGLE_MAPS_APIKEY}
-            />
           </MapView>
         )}
       </Box>

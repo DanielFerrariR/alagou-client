@@ -3246,6 +3246,11 @@ decamelize@^1.2.0:
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
   integrity sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=
 
+decode-google-map-polyline@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/decode-google-map-polyline/-/decode-google-map-polyline-1.0.1.tgz#d9a708410db4e8dea03d2df00e6e96315784ec51"
+  integrity sha1-2acIQQ206N6gPS3wDm6WMVeE7FE=
+
 decode-uri-component@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
@@ -4385,6 +4390,11 @@ globals@^12.1.0:
   integrity sha512-BWICuzzDvDoH54NHKCseDanAhE3CeDorgDL5MT6LMXXj2WCnd9UC2szdk4AWLfjdgNBCXLUanXYcpBBKOSWGwg==
   dependencies:
     type-fest "^0.8.1"
+
+google-polyline@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/google-polyline/-/google-polyline-1.0.3.tgz#b1fafd8841059f7049d4ba6767c386be979510dc"
+  integrity sha512-36BnqVxmVcR8lTvzO6aeXdICNChAwQLlfMkR1P9IBpTWE8hA6bAbQHCVArwMHB5WIMq9owywtAkjioe3crNq4Q==
 
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.3, graceful-fs@^4.1.6, graceful-fs@^4.1.9, graceful-fs@^4.2.0, graceful-fs@^4.2.4:
   version "4.2.4"
@@ -7189,14 +7199,6 @@ react-native-localize@1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/react-native-localize/-/react-native-localize-1.4.1.tgz#031bd2089f09cc16ee7daee03019684dda60c275"
   integrity sha512-g1L1au6GtCd0Ci6lQ8JVPYgl7uvEtKY2jeVghJcV6qQEN9+qACyqjOIR8pskUyI+qcSj1z4/nZh3IFxDVu1drw==
-
-react-native-maps-directions@1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/react-native-maps-directions/-/react-native-maps-directions-1.8.0.tgz#ced452efeb153e54dfb9315480b0ae9539dfbcc7"
-  integrity sha512-7KWfPrvPLU8VP2nEqsnrWlOuylidlRWWDdk3lqT5Nb1q87FeyzNgA7Ib7n6cZlQwH4usTRlJSnzNo/yQ3u4AZw==
-  dependencies:
-    lodash.isequal "^4.5.0"
-    prop-types "^15.6.0"
 
 react-native-maps@0.27.1:
   version "0.27.1"

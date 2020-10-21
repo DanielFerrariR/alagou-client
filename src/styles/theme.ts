@@ -23,6 +23,7 @@ declare global {
         error: string
         success: string
         warning: string
+        navigationRoute: string
       }
     }
   }
@@ -47,7 +48,8 @@ const custom = {
   email: '#00b034',
   error: '#f44336',
   success: '#388e3c',
-  warning: '#ff9800'
+  warning: '#ff9800',
+  navigationRoute: '#1E88E5'
 }
 
 const theme = {
