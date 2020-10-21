@@ -153,6 +153,7 @@ const AddressSearchInput: React.FC<Props> = ({
   const onClickMenuitem = (item: string) => {
     if (searchAddress === item) {
       inputRef.current.blur()
+      setOpenSearchBox(false)
 
       return
     }
