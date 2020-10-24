@@ -71,11 +71,13 @@ const Administration: React.FC = () => {
 
           newFloodings = [].concat(...(newFloodings as any)) as DataStructure
 
-          newFloodings = newFloodings.map(async (each) => {
-            const dateArray = each.date.split('/')
+          const fetchedFloodings = []
+
+          for (const newFlooding of newFloodings) {
+            const dateArray = newFlooding.date.split('/')
             const { latitude, longitude } = toLatLon(
-              Number(each.coordinateX.replace(',', '.')),
-              Number(each.coordinateY.replace(',', '.')),
+              Number(newFlooding.coordinateX.replace(',', '.')),
+              Number(newFlooding.coordinateY.replace(',', '.')),
               23,
               'L'
             )
@@ -84,8 +86,8 @@ const Administration: React.FC = () => {
 
             const address = addressResponse.results[0].formatted_address
 
-            return {
-              title: each.title,
+            fetchedFloodings.push({
+              title: newFlooding.title,
               longitude,
               latitude,
               address,
@@ -95,13 +97,12 @@ const Administration: React.FC = () => {
               ).getTime(),
               picture: '',
               omitHours: true,
-              isVerified: true
-            }
-          })
+              isVerified: true,
+              precipitationAmount: -1
+            })
+          }
 
-          newFloodings = await Promise.all(newFloodings)
-
-          dispatch(await uploadFloodingsCSV(newFloodings))
+          dispatch(await uploadFloodingsCSV(fetchedFloodings))
 
           setLoadingImport(false)
           setSuccessMessage('Alagamentos importados com sucesso!')

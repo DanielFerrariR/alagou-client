@@ -22,7 +22,8 @@
     "no-underscore-dangle": "off",
     "react/no-array-index-key": "off",
     "import/no-mutable-exports": "off",
-    "no-param-reassign": "off"
+    "no-param-reassign": "off",
+    "no-await-in-loop": "off"
   },
   "overrides": [
     {
@@ -60,7 +61,8 @@
         "import/no-mutable-exports": "off",
         "no-param-reassign": "off",
         "@typescript-eslint/naming-convention": "off",
-        "@typescript-eslint/no-var-requires": "off"
+        "@typescript-eslint/no-var-requires": "off",
+        "no-await-in-loop": "off"
       }
     }
   ]

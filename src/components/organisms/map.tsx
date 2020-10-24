@@ -14,7 +14,7 @@ import { useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'src/store'
 import { FloodingsState } from 'src/store/floodings'
-import { isDateInRange } from 'src/utils'
+import { isDateInRange, forecastFloodingDay, isSameDay } from 'src/utils'
 import Geolocation from 'react-native-geolocation-service'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Navigation } from 'src/images'
@@ -272,6 +272,47 @@ const Map: React.FC<Props> = ({ route }) => {
                   )
                 })
               : null}
+            {floodings &&
+              floodings.map((each) => {
+                if (isSameDay(new Date(each.date), new Date())) {
+                  return null
+                }
+
+                if (!forecastFloodingDay(each.latitude, each.longitude)) {
+                  return null
+                }
+
+                return (
+                  <Marker
+                    key={each._id}
+                    zIndex={-1}
+                    coordinate={{
+                      latitude: each.latitude,
+                      longitude: each.longitude
+                    }}
+                    tracksViewChanges={false}
+                  >
+                    <MaterialCommunityIcons
+                      name="alert"
+                      size={32}
+                      color={theme.colors.custom.danger}
+                    />
+                    <Callout>
+                      <Box width={200}>
+                        <Typography
+                          ellipsizeMode="tail"
+                          numberOfLines={3}
+                          variant="h3"
+                        >
+                          <Typography variant="h3">
+                            O local tem risco de alagar hoje.
+                          </Typography>
+                        </Typography>
+                      </Box>
+                    </Callout>
+                  </Marker>
+                )
+              })}
           </MapView>
         )}
       </Box>

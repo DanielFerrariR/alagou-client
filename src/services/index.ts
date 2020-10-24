@@ -1,2 +1,2 @@
-// eslint-disable-next-line import/prefer-default-export
 export { default as serverAPI } from './server_api'
+export { default as weatherAPI } from './weather_api'

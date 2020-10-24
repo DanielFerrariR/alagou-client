@@ -24,7 +24,7 @@ import { editFlooding, FloodingsState } from 'src/store/floodings'
 import { useDispatch } from 'src/store'
 import { Keyboard } from 'react-native'
 import GeocoderLibrary from 'react-native-geocoding'
-import { API_ADDRESS, GOOGLE_MAPS_APIKEY } from '@env'
+import { GOOGLE_MAPS_APIKEY } from '@env'
 
 interface Form {
   title: string

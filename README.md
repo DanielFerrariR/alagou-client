@@ -66,6 +66,7 @@ For development:
 ```sh
 API_ADDRESS=http://localhost:3005
 GOOGLE_MAPS_APIKEY=AIzaSyCe8ZxzuGikY1DgHTbIluJqmgKnjrShAOk
+WEATHER_API_KEY=4ca644f65d10490890b31004202010
 ```
 
 For production
@@ -73,6 +74,7 @@ For production
 ```sh
 API_ADDRESS=https://alagou-server.herokuapp.com
 GOOGLE_MAPS_APIKEY=AIzaSyCe8ZxzuGikY1DgHTbIluJqmgKnjrShAOk
+WEATHER_API_KEY=4ca644f65d10490890b31004202010
 ```
 
 Important notes:
