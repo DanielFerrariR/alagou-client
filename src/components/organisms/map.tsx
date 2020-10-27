@@ -63,6 +63,7 @@ const Map: React.FC<Props> = ({ route }) => {
     filteredFloodings,
     setFilteredFloodings
   ] = useState<FloodingsState | null>(null)
+  const [markers, setMarkers] = useState<FloodingsState | null>(null)
   const [region, setRegion] = useState<Region>()
   const [onlyOnce, setOnlyOnce] = useState(false)
   const [mapType, setMapType] = useState<MapType>('standard')
@@ -75,6 +76,56 @@ const Map: React.FC<Props> = ({ route }) => {
   const dimensions = useWindowDimensions()
   const Geocoder = GeocoderLibrary as any
   Geocoder.init(GOOGLE_MAPS_APIKEY)
+
+  useEffect(() => {
+    const asyncEffect = async () => {
+      if (floodings) {
+        const todayFloodingsAddress = floodings
+          .filter((each) => {
+            if (isSameDay(new Date(each.date), new Date())) {
+              return true
+            }
+
+            return false
+          })
+          .map((each) => {
+            return each.address
+          })
+
+        const newFloodings = []
+
+        for (const flooding of floodings) {
+          if (todayFloodingsAddress.includes(flooding.address)) {
+            continue
+          }
+
+          if (
+            new Date(
+              new Date(flooding.date).getTime() + 1000 * 60 * 60 * 24 * 7
+            ) < new Date()
+          ) {
+            continue
+          }
+
+          if (
+            !(await forecastFloodingDay(
+              flooding.latitude,
+              flooding.longitude,
+              flooding.date
+            ))
+          ) {
+            continue
+          }
+
+          newFloodings.push(flooding)
+        }
+
+        setMarkers(newFloodings)
+      }
+    }
+
+    asyncEffect()
+  }, [floodings])
 
   useEffect(() => {
     const asyncEffect = async () => {
@@ -272,16 +323,8 @@ const Map: React.FC<Props> = ({ route }) => {
                   )
                 })
               : null}
-            {floodings &&
-              floodings.map((each) => {
-                if (isSameDay(new Date(each.date), new Date())) {
-                  return null
-                }
-
-                if (!forecastFloodingDay(each.latitude, each.longitude)) {
-                  return null
-                }
-
+            {markers &&
+              markers.map((each) => {
                 return (
                   <Marker
                     key={each._id}

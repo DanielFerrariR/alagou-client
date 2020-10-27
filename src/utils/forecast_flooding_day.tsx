@@ -124,50 +124,57 @@ interface WeatherForecastResponse {
 
 const forecastFloodingDay = async (
   latitude: number,
-  longitude: number
+  longitude: number,
+  date: Date
 ): Promise<boolean> => {
-  const todayResponse = await weatherAPI.get<WeatherForecastResponse>(
-    `/history.json?key=${WEATHER_API_KEY}&q=${latitude},${longitude}&dt=${formatDate(
-      new Date(),
-      { weatherApiFormat: true }
-    )}`
-  )
-
-  const todayPrecipitationAmount =
-    todayResponse.data.forecast.forecastday[0].day.totalprecip_mm
-
-  const historyPrecipitationAmount = []
-
-  for (let count = 0; count < 8; count += 1) {
-    const day = formatDate(
-      new Date(+new Date() - 1000 * 60 * 60 * 24 * count),
-      {
-        weatherApiFormat: true
-      }
+  try {
+    const todayResponse = await weatherAPI.get<WeatherForecastResponse>(
+      `/history.json?key=${WEATHER_API_KEY}&q=${latitude},${longitude}&dt=${formatDate(
+        new Date(date),
+        { weatherApiFormat: true }
+      )}`
     )
 
-    const historyResponse = await weatherAPI.get<WeatherForecastResponse>(
-      `/history.json?key=${WEATHER_API_KEY}&q=${latitude},${longitude}&dt=${day}`
-    )
+    const todayPrecipitationAmount =
+      todayResponse.data.forecast.forecastday[0].day.totalprecip_mm
 
-    historyPrecipitationAmount.push(
-      historyResponse.data.forecast.forecastday[0].day.totalprecip_mm
-    )
+    const historyPrecipitationAmount = []
+
+    for (let count = 0; count < 8; count += 1) {
+      const day = formatDate(
+        new Date(new Date(date).getTime() - 1000 * 60 * 60 * 24 * count),
+        {
+          weatherApiFormat: true
+        }
+      )
+
+      const historyResponse = await weatherAPI.get<WeatherForecastResponse>(
+        `/history.json?key=${WEATHER_API_KEY}&q=${latitude},${longitude}&dt=${day}`
+      )
+
+      historyPrecipitationAmount.push(
+        historyResponse.data.forecast.forecastday[0].day.totalprecip_mm
+      )
+    }
+
+    let precipitationRange = 0
+
+    for (const value of historyPrecipitationAmount) {
+      precipitationRange += value
+    }
+
+    precipitationRange /= historyPrecipitationAmount.length
+
+    if ((todayPrecipitationAmount / precipitationRange) * 100 >= 70) {
+      return true
+    }
+
+    return false
+  } catch (error) {
+    console.log(error)
+
+    return false
   }
-
-  let precipitationRange = 0
-
-  for (const value of historyPrecipitationAmount) {
-    precipitationRange += value
-  }
-
-  precipitationRange /= historyPrecipitationAmount.length
-
-  if ((todayPrecipitationAmount / precipitationRange) * 100 >= 70) {
-    return true
-  }
-
-  return false
 }
 
 export default forecastFloodingDay

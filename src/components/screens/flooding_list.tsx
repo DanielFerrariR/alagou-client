@@ -56,7 +56,15 @@ const FloadingList: React.FC<Props> = ({ route }) => {
 
   useEffect(() => {
     if (floodings && route?.params) {
-      setFilteredFloodings(route.params.data)
+      const newFloodings = route.params.data.filter((each) => {
+        if (floodings.find((element) => element._id === each._id)) {
+          return true
+        }
+
+        return false
+      })
+
+      setFilteredFloodings(newFloodings)
       setIsRouteFiltered(true)
 
       return
@@ -70,7 +78,7 @@ const FloadingList: React.FC<Props> = ({ route }) => {
       return
     }
 
-    if(searchText === '') {
+    if (searchText === '') {
       setFilteredFloodings(floodings)
       return
     }
