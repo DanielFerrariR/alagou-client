@@ -163,6 +163,16 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
     }
   }
 
+  const chooseDisplayPhoto = () => {
+    if (form.picture && typeof form.picture === 'string') {
+      return { uri: form.picture }
+    }
+    if (form.picture && typeof form.picture !== 'string')
+      return { uri: form.picture.uri }
+
+    return require('src/images/no_flooding_picture.png')
+  }
+
   return (
     <>
       <BackHeader title="Editar alagamento" />
@@ -218,22 +228,14 @@ const EditFlooding: React.FC<Props> = ({ route }) => {
         </Box>
         <Box justifyContent="center" alignItems="center" mb={3}>
           <ImageView
-            images={[
-              typeof form.picture !== 'string'
-                ? { uri: form.picture.uri }
-                : require('src/images/no_flooding_picture.png')
-            ]}
+            images={[chooseDisplayPhoto()]}
             imageIndex={0}
             visible={openImage}
             onRequestClose={() => setOpenImage(false)}
           />
           <TouchableOpacity onPress={() => setOpenImage(true)} width={1}>
             <Image
-              source={
-                typeof form.picture !== 'string'
-                  ? { uri: form.picture.uri }
-                  : require('src/images/no_flooding_picture.png')
-              }
+              source={chooseDisplayPhoto()}
               width={1}
               height={148}
               mb={1}

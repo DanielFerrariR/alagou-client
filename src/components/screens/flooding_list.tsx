@@ -56,8 +56,8 @@ const FloadingList: React.FC<Props> = ({ route }) => {
 
   useEffect(() => {
     if (floodings && route?.params) {
-      const newFloodings = route.params.data.filter((each) => {
-        if (floodings.find((element) => element._id === each._id)) {
+      const newFloodings = floodings.filter((each) => {
+        if (route.params?.data.find((element) => element._id === each._id)) {
           return true
         }
 

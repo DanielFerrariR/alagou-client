@@ -26,10 +26,8 @@ interface Props {
 }
 
 interface Form {
-  oldPassword: string
   newPassword: string
   confirmNewPassword: string
-  showOldPassword: boolean
   showNewPassword: boolean
   showConfirmNewPassword: boolean
 }
@@ -39,7 +37,6 @@ interface ConfirmResetPasswordAxiosResponse {
 }
 
 interface Errors {
-  oldPassword: string | false
   newPassword: string | false
   confirmNewPassword: string | false
 }
@@ -52,15 +49,12 @@ const ResetPassword: React.FC<Props> = ({ route }) => {
   const [successMessage, setSuccessMessage] = useState<string | string[]>('')
   const [loading, setLoading] = useState(false)
   const [form, setForm] = useState<Form>({
-    oldPassword: '',
     newPassword: '',
     confirmNewPassword: '',
-    showOldPassword: false,
     showNewPassword: false,
     showConfirmNewPassword: false
   })
   const [errors, setErrors] = useState<Errors>({
-    oldPassword: false,
     newPassword: false,
     confirmNewPassword: false
   })
@@ -78,12 +72,8 @@ const ResetPassword: React.FC<Props> = ({ route }) => {
         return
       }
 
-      if (!form.oldPassword || !form.newPassword || !form.confirmNewPassword) {
+      if (!form.newPassword || !form.confirmNewPassword) {
         const errorsMessage = []
-
-        if (!form.oldPassword) {
-          errorsMessage.push('A senha atual precisa ser preenchida.')
-        }
 
         if (!form.newPassword) {
           errorsMessage.push('A nova senha precisa ser preenchida.')
@@ -98,8 +88,6 @@ const ResetPassword: React.FC<Props> = ({ route }) => {
         setErrorMessage(errorsMessage)
         setErrors({
           ...errors,
-          oldPassword:
-            !form.oldPassword && 'A senha atual precisa ser preenchida.',
           newPassword:
             !form.newPassword && 'A nova senha precisa ser preenchida.',
           confirmNewPassword:
@@ -164,28 +152,6 @@ const ResetPassword: React.FC<Props> = ({ route }) => {
         <Appbar.Content title="Alterar senha" />
       </Appbar.Header>
       <Container p={2}>
-        <TextInput
-          label="Senha Atual"
-          placeholder="Digite sua senha atual"
-          mb={errors.oldPassword ? 0 : 3}
-          onChangeText={(text) => onChange('oldPassword', text)}
-          value={form.oldPassword}
-          secureTextEntry={!form.showOldPassword}
-          right={
-            <OldTextInput.Icon
-              color={theme.colors.placeholder}
-              onPress={() =>
-                setForm({ ...form, showOldPassword: !form.showOldPassword })
-              }
-              name={form.showOldPassword ? 'eye-off' : 'eye'}
-            />
-          }
-        />
-        {errors.oldPassword ? (
-          <Box mb={2}>
-            <HelperText type="error">{errors.oldPassword}</HelperText>
-          </Box>
-        ) : null}
         <TextInput
           label="Nova senha"
           placeholder="Digite sua nova senha"
