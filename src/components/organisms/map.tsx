@@ -14,7 +14,7 @@ import { useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'src/store'
 import { FloodingsState } from 'src/store/floodings'
-import { isDateInRange, forecastFloodingDay, isSameDay } from 'src/utils'
+import { isDateInRange } from 'src/utils'
 import Geolocation from 'react-native-geolocation-service'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Navigation } from 'src/images'
@@ -63,7 +63,6 @@ const Map: React.FC<Props> = ({ route }) => {
     filteredFloodings,
     setFilteredFloodings
   ] = useState<FloodingsState | null>(null)
-  const [markers, setMarkers] = useState<FloodingsState | null>(null)
   const [region, setRegion] = useState<Region>()
   const [onlyOnce, setOnlyOnce] = useState(false)
   const [mapType, setMapType] = useState<MapType>('standard')
@@ -77,55 +76,55 @@ const Map: React.FC<Props> = ({ route }) => {
   const Geocoder = GeocoderLibrary as any
   Geocoder.init(GOOGLE_MAPS_APIKEY)
 
-  useEffect(() => {
-    const asyncEffect = async () => {
-      if (floodings) {
-        const todayFloodingsAddress = floodings
-          .filter((each) => {
-            if (isSameDay(new Date(each.date), new Date())) {
-              return true
-            }
+  // useEffect(() => {
+  //   const asyncEffect = async () => {
+  //     if (floodings) {
+  //       const todayFloodingsAddress = floodings
+  //         .filter((each) => {
+  //           if (isSameDay(new Date(each.date), new Date())) {
+  //             return true
+  //           }
 
-            return false
-          })
-          .map((each) => {
-            return each.address
-          })
+  //           return false
+  //         })
+  //         .map((each) => {
+  //           return each.address
+  //         })
 
-        const newFloodings = []
+  //       const newFloodings = []
 
-        for (const flooding of floodings) {
-          if (todayFloodingsAddress.includes(flooding.address)) {
-            continue
-          }
+  //       for (const flooding of floodings) {
+  //         if (todayFloodingsAddress.includes(flooding.address)) {
+  //           continue
+  //         }
 
-          if (
-            new Date(
-              new Date(flooding.date).getTime() + 1000 * 60 * 60 * 24 * 7
-            ) < new Date()
-          ) {
-            continue
-          }
+  //         if (
+  //           new Date(
+  //             new Date(flooding.date).getTime() + 1000 * 60 * 60 * 24 * 7
+  //           ) < new Date()
+  //         ) {
+  //           continue
+  //         }
 
-          if (
-            !(await forecastFloodingDay(
-              flooding.latitude,
-              flooding.longitude,
-              flooding.date
-            ))
-          ) {
-            continue
-          }
+  //         if (
+  //           !(await forecastFloodingDay(
+  //             flooding.latitude,
+  //             flooding.longitude,
+  //             flooding.date
+  //           ))
+  //         ) {
+  //           continue
+  //         }
 
-          newFloodings.push(flooding)
-        }
+  //         newFloodings.push(flooding)
+  //       }
 
-        setMarkers(newFloodings)
-      }
-    }
+  //       setMarkers(newFloodings)
+  //     }
+  //   }
 
-    asyncEffect()
-  }, [floodings])
+  //   asyncEffect()
+  // }, [floodings])
 
   useEffect(() => {
     const asyncEffect = async () => {
@@ -323,7 +322,7 @@ const Map: React.FC<Props> = ({ route }) => {
                   )
                 })
               : null}
-            {markers &&
+            {/* {markers &&
               markers.map((each) => {
                 return (
                   <Marker
@@ -355,7 +354,7 @@ const Map: React.FC<Props> = ({ route }) => {
                     </Callout>
                   </Marker>
                 )
-              })}
+              })} */}
           </MapView>
         )}
       </Box>
